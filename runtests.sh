@@ -1,7 +1,7 @@
 #!/bin/bash
 
 find . -name "*.pyc" -exec rm {} \;
-coverage run -p --source=tests,apigee -m unittest
+coverage run -p --source=tests,apigee -m pytest
 if [ "$?" = "0" ]; then
     coverage combine
     echo -e "\n\n================================================"

@@ -124,6 +124,24 @@ We built and use the Apigee CLI to implement and distribute features that allow 
 to manage CI/CD, perform self-service operations and promote our DevOps workflows
 which are difficult to perform using official tools.
 
+-------------
+Running Tests
+-------------
+
+This project uses `unittest` for testing its codebase. In order to run the tests, you will need to install the `coverage.py` tool. You can install it using pip:
+
+.. code-block:: bash
+
+   pip3 install coverage
+
+Once `coverage.py` is installed, you can run the tests using the `runtests` script:
+
+.. code-block:: bash
+
+   ./runtests
+
+This script will run all the tests in the `tests` directory and generate a coverage report.
+
 ------------
 Getting Help
 ------------

@@ -22,6 +22,8 @@ def encrypt_message_with_gpg(secret, message, encoded=True):
 
 
 def has_encrypted_header(message):
+    if not isinstance(message, str):
+        return False
     return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(
         ENCRYPTED_HEADER_END
     )
