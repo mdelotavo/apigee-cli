@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quickstart &mdash; apigee-cli 0.x.x documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=371f806f" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=30f05f40" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5be48651"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=369d1ff3"></script>
+        <script src="_static/doctools.js?v=b682be12"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -101,9 +103,9 @@
            <div itemprop="articleBody">
              
   <section id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading"></a></h1>
 <section id="getting-started">
-<span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
 <p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials. You
 can do this in three ways:</p>
 <ul class="simple">
@@ -161,7 +163,7 @@ $ export APIGEE_CLI_PREFIX=MY_PREFIX
 profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
 the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
 <section id="using-saml-authentication">
-<h3>Using SAML authentication<a class="headerlink" href="#using-saml-authentication" title="Permalink to this heading"></a></h3>
+<h3>Using SAML authentication<a class="headerlink" href="#using-saml-authentication" title="Link to this heading"></a></h3>
 <p>If you specified an <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span> <span class="pre">(to</span> <span class="pre">support</span> <span class="pre">SAML</span> <span class="pre">authentication)</span></code> during setup,
 the CLI will automatically use SAML authentication.
 If you are not currently signed in by your identity provider, you will be prompted to sign in:</p>
@@ -183,7 +185,7 @@ Please enter the Temporary Authentication Code:
 </section>
 </section>
 <section id="using-saml-with-automated-tasks">
-<h2>Using SAML with automated tasks<a class="headerlink" href="#using-saml-with-automated-tasks" title="Permalink to this heading"></a></h2>
+<h2>Using SAML with automated tasks<a class="headerlink" href="#using-saml-with-automated-tasks" title="Link to this heading"></a></h2>
 <p>The CLI also supports machine users as described in <a class="reference external" href="https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks">Using SAML with automated tasks</a> when SAML is enabled
 to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
 <p>To tell the CLI that the current user <code class="docutils literal notranslate"><span class="pre">--profile</span></code> is a machine user and thus to not redirect you to an identity provider,
@@ -195,7 +197,7 @@ you can set the following environment variable like so:</p>
 <p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
 </section>
 <section id="deploy-api-proxy-bundles">
-<h2>Deploy API Proxy bundles<a class="headerlink" href="#deploy-api-proxy-bundles" title="Permalink to this heading"></a></h2>
+<h2>Deploy API Proxy bundles<a class="headerlink" href="#deploy-api-proxy-bundles" title="Link to this heading"></a></h2>
 <p>You can also deploy API proxy bundles to Apigee.</p>
 <p>This command is an enhanced version of the Apigee API Proxy Deploy Tool.</p>
 <p>It supports a bunch of useful features such as MFA, SAML, seamless deployments and automatic handling of <code class="docutils literal notranslate"><span class="pre">missing</span></code> and broken deployments.</p>
@@ -213,7 +215,7 @@ you can set the following environment variable like so:</p>
 </div>
 </section>
 <section id="cleaning-up-undeployed-revisions">
-<h2>Cleaning up undeployed revisions<a class="headerlink" href="#cleaning-up-undeployed-revisions" title="Permalink to this heading"></a></h2>
+<h2>Cleaning up undeployed revisions<a class="headerlink" href="#cleaning-up-undeployed-revisions" title="Link to this heading"></a></h2>
 <p>If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
 make use of the <code class="docutils literal notranslate"><span class="pre">clean</span></code> command to delete all undeployed revisions.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ apigee apis clean -n API_NAME
@@ -229,7 +231,7 @@ make use of the <code class="docutils literal notranslate"><span class="pre">cle
 </div>
 </section>
 <section id="push-commands">
-<h2>Push commands<a class="headerlink" href="#push-commands" title="Permalink to this heading"></a></h2>
+<h2>Push commands<a class="headerlink" href="#push-commands" title="Link to this heading"></a></h2>
 <p>Some commands support the <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand which combines API calls to manage the creation, update and sometimes deletion of resources using a single command.</p>
 <p>Push commands read JSON from a file and can be invoked like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee keyvaluemaps push -e ENVIRONMENT -f FILENAME
@@ -238,13 +240,13 @@ make use of the <code class="docutils literal notranslate"><span class="pre">cle
 <p>This will create the KVM if it does not exist, and update it if it does.</p>
 </section>
 <section id="managing-plugins-advanced-usage">
-<h2>Managing plugins (Advanced usage)<a class="headerlink" href="#managing-plugins-advanced-usage" title="Permalink to this heading"></a></h2>
+<h2>Managing plugins (Advanced usage)<a class="headerlink" href="#managing-plugins-advanced-usage" title="Link to this heading"></a></h2>
 <p>The simple plugins manager uses Git to install commands from remote sources, thus you will need to have Git installed for installation to work.
 However, it is possible to install plugins manually by storing plugins in the correct location (to be documented).</p>
 <p>Currently, only the commands below are supported. More commands will be added to improve automation and user experience.</p>
 <p>The steps below show how to install commands from a <a class="reference external" href="https://github.com/mdelotavo/apigee-cli-plugins">public plugins repository</a>.</p>
 <section id="configuring">
-<h3>Configuring<a class="headerlink" href="#configuring" title="Permalink to this heading"></a></h3>
+<h3>Configuring<a class="headerlink" href="#configuring" title="Link to this heading"></a></h3>
 <p>To configure remote sources for installing plugins, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">configure</span> <span class="o">-</span><span class="n">a</span>
 </pre></div>
@@ -263,7 +265,7 @@ The key will be the name of the repository on your local machine under <code cla
 <p>If installation is successful, you should now see additional commands when you run <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">-h</span></code></p>
 </section>
 <section id="updating">
-<h3>Updating<a class="headerlink" href="#updating" title="Permalink to this heading"></a></h3>
+<h3>Updating<a class="headerlink" href="#updating" title="Link to this heading"></a></h3>
 <p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then install will occur automatically.
 Otherwise you can run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">update</span>
@@ -272,7 +274,7 @@ Otherwise you can run:</p>
 <p>This will install and update plugins.</p>
 </section>
 <section id="pruning">
-<h3>Pruning<a class="headerlink" href="#pruning" title="Permalink to this heading"></a></h3>
+<h3>Pruning<a class="headerlink" href="#pruning" title="Link to this heading"></a></h3>
 <p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then the removal of plugins will occur automatically.
 Otherwise you can run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">prune</span>
@@ -280,7 +282,7 @@ Otherwise you can run:</p>
 </div>
 </section>
 <section id="showing">
-<h3>Showing<a class="headerlink" href="#showing" title="Permalink to this heading"></a></h3>
+<h3>Showing<a class="headerlink" href="#showing" title="Link to this heading"></a></h3>
 <p>To show the plugins you have configured, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">show</span>
 </pre></div>
