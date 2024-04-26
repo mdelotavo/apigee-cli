@@ -37,21 +37,21 @@ def attach_is_token_option(func, profile):
             "--token/--no-token",
             default=is_token,
             show_default=True,
-            help="specify to use oauth without MFA",
+            help="specify to use OAuth without MFA",
         )(func)
     elif is_token_envvar in (True, "True", "true", "1"):
         func = click.option(
             "--token/--no-token",
             default=is_token_envvar,
             show_default=True,
-            help="specify to use oauth without MFA",
+            help="specify to use OAuth without MFA",
         )(func)
     else:
         func = click.option(
             "--token/--no-token",
             default=False,
             show_default=True,
-            help="specify to use oauth without MFA",
+            help="specify to use OAuth without MFA",
         )(func)
     return func
 
@@ -222,75 +222,68 @@ def get_access_token_for_mfa(
         )
 
 
-def get_access_token(auth, username, password, oauth_url, post_headers, session):
+def get_access_token(auth, username, password, oauth_url, post_headers, session, passcode):
     if auth.token or APIGEE_CLI_IS_MACHINE_USER:
         return get_access_token_for_token(auth, username, password, oauth_url, post_headers, session)
     elif auth.mfa_secret:
         return get_access_token_for_mfa(auth, username, password, oauth_url, post_headers, session)
     elif auth.zonename:
-        return get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session)
+        return get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session, passcode)
 
 
 def get_access_token_for_sso(
-    auth, username, password, oauth_url, post_headers, session
+    auth, username, password, oauth_url, post_headers, session, passcode
 ):
     refresh_token = validate_refresh_token(auth)
     oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
     passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
+
     if not refresh_token:
-        post_body = get_sso_access_token_parameters(passcode_url)
+        if not passcode:
+            passcode = get_sso_temporary_authentication_code(passcode_url)
+        post_body = f"passcode={passcode}&grant_type=password&response_type=token"
     else:
         # Should we notify users that the refresh token is being used to verify the access token?
         #console.echo("Refresh Token found, renewing access token with Refresh Token...")
         post_body = f"grant_type=refresh_token&refresh_token={refresh_token}"
 
     try:
-        try:
-            response_post = session.post(
-                f"{oauth_url}", headers=post_headers, data=post_body
-            )
-            response_data = response_post.json()
-            response_data["access_token"]
-            # If we didn't have a refresh token previously, save the refresh token we just got.
-            if not refresh_token:
-                with open(APIGEE_CLI_REFRESH_TOKEN_FILE, "w") as f:
-                    f.write(response_data["refresh_token"])
-            return response_data
-        except KeyError:
-            sys.exit("Temporary Authentication Code or Refresh Token is invalid. Please try again.")
+        response_post = session.post(
+            f"{oauth_url}", headers=post_headers, data=post_body
+        )
+        response_data = response_post.json()
+        response_data["access_token"]
+
+        # If we didn't have a refresh token previously, save the refresh token we just got.
+        if not refresh_token:
+            with open(APIGEE_CLI_REFRESH_TOKEN_FILE, "w") as f:
+                f.write(response_data["refresh_token"])
+        return response_data
+    except KeyError:
+        sys.exit("Temporary Authentication Code or Refresh Token is invalid. Please try again.")
     except ConnectionError as ce:
         console.echo(ce)
-    except KeyError:
-        pass
 
 
 def get_config_value(config_section, config_key):
-    try:
-        config = configparser.ConfigParser()
-        config.read(APIGEE_CLI_CREDENTIALS_FILE)
-        if config_section in config:
+    config = configparser.ConfigParser()
+    config.read(APIGEE_CLI_CREDENTIALS_FILE)
+    if config_section in config:
+        if config_key in config[config_section]:
             return config[config_section][config_key]
-    except Exception:
-        return
 
 
-def get_sso_access_token_parameters(passcode_url):
+def get_sso_temporary_authentication_code(passcode_url):
     webbrowser.open(passcode_url)
-    console.echo(
-        "SSO authorization page has automatically been opened in your default browser."
-    )
-    console.echo(
-        "Follow the instructions in the browser to complete this authorization request."
-    )
-    console.echo(
-        f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n"""
-    )
+    console.echo("SSO authorization page has automatically been opened in your default browser.")
+    console.echo("Follow the instructions in the browser to complete this authorization request.")
+    console.echo(f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n""")
 
     passcode = click.prompt("Please enter the Temporary Authentication Code")
-    return f"passcode={passcode}&grant_type=password&response_type=token"
+    return passcode
 
 
-def retrieve_access_token(authentication, session=None):
+def retrieve_access_token(authentication, passcode=None):
     oauth_url = APIGEE_OAUTH_URL
     username = authentication.username
     password = authentication.password
@@ -302,7 +295,7 @@ def retrieve_access_token(authentication, session=None):
         "Accept": "application/json;charset=utf-8",
         "Authorization": "Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0",
     }
-    response_data = get_access_token(authentication, username, password, oauth_url, post_headers, session)
+    response_data = get_access_token(authentication, username, password, oauth_url, post_headers, session, passcode)
     try:
         return response_data["access_token"]
     except KeyError as error:
@@ -366,19 +359,18 @@ def auth():
     pass
 
 
-@auth.command(name="get-access-token", help="request a fresh access token")
+@auth.command(name="get-access-token", help="Request a fresh access token")
 @common_auth_options
 @common_verbose_options
 @common_silent_options
+@click.option('--passcode', help='Apigee SAML temporary authentication code to use when getting an Apigee access token (optional)')
 def get_access_token_command(
-    username, password, mfa_secret, token, zonename, org, profile, **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, passcode, **kwargs
 ):
-    console.echo(
-        retrieve_access_token(generate_authentication(username, password, mfa_secret, token, zonename))
-    )
+    console.echo(retrieve_access_token(generate_authentication(username, password, mfa_secret, token, zonename), passcode))
 
 
-@auth.command(help="view the current access token")
+@auth.command(help="View the current access token")
 @common_auth_options
 @common_verbose_options
 @common_silent_options
@@ -392,11 +384,7 @@ def view_access_token(
         console.echo(validate_access_token(authentication_object))
     else:
         # Show the user/password base64 basic auth value
-        console.echo(
-            base64.b64encode(
-                f"{authentication_object.username}:{authentication_object.password}".encode()
-            ).decode()
-        )
+        console.echo(base64.b64encode(f"{authentication_object.username}:{authentication_object.password}".encode()).decode())
 
 
 @auth.command(help="Clear cached access token and refresh token")
