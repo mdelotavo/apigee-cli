@@ -16,13 +16,9 @@ I have created private forks for clients, where I continued to add features, fix
 
 If you’re up for a challenge, try updating the code to work with Apigee X (ง•_•)ง
 
-.. note::
-
-   **apigee-cli** is highly experimental and is not affiliated with Apigee or Google.
-
---------------------
+-----------------------------------------
 Why use this instead of the official tool
---------------------
+-----------------------------------------
 
 The `official Apigee CLI`_ is powerful and may suit your needs. However, I built this version to better support our CI/CD processes, self-service operations, and DevOps workflows that are difficult to manage with the official tool.
 
@@ -148,7 +144,8 @@ For further questions, feel free to contact us at hello@darumatic.com.
 ----------
 Disclaimer
 ----------
-This is not an officially supported Google product.
+
+This tool is not affiliated with Apigee or Google and is highly experimental.
 
 
 .. _`official Apigee CLI`: https://github.com/apigee/apigeetool-node
