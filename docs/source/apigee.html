@@ -20,7 +20,9 @@
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="apigee.apiproducts package" href="apigee.apiproducts.html" />
+    <link rel="prev" title="apigee" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,6 +48,136 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">apigee</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">apigee package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apiproducts.html">apigee.apiproducts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html">apigee.apis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html">apigee.apps package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html">apigee.backups package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html">apigee.caches package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.configure.html">apigee.configure package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.deployments.html">apigee.deployments package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html">apigee.developers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html">apigee.keystores package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html">apigee.keyvaluemaps package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html">apigee.maskconfigs package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html">apigee.permissions package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html">apigee.plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.references.html">apigee.references package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html">apigee.sharedflows package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html">apigee.targetservers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html">apigee.userroles package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.virtualhosts.html">apigee.virtualhosts package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.auth">apigee.auth module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.attach_is_token_option"><code class="docutils literal notranslate"><span class="pre">attach_is_token_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.attach_mfa_secret_option"><code class="docutils literal notranslate"><span class="pre">attach_mfa_secret_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.attach_org_option"><code class="docutils literal notranslate"><span class="pre">attach_org_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.attach_password_option"><code class="docutils literal notranslate"><span class="pre">attach_password_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.attach_username_option"><code class="docutils literal notranslate"><span class="pre">attach_username_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.attach_zonename_option"><code class="docutils literal notranslate"><span class="pre">attach_zonename_option()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.common_auth_options"><code class="docutils literal notranslate"><span class="pre">common_auth_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.generate_authentication"><code class="docutils literal notranslate"><span class="pre">generate_authentication()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.generate_authentication_error_message"><code class="docutils literal notranslate"><span class="pre">generate_authentication_error_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.get_access_token"><code class="docutils literal notranslate"><span class="pre">get_access_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.get_access_token_for_mfa"><code class="docutils literal notranslate"><span class="pre">get_access_token_for_mfa()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.get_access_token_for_sso"><code class="docutils literal notranslate"><span class="pre">get_access_token_for_sso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.get_access_token_for_token"><code class="docutils literal notranslate"><span class="pre">get_access_token_for_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.get_config_value"><code class="docutils literal notranslate"><span class="pre">get_config_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.get_sso_temporary_authentication_code"><code class="docutils literal notranslate"><span class="pre">get_sso_temporary_authentication_code()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.retrieve_access_token"><code class="docutils literal notranslate"><span class="pre">retrieve_access_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.set_authentication_headers"><code class="docutils literal notranslate"><span class="pre">set_authentication_headers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.validate_access_token"><code class="docutils literal notranslate"><span class="pre">validate_access_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.validate_jwt_token"><code class="docutils literal notranslate"><span class="pre">validate_jwt_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.auth.validate_refresh_token"><code class="docutils literal notranslate"><span class="pre">validate_refresh_token()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.cls">apigee.cls module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.cls.AliasedGroup"><code class="docutils literal notranslate"><span class="pre">AliasedGroup</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.console">apigee.console module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.console.echo"><code class="docutils literal notranslate"><span class="pre">echo()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.crypto">apigee.crypto module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.crypto.decrypt_message"><code class="docutils literal notranslate"><span class="pre">decrypt_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.crypto.encrypt_message"><code class="docutils literal notranslate"><span class="pre">encrypt_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.crypto.is_encrypted"><code class="docutils literal notranslate"><span class="pre">is_encrypted()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.encryption_utils">apigee.encryption_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.decrypt_message_with_gpg"><code class="docutils literal notranslate"><span class="pre">decrypt_message_with_gpg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.encrypt_message_with_gpg"><code class="docutils literal notranslate"><span class="pre">encrypt_message_with_gpg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.has_encrypted_header"><code class="docutils literal notranslate"><span class="pre">has_encrypted_header()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.exceptions">apigee.exceptions module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.exceptions.InvalidApisError"><code class="docutils literal notranslate"><span class="pre">InvalidApisError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.exceptions.configure_global_logger"><code class="docutils literal notranslate"><span class="pre">configure_global_logger()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.exceptions.log_and_echo_http_error"><code class="docutils literal notranslate"><span class="pre">log_and_echo_http_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.exceptions.wrap_with_exception_handling"><code class="docutils literal notranslate"><span class="pre">wrap_with_exception_handling()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.prefix">apigee.prefix module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.prefix.common_prefix_options"><code class="docutils literal notranslate"><span class="pre">common_prefix_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.silent">apigee.silent module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.silent.common_silent_options"><code class="docutils literal notranslate"><span class="pre">common_silent_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.silent.silent_callback"><code class="docutils literal notranslate"><span class="pre">silent_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.types">apigee.types module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.types.Struct"><code class="docutils literal notranslate"><span class="pre">Struct</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.types.empty_snapshot"><code class="docutils literal notranslate"><span class="pre">empty_snapshot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.utils">apigee.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.apply_function_on_iterable"><code class="docutils literal notranslate"><span class="pre">apply_function_on_iterable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.check_files_exist"><code class="docutils literal notranslate"><span class="pre">check_files_exist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.create_directory"><code class="docutils literal notranslate"><span class="pre">create_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.create_empty_file"><code class="docutils literal notranslate"><span class="pre">create_empty_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.ensure_set"><code class="docutils literal notranslate"><span class="pre">ensure_set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.execute_function_on_directory_files"><code class="docutils literal notranslate"><span class="pre">execute_function_on_directory_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.extract_zip_file"><code class="docutils literal notranslate"><span class="pre">extract_zip_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.filter_out_empty_values"><code class="docutils literal notranslate"><span class="pre">filter_out_empty_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.get_resolved_directory_path"><code class="docutils literal notranslate"><span class="pre">get_resolved_directory_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.import_plugins_from_directory"><code class="docutils literal notranslate"><span class="pre">import_plugins_from_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.is_directory"><code class="docutils literal notranslate"><span class="pre">is_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.is_regular_file"><code class="docutils literal notranslate"><span class="pre">is_regular_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.merge_dict_values"><code class="docutils literal notranslate"><span class="pre">merge_dict_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.read_file_content"><code class="docutils literal notranslate"><span class="pre">read_file_content()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.remove_file_if_above_size"><code class="docutils literal notranslate"><span class="pre">remove_file_if_above_size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.remove_last_elements"><code class="docutils literal notranslate"><span class="pre">remove_last_elements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.show_message"><code class="docutils literal notranslate"><span class="pre">show_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.split_path_by_delimiter"><code class="docutils literal notranslate"><span class="pre">split_path_by_delimiter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.write_content_to_file"><code class="docutils literal notranslate"><span class="pre">write_content_to_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.write_content_to_zip"><code class="docutils literal notranslate"><span class="pre">write_content_to_zip()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.utils_init">apigee.utils_init module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils_init.is_truthy_envvar"><code class="docutils literal notranslate"><span class="pre">is_truthy_envvar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils_init.join_path_components"><code class="docutils literal notranslate"><span class="pre">join_path_components()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.verbose">apigee.verbose module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.verbose.common_verbose_options"><code class="docutils literal notranslate"><span class="pre">common_verbose_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.verbose.verbose_callback"><code class="docutils literal notranslate"><span class="pre">verbose_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
@@ -73,6 +205,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">apigee</a></li>
       <li class="breadcrumb-item active">apigee package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/source/apigee.rst.txt" rel="nofollow"> View page source</a>
@@ -165,7 +298,6 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.deploy.printDeployments"><code class="docutils literal notranslate"><span class="pre">printDeployments()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#apigee-apis-pull-module">apigee.apis.pull module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#module-apigee.apis.serializer">apigee.apis.serializer module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.serializer.ApisSerializer"><code class="docutils literal notranslate"><span class="pre">ApisSerializer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions"><code class="docutils literal notranslate"><span class="pre">ApisSerializer.filter_deployed_revisions()</span></code></a></li>
@@ -1039,7 +1171,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="apigee" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="apigee.apiproducts.html" class="btn btn-neutral float-right" title="apigee.apiproducts package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
