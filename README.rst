@@ -2,7 +2,7 @@
 apigee-cli
 ==========
 
-|License| |Python version| |Downloads|
+|Python version| |Downloads| |License|
 
 .. warning::
 
@@ -14,11 +14,17 @@ Initially developed for Darumatic clients, this project remains available as a w
 
 I have created private forks for clients, where I continued to add features, fixes, and unit tests. However, I do not intend to maintain this public version. Feel free to explore and learn from the code.
 
-If you’re up for a challenge, try updating the code to work with Apigee X :)
+If you’re up for a challenge, try updating the code to work with Apigee X (ง•_•)ง
 
 .. note::
 
    **apigee-cli** is highly experimental and is not affiliated with Apigee or Google.
+
+--------------------
+Why use this instead of the official tool
+--------------------
+
+The `official Apigee CLI`_ is powerful and may suit your needs. However, I built this version to better support our CI/CD processes, self-service operations, and DevOps workflows that are difficult to manage with the official tool.
 
 ------------
 Installation
@@ -105,25 +111,6 @@ Run the following command to get a list of API proxies in your ``default`` Apige
     $ apigee apis list
     ["helloworld", "oauth"]
 
---------------------
-Why does this exist?
---------------------
-
-It is intended for general administrative use from your shell, as a package for developers,
-and to support automation for common development tasks, such as test automation
-or Continuous Integration/Continuous Deployment (CI/CD).
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-When to use this over the official tool
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Apigee Corporation maintains their own `fully-featured CLI`_ for the Apigee Management API
-that can be used as an SDK to orchestrate tasks and may be more than suitable for your needs.
-
-We built and use the Apigee CLI to implement and distribute features that allow our clients
-to manage CI/CD, perform self-service operations and promote our DevOps workflows
-which are difficult to perform using official tools.
-
 -------------
 Running Tests
 -------------
@@ -164,7 +151,7 @@ Disclaimer
 This is not an officially supported Google product.
 
 
-.. _`fully-featured CLI`: https://github.com/apigee/apigeetool-node
+.. _`official Apigee CLI`: https://github.com/apigee/apigeetool-node
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
