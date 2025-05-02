@@ -12,11 +12,17 @@ Initially developed for Darumatic clients, this project remains available as a w
 
 I have created private forks for clients, where I continued to add features, fixes, and unit tests. However, I do not intend to maintain this public version. Feel free to explore and learn from the code.
 
-If you’re up for a challenge, try updating the code to work with Apigee X :)
+If you’re up for a challenge, try updating the code to work with Apigee X (ง•_•)ง
 
 .. note::
 
    **apigee-cli** is highly experimental and is not affiliated with Apigee or Google.
+
+--------------------
+Why use this instead of the official tool
+--------------------
+
+The `official Apigee CLI`_ is powerful and may suit your needs. However, I built this version to better support our CI/CD processes, self-service operations, and DevOps workflows that are difficult to manage with the official tool.
 
 ----------
 Disclaimer
@@ -24,7 +30,7 @@ Disclaimer
 This is not an officially supported Google product.
 
 
-.. _`Apigee Corporation maintains their own fully-featured CLI for the Apigee Management API`: https://github.com/apigee/apigeetool-node
+.. _`official Apigee CLI`: https://github.com/apigee/apigeetool-node
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
