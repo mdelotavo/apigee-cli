@@ -23,13 +23,6 @@ Welcome to the Apigee Management API command-line interface documentation!
    source/modules
 
 .. toctree::
-   :maxdepth: 1
-   :caption: API
-   :hidden:
-
-   auth
-
-.. toctree::
    :maxdepth: 2
    :caption: Guide
    :hidden:
