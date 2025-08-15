@@ -4,10 +4,7 @@ import click
 
 from apigee import APIGEE_CLI_SYMMETRIC_KEY, console
 from apigee.auth import common_auth_options, generate_authentication
-from apigee.encryption_utils import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
-                           decrypt_message_with_gpg, encrypt_message_with_gpg, has_encrypted_header)
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
-from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.utils import read_file_content, write_content_to_file

@@ -30,11 +30,12 @@ def _take_snapshot(
     apis,
     **kwargs
 ):
-    for choice in apis:
-        if choice not in APIGEE_API_CHOICES:
-            raise InvalidApisError(f"The choice '{choice}' is not a valid APIGEE API choice.")
-    if not isinstance(apis, set):
-        apis = set(apis)
+    apis = set(apis) if not isinstance(apis, set) else apis
+
+    invalid = set(apis) - set(APIGEE_API_CHOICES)
+    if invalid:
+        raise InvalidApisError(f"Invalid APIGEE API choices: {', '.join(invalid)}")
+
     config = BackupConfig(
         authentication=generate_authentication(username, password, mfa_secret, token, zonename),
         org_name=org,

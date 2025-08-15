@@ -6,7 +6,7 @@ from apigee import utils_init
 
 APP = "apigeecli"
 CMD = "apigee"
-__version__ = "0.53.6"
+__version__ = "0.54.0"
 description = "The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication."
 long_description = """This tool is no longer actively maintained. Initially developed for Darumatic clients, this project remains available as a working proof of concept, proven reliable in production CI/CD pipelines. The custom plugins feature will remain functional even if Apigee Edge APIs stop working."""
 

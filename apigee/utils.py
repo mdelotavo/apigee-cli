@@ -88,6 +88,15 @@ def get_resolved_directory_path(target_directory=None):
     return os.getcwd()
 
 
+def get_tqdm_kwargs(desc):
+    return {
+        "desc": desc,
+        "unit": "entries",
+        "bar_format": "{l_bar}{bar:32}{r_bar}{bar:-10b}",
+        "leave": False,
+    }
+
+
 def import_plugins_from_directory(plugins_init_file, existing_commands):
     try:
         spec = importlib.util.spec_from_file_location(
