@@ -12,7 +12,7 @@ The Apigee Edge command-line interface is an unofficial Python command-line tool
 Why use this instead of the official tool
 -----------------------------------------
 
-While the `official Apigee CLI`_ is powerful, this tool was created to better support Darumatic clients’ CI/CD, self-service, and DevOps workflows that were difficult to manage with the official tool, using simple and easily editable code to demonstrate how to leverage the Apigee Admin APIs.
+While the `official Apigee CLI`_ is powerful, this tool was created to better support Darumatic clients’ CI/CD and self-service workflows that were difficult to manage with the official tool, using simple and easily editable code to demonstrate how to leverage the Apigee Admin APIs.
 
 ----------
 Disclaimer
