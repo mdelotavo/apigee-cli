@@ -78,7 +78,6 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.auth">apigee.auth module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.cls">apigee.cls module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.console">apigee.console module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.crypto">apigee.crypto module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.encryption_utils">apigee.encryption_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.exceptions">apigee.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.prefix">apigee.prefix module</a></li>
@@ -141,6 +140,7 @@
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.keyvaluemaps.keyvaluemaps.</span></span><span class="sig-name descname"><span class="pre">Keyvaluemaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Keyvaluemaps manager with full backward compatibility.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm">
 <span class="sig-name descname"><span class="pre">create_an_entry_in_an_environment_scoped_kvm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm" title="Link to this definition"></a></dt>
@@ -158,12 +158,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt_keyvaluemap">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decrypt_keyvaluemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt_keyvaluemap" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt_value">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decrypt_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt_value" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decrypt_keyvaluemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt_keyvaluemap" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -183,22 +178,12 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt_keyvaluemap">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encrypt_keyvaluemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt_keyvaluemap" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt_value">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encrypt_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt_value" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encrypt_keyvaluemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt_keyvaluemap" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.fetch_keys_in_environment_scoped_keyvaluemap">
 <span class="sig-name descname"><span class="pre">fetch_keys_in_environment_scoped_keyvaluemap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.fetch_keys_in_environment_scoped_keyvaluemap" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.find_deleted_keys">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_deleted_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kvm_dict1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kvm_dict2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.find_deleted_keys" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -234,30 +219,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.synchronize_keyvaluemap_with_environment">
 <span class="sig-name descname"><span class="pre">synchronize_keyvaluemap_with_environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.synchronize_keyvaluemap_with_environment" title="Link to this definition"></a></dt>
-<dd><p>Synchronizes the local Key-Value Map (KVM) with the specified environment.</p>
-<p>This method compares the entries in the local_map with the existing Key-Value Map in the given environment.
-It performs the following actions to synchronize the KVM:
-- Removes any entries in the environment’s KVM that are not present in the local_map.
-- Updates the entries in the environment’s KVM with the ones from the local_map that have different values.
-- Creates new entries in the environment’s KVM for the entries in the local_map that are not already present.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>environment</strong> (<em>str</em>) – The name of the environment where the KVM should be synchronized.</p></li>
-<li><p><strong>local_map</strong> (<em>dict</em>) – The local Key-Value Map (KVM) containing the entries to synchronize.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Exception</strong> – If there is an error during the synchronization process.</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The method does not return a value directly. It performs the necessary synchronization actions.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm">
@@ -270,11 +232,6 @@ It performs the following actions to synchronize the KVM:
 <dd></dd></dl>
 
 </dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="apigee.keyvaluemaps.keyvaluemaps.get_tqdm_kwargs">
-<span class="sig-prename descclassname"><span class="pre">apigee.keyvaluemaps.keyvaluemaps.</span></span><span class="sig-name descname"><span class="pre">get_tqdm_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">desc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.keyvaluemaps.keyvaluemaps.get_tqdm_kwargs" title="Link to this definition"></a></dt>
-<dd></dd></dl>
 
 </section>
 <section id="module-apigee.keyvaluemaps.serializer">
