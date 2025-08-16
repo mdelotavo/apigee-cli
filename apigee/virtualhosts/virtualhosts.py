@@ -10,6 +10,7 @@ UPDATE_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = "{api_url}/v1/o/{org_name}/environ
 
 
 class Virtualhosts:
+
     def __init__(self, auth, org_name, virtualhost_name):
         self.auth = auth
         self.org_name = org_name
@@ -19,10 +20,15 @@ class Virtualhosts:
         uri = self._get_virtual_host_uri(environment)
         return self._get_virtual_hosts_for_environment(uri)
 
-    def list_virtual_hosts_for_an_environment(self, environment, prefix=None, format="json"):
+    def list_virtual_hosts_for_an_environment(self,
+                                              environment,
+                                              prefix=None,
+                                              format="json"):
         uri = self._get_virtual_hosts_uri(environment)
         resp = self._get_virtual_hosts_for_environment(uri)
-        return VirtualhostsSerializer().serialize_details(resp, format, prefix=prefix)
+        return VirtualhostsSerializer().serialize_details(resp,
+                                                          format,
+                                                          prefix=prefix)
 
     def _get_virtual_host_uri(self, environment):
         return GET_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH.format(
@@ -40,7 +46,8 @@ class Virtualhosts:
         )
 
     def _get_virtual_hosts_for_environment(self, uri):
-        headers = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        headers = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         result = requests.get(uri, headers=headers)
         result.raise_for_status()
         return result

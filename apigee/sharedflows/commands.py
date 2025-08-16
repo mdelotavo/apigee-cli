@@ -28,37 +28,47 @@ def _delete_a_shared_flow_revision(
     revision_number,
     **kwargs,
 ):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .delete_a_shared_flow_revision(name, revision_number)
-        .text
-    )
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).delete_a_shared_flow_revision(name, revision_number).text)
 
 
 @sharedflows.command(
-    help="Deletes a revision of a shared flow and all policies, resources, endpoints, and revisions associated with it. The shared flow revision must be undeployed before you can delete it."
+    help=
+    "Deletes a revision of a shared flow and all policies, resources, endpoints, and revisions associated with it. The shared flow revision must be undeployed before you can delete it."
 )
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 def delete_revision(*args, **kwargs):
     console.echo(_delete_a_shared_flow_revision(*args, **kwargs))
 
 
-def _get_a_list_of_shared_flows(
-    username, password, mfa_secret, token, zonename, org, profile, prefix=None, **kwargs
-):
+def _get_a_list_of_shared_flows(username,
+                                password,
+                                mfa_secret,
+                                token,
+                                zonename,
+                                org,
+                                profile,
+                                prefix=None,
+                                **kwargs):
     return Sharedflows(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).get_a_list_of_shared_flows(prefix=prefix)
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).get_a_list_of_shared_flows(prefix=prefix)
 
 
 @sharedflows.command(
-    help="Gets an array of the names of shared flows in the organization. The response is a simple array of strings."
+    help=
+    "Gets an array of the names of shared flows in the organization. The response is a simple array of strings."
 )
 @common_auth_options
 @common_prefix_options
@@ -68,19 +78,18 @@ def list(*args, **kwargs):
     console.echo(_get_a_list_of_shared_flows(*args, **kwargs))
 
 
-def _import_a_shared_flow(
-    username, password, mfa_secret, token, zonename, org, profile, file, name, **kwargs
-):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .import_a_shared_flow(file, name)
-        .text
-    )
+def _import_a_shared_flow(username, password, mfa_secret, token, zonename, org,
+                          profile, file, name, **kwargs):
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).import_a_shared_flow(file, name).text)
 
 
 @sharedflows.command(
     name="import",
-    help="Uploads a ZIP-formatted shared flow configuration bundle from a local machine to an Edge organization. If the shared flow already exists, this creates a new revision of it. If the shared flow does not exist, this creates it. Once imported, the shared flow revision must be deployed before it can be accessed at runtime. By default, shared flow configurations are not validated on import.",
+    help=
+    "Uploads a ZIP-formatted shared flow configuration bundle from a local machine to an Edge organization. If the shared flow already exists, this creates a new revision of it. If the shared flow does not exist, this creates it. Once imported, the shared flow revision must be deployed before it can be accessed at runtime. By default, shared flow configurations are not validated on import.",
 )
 @common_auth_options
 @common_prefix_options
@@ -89,7 +98,10 @@ def _import_a_shared_flow(
 @click.option(
     "-f",
     "--file",
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
+    type=click.Path(exists=True,
+                    dir_okay=False,
+                    file_okay=True,
+                    resolve_path=False),
     required=True,
     help="file path of the shared flow configuration in ZIP format",
 )
@@ -102,19 +114,15 @@ def import_a_shared_flow(*args, **kwargs):
 #     pass
 
 
-def _get_a_shared_flow(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .get_a_shared_flow(name)
-        .text
-    )
+def _get_a_shared_flow(username, password, mfa_secret, token, zonename, org,
+                       profile, name, **kwargs):
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org).get_a_shared_flow(name).text)
 
 
 @sharedflows.command(
-    help="Gets a shared flow by name, including a list of its revisions."
-)
+    help="Gets a shared flow by name, including a list of its revisions.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -139,22 +147,21 @@ def _deploy_a_shared_flow(
     file,
     **kwargs,
 ):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .deploy_a_shared_flow(
-            environment,
-            name,
-            revision_number,
-            override=override,
-            delay=delay,
-            shared_flow_file=file,
-        )
-        .text
-    )
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org).deploy_a_shared_flow(
+                                    environment,
+                                    name,
+                                    revision_number,
+                                    override=override,
+                                    delay=delay,
+                                    shared_flow_file=file,
+                                ).text)
 
 
 @sharedflows.command(
-    help="Deploys a shared flow revision to an environment in an organization. Shared flows cannot be used until they have been deployed to an environment. If you experience HTTP 500 errors during deployment, consider using the override parameter to deploy the shared flow in place of a revision currently deployed. The size limit of a shared flow bundle is 15 MB."
+    help=
+    "Deploys a shared flow revision to an environment in an organization. Shared flows cannot be used until they have been deployed to an environment. If you experience HTTP 500 errors during deployment, consider using the override parameter to deploy the shared flow in place of a revision currently deployed. The size limit of a shared flow bundle is 15 MB."
 )
 @common_auth_options
 @common_prefix_options
@@ -170,22 +177,30 @@ def _deploy_a_shared_flow(
 @optgroup.option(
     "-f",
     "--file",
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
+    type=click.Path(exists=True,
+                    dir_okay=False,
+                    file_okay=True,
+                    resolve_path=False),
     help="file path of the shared flow configuration in ZIP format",
 )
-@optgroup.option("-r", "--revision-number", type=click.INT, help="revision number")
+@optgroup.option("-r",
+                 "--revision-number",
+                 type=click.INT,
+                 help="revision number")
 @click.option(
     "--override/--no-override",
     default=False,
     show_default=True,
-    help='Set this flag to "true" to deploy the shared flow revision in place of the revision currently deployed (also known as "zero downtime" deployment).',
+    help=
+    'Set this flag to "true" to deploy the shared flow revision in place of the revision currently deployed (also known as "zero downtime" deployment).',
 )
 @click.option(
     "--delay",
     type=click.INT,
     default=0,
     show_default=True,
-    help="Enforces a delay, measured in seconds, before the currently deployed API proxy revision is undeployed and replaced by the new revision that is being deployed. Use this setting to minimize the impact of deployment on in-flight transactions. The default value is 0.",
+    help=
+    "Enforces a delay, measured in seconds, before the currently deployed API proxy revision is undeployed and replaced by the new revision that is being deployed. Use this setting to minimize the impact of deployment on in-flight transactions. The default value is 0.",
 )
 def deploy(*args, **kwargs):
     console.echo(_deploy_a_shared_flow(*args, **kwargs))
@@ -204,22 +219,24 @@ def _undeploy_a_shared_flow(
     revision_number,
     **kwargs,
 ):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .undeploy_a_shared_flow(environment, name, revision_number)
-        .text
-    )
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).undeploy_a_shared_flow(environment, name, revision_number).text)
 
 
-@sharedflows.command(help="Undeploys a shared flow revision from an environment.")
+@sharedflows.command(
+    help="Undeploys a shared flow revision from an environment.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
 @click.option("-e", "--environment", help="environment", required=True)
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 def undeploy(*args, **kwargs):
     console.echo(_undeploy_a_shared_flow(*args, **kwargs))
 
@@ -236,25 +253,28 @@ def _get_deployment_environments_for_shared_flows(
     revision_number,
     **kwargs,
 ):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .get_deployment_environments_for_shared_flows(name, revision_number)
-        .text
-    )
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).get_deployment_environments_for_shared_flows(
+            name, revision_number).text)
 
 
 @sharedflows.command(
-    help="Gets an array of the environments to which the shared flow is deployed."
-)
+    help=
+    "Gets an array of the environments to which the shared flow is deployed.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 def get_deployment_environments(*args, **kwargs):
-    console.echo(_get_deployment_environments_for_shared_flows(*args, **kwargs))
+    console.echo(_get_deployment_environments_for_shared_flows(
+        *args, **kwargs))
 
 
 def _delete_undeployed_revisions(
@@ -271,12 +291,16 @@ def _delete_undeployed_revisions(
     **kwargs,
 ):
     return Sharedflows(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).delete_undeployed_revisions(name, save_last=save_last, dry_run=dry_run)
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).delete_undeployed_revisions(name,
+                                         save_last=save_last,
+                                         dry_run=dry_run)
 
 
 @sharedflows.command(
-    help="Deletes all undeployed revisions of a shared flow and all policies, resources, endpoints, and revisions associated with it."
+    help=
+    "Deletes all undeployed revisions of a shared flow and all policies, resources, endpoints, and revisions associated with it."
 )
 @common_auth_options
 @common_verbose_options
@@ -320,35 +344,34 @@ def _get_the_shared_flow_attached_to_a_flow_hook(
     flow_hook,
     **kwargs,
 ):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .get_the_shared_flow_attached_to_a_flow_hook(environment, flow_hook)
-        .text
-    )
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).get_the_shared_flow_attached_to_a_flow_hook(
+            environment, flow_hook).text)
 
 
 @sharedflows.command(
-    help="Returns the name of the shared flow attached to the specified flow hook. If there's no shared flow attached to the flow hook, the API does not return an error; it simply does not return a name in the response. Specify one of these flowhook locations in the API: PreProxyFlowHook, PreTargetFlowHook, PostTargetFlowHook, PostProxyFlowHook."
+    help=
+    "Returns the name of the shared flow attached to the specified flow hook. If there's no shared flow attached to the flow hook, the API does not return an error; it simply does not return a name in the response. Specify one of these flowhook locations in the API: PreProxyFlowHook, PreTargetFlowHook, PostTargetFlowHook, PostProxyFlowHook."
 )
 @common_auth_options
 @common_silent_options
 @common_verbose_options
 @click.option("-e", "--environment", help="environment", required=True)
-@click.option(
-    "--flow-hook", help="flow hook to which the shared flow is attached", required=True
-)
+@click.option("--flow-hook",
+              help="flow hook to which the shared flow is attached",
+              required=True)
 def get_flow_hook(*args, **kwargs):
     console.echo(_get_the_shared_flow_attached_to_a_flow_hook(*args, **kwargs))
 
 
-def _get_shared_flow_deployments(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .get_shared_flow_deployments(name)
-        .text
-    )
+def _get_shared_flow_deployments(username, password, mfa_secret, token,
+                                 zonename, org, profile, name, **kwargs):
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).get_shared_flow_deployments(name).text)
 
 
 @sharedflows.command(help="View all shared flow deployments.")
@@ -360,14 +383,12 @@ def get_deployments(*args, **kwargs):
     console.echo(_get_shared_flow_deployments(*args, **kwargs))
 
 
-def _get_shared_flow_revisions(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .get_shared_flow_revisions(name)
-        .text
-    )
+def _get_shared_flow_revisions(username, password, mfa_secret, token, zonename,
+                               org, profile, name, **kwargs):
+    return (Sharedflows(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).get_shared_flow_revisions(name).text)
 
 
 @sharedflows.command(help="List the revisions of a shared flow.")
@@ -394,29 +415,36 @@ def _export_shared_flow(
     **kwargs,
 ):
     return Sharedflows(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).export_shared_flow(
-        name,
-        revision_number,
-        output_file if output_file else f"{name}.zip",
-        write_to_filesystem=True,
-    )
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).export_shared_flow(
+            name,
+            revision_number,
+            output_file if output_file else f"{name}.zip",
+            write_to_filesystem=True,
+        )
 
 
 @sharedflows.command(
-    help="Outputs a shared flow revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts."
+    help=
+    "Outputs a shared flow revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts."
 )
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 @click.option(
     "-O",
     "--output-file",
-    type=click.Path(exists=False, dir_okay=False, file_okay=True, resolve_path=False),
+    type=click.Path(exists=False,
+                    dir_okay=False,
+                    file_okay=True,
+                    resolve_path=False),
     help="specify output file (defaults to SHARED_FLOW_NAME.zip)",
     default=None,
 )

@@ -14,28 +14,17 @@ def apps():
     pass
 
 
-def _create_developer_app(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    body,
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
-        .create_developer_app(developer, body)
-        .text
-    )
+def _create_developer_app(username, password, mfa_secret, token, zonename, org,
+                          profile, name, developer, body, **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        None).create_developer_app(developer, body).text)
 
 
 @apps.command(
-    help="Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product."
+    help=
+    "Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product."
 )
 @common_auth_options
 @common_verbose_options
@@ -47,23 +36,12 @@ def create(*args, **kwargs):
     console.echo(_create_developer_app(*args, **kwargs))
 
 
-def _delete_developer_app(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .delete_developer_app(developer)
-        .text
-    )
+def _delete_developer_app(username, password, mfa_secret, token, zonename, org,
+                          profile, name, developer, **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).delete_developer_app(developer).text)
 
 
 @apps.command(help="Deletes a developer app.")
@@ -76,27 +54,24 @@ def delete(*args, **kwargs):
     console.echo(_delete_developer_app(*args, **kwargs))
 
 
-def _create_empty_developer_app(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    display_name="",
-    callback_url="",
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .create_empty_developer_app(
-            developer, display_name=display_name, callback_url=callback_url
-        )
-        .text
-    )
+def _create_empty_developer_app(username,
+                                password,
+                                mfa_secret,
+                                token,
+                                zonename,
+                                org,
+                                profile,
+                                name,
+                                developer,
+                                display_name="",
+                                callback_url="",
+                                **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).create_empty_developer_app(developer,
+                                         display_name=display_name,
+                                         callback_url=callback_url).text)
 
 
 @apps.command(help="Creates an empty developer app.")
@@ -108,38 +83,30 @@ def _create_empty_developer_app(
 @click.option(
     "--display-name",
     default=None,
-    help="The DisplayName (set with an attribute) is what appears in the management UI. If you don't provide a DisplayName, the name is used.",
+    help=
+    "The DisplayName (set with an attribute) is what appears in the management UI. If you don't provide a DisplayName, the name is used.",
 )
 @click.option(
     "--callback-url",
     default=None,
-    help="The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps. CallbackUrl must match the value of redirect_uri in some OAuth 2.0 See the documentation on OAuth 2.0 for more details.",
+    help=
+    "The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps. CallbackUrl must match the value of redirect_uri in some OAuth 2.0 See the documentation on OAuth 2.0 for more details.",
 )
 def create_empty(*args, **kwargs):
     console.echo(_create_empty_developer_app(*args, **kwargs))
 
 
-def _get_developer_app_details(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .get_developer_app_details(developer)
-        .text
-    )
+def _get_developer_app_details(username, password, mfa_secret, token, zonename,
+                               org, profile, name, developer, **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).get_developer_app_details(developer).text)
 
 
 @apps.command(
-    help="Get the profile of a specific developer app. All times in the response are UNIX times. Note that the response contains a top-level attribute named accessType that is no longer used by Apigee."
+    help=
+    "Get the profile of a specific developer app. All times in the response are UNIX times. Note that the response contains a top-level attribute named accessType that is no longer used by Apigee."
 )
 @common_auth_options
 @common_verbose_options
@@ -150,37 +117,51 @@ def get(*args, **kwargs):
     console.echo(_get_developer_app_details(*args, **kwargs))
 
 
-def _list_org_apps(
-    username, password, mfa_secret, token, zonename, org, profile, apptype, expand, rows, startkey, status, **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
-        .list_org_apps(apptype, expand, rows, startkey, status)
-        .text
-    )
+def _list_org_apps(username, password, mfa_secret, token, zonename, org,
+                   profile, apptype, expand, rows, startkey, status, **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        None).list_org_apps(apptype, expand, rows, startkey, status).text)
 
 
 @apps.command(help="Lists apps in an organisation.")
 @common_auth_options
 @common_verbose_options
 @common_silent_options
-@click.option("--apptype", default=None, help="The type of the apps that you want to view. The value can be 'company' or 'developer'.")
-@click.option("--expand", is_flag=True, show_default=True, help="Whether to get expanded details for each app.")
-@click.option("--rows", default=None, type=click.INT, help="The number of apps to return.")
-@click.option("--startkey", default=None, help="The ID of the app from which to start displaying the list of apps.")
-@click.option("--status", default=None, help="The status of the apps that you want to view. The value can be 'approved' or 'revoked'.")
+@click.option(
+    "--apptype",
+    default=None,
+    help=
+    "The type of the apps that you want to view. The value can be 'company' or 'developer'."
+)
+@click.option("--expand",
+              is_flag=True,
+              show_default=True,
+              help="Whether to get expanded details for each app.")
+@click.option("--rows",
+              default=None,
+              type=click.INT,
+              help="The number of apps to return.")
+@click.option(
+    "--startkey",
+    default=None,
+    help="The ID of the app from which to start displaying the list of apps.")
+@click.option(
+    "--status",
+    default=None,
+    help=
+    "The status of the apps that you want to view. The value can be 'approved' or 'revoked'."
+)
 def list_org_apps(*args, **kwargs):
     console.echo(_list_org_apps(*args, **kwargs))
 
 
-def _get_org_app(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .get_org_app()
-        .text
-    )
+def _get_org_app(username, password, mfa_secret, token, zonename, org, profile,
+                 name, **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org, name).get_org_app().text)
 
 
 @apps.command(help="Gets an app in an organisation.")
@@ -192,30 +173,32 @@ def get_org_app(*args, **kwargs):
     console.echo(_get_org_app(*args, **kwargs))
 
 
-def _list_developer_apps(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    developer,
-    prefix=None,
-    expand=False,
-    count=1000,
-    startkey="",
-    **kwargs
-):
+def _list_developer_apps(username,
+                         password,
+                         mfa_secret,
+                         token,
+                         zonename,
+                         org,
+                         profile,
+                         developer,
+                         prefix=None,
+                         expand=False,
+                         count=1000,
+                         startkey="",
+                         **kwargs):
     return Apps(
-        generate_authentication(username, password, mfa_secret, token, zonename), org, None
-    ).list_developer_apps(
-        developer, prefix=prefix, expand=expand, count=count, startkey=startkey
-    )
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        None).list_developer_apps(developer,
+                                  prefix=prefix,
+                                  expand=expand,
+                                  count=count,
+                                  startkey=startkey)
 
 
 @apps.command(
-    help="Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer's email address or Edge ID."
+    help=
+    "Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer's email address or Edge ID."
 )
 @common_auth_options
 @common_verbose_options
@@ -225,20 +208,23 @@ def _list_developer_apps(
 @click.option(
     "--expand/--no-expand",
     default=False,
-    help="Set to true to expand the results. This query parameter does not work if you use the count or startKey query parameters.",
+    help=
+    "Set to true to expand the results. This query parameter does not work if you use the count or startKey query parameters.",
 )
 @click.option(
     "--count",
     type=click.INT,
     default=1000,
     show_default=True,
-    help="Limits the list to the number you specify. The limit is 100. Use with the startKey parameter to provide more targeted filtering.",
+    help=
+    "Limits the list to the number you specify. The limit is 100. Use with the startKey parameter to provide more targeted filtering.",
 )
 @click.option(
     "--startkey",
     default="",
     show_default=True,
-    help="To filter the keys that are returned, enter the name of a developer app that the list will start with.",
+    help=
+    "To filter the keys that are returned, enter the name of a developer app that the list will start with.",
 )
 def list(*args, **kwargs):
     console.echo(_list_developer_apps(*args, **kwargs))
@@ -256,24 +242,24 @@ def list(*args, **kwargs):
 #     pass
 
 
-def _delete_key_for_a_developer_app(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    consumer_key=None,
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .delete_key_for_a_developer_app(developer, consumer_key=consumer_key,)
-        .text
-    )
+def _delete_key_for_a_developer_app(username,
+                                    password,
+                                    mfa_secret,
+                                    token,
+                                    zonename,
+                                    org,
+                                    profile,
+                                    name,
+                                    developer,
+                                    consumer_key=None,
+                                    **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).delete_key_for_a_developer_app(
+            developer,
+            consumer_key=consumer_key,
+        ).text)
 
 
 @apps.command(help="Deletes a custom consumer key from a developer app.")
@@ -287,27 +273,26 @@ def delete_creds(*args, **kwargs):
     console.echo(_delete_key_for_a_developer_app(*args, **kwargs))
 
 
-def _update_key_for_a_developer_app(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    consumer_key=None,
-    action="",
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .update_key_for_a_developer_app(
-            developer, consumer_key=consumer_key, action=action,
-        )
-        .text
-    )
+def _update_key_for_a_developer_app(username,
+                                    password,
+                                    mfa_secret,
+                                    token,
+                                    zonename,
+                                    org,
+                                    profile,
+                                    name,
+                                    developer,
+                                    consumer_key=None,
+                                    action="",
+                                    **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).update_key_for_a_developer_app(
+            developer,
+            consumer_key=consumer_key,
+            action=action,
+        ).text)
 
 
 @apps.command(help="Approve a custom consumer key in a developer app.")
@@ -334,28 +319,27 @@ def revoke_creds(*args, **kwargs):
     console.echo(_update_key_for_a_developer_app(*args, **kwargs))
 
 
-def _create_a_consumer_key_and_secret(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    consumer_key=None,
-    consumer_secret=None,
-    key_length=32,
-    secret_length=32,
-    key_suffix=None,
-    key_delimiter="-",
-    products=[],
-    **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .create_a_consumer_key_and_secret(
+def _create_a_consumer_key_and_secret(username,
+                                      password,
+                                      mfa_secret,
+                                      token,
+                                      zonename,
+                                      org,
+                                      profile,
+                                      name,
+                                      developer,
+                                      consumer_key=None,
+                                      consumer_secret=None,
+                                      key_length=32,
+                                      secret_length=32,
+                                      key_suffix=None,
+                                      key_delimiter="-",
+                                      products=[],
+                                      **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).create_a_consumer_key_and_secret(
             developer,
             consumer_key=consumer_key,
             consumer_secret=consumer_secret,
@@ -364,13 +348,12 @@ def _create_a_consumer_key_and_secret(
             key_suffix=key_suffix,
             key_delimiter=key_delimiter,
             products=products,
-        )
-        .text
-    )
+        ).text)
 
 
 @apps.command(
-    help="Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed."
+    help=
+    "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed."
 )
 @common_auth_options
 @common_verbose_options
@@ -434,14 +417,12 @@ def create_creds(*args, **kwargs):
 #     pass
 
 
-def _restore_app(
-    username, password, mfa_secret, token, zonename, org, profile, file, **kwargs
-):
-    return (
-        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
-        .restore_and_update_app_details(file)
-        .text
-    )
+def _restore_app(username, password, mfa_secret, token, zonename, org, profile,
+                 file, **kwargs):
+    return (Apps(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        None).restore_and_update_app_details(file).text)
 
 
 @apps.command(help="Restore developer app from a file.")
@@ -451,7 +432,10 @@ def _restore_app(
 @click.option(
     "-f",
     "--file",
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
+    type=click.Path(exists=True,
+                    dir_okay=False,
+                    file_okay=True,
+                    resolve_path=False),
     required=True,
 )
 def restore(*args, **kwargs):

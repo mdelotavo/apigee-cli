@@ -13,24 +13,24 @@ def references():
     pass
 
 
-def _list_all_references(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    environment,
-    prefix=None,
-    **kwargs
-):
+def _list_all_references(username,
+                         password,
+                         mfa_secret,
+                         token,
+                         zonename,
+                         org,
+                         profile,
+                         environment,
+                         prefix=None,
+                         **kwargs):
     return References(
-        generate_authentication(username, password, mfa_secret, token, zonename), org, None
-    ).list_all_references(environment, prefix=prefix)
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        None).list_all_references(environment, prefix=prefix)
 
 
-@references.command(help="List all references in an organization and environment.")
+@references.command(
+    help="List all references in an organization and environment.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
@@ -40,23 +40,12 @@ def list(*args, **kwargs):
     console.echo(_list_all_references(*args, **kwargs))
 
 
-def _get_reference(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    **kwargs
-):
-    return (
-        References(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
-        .get_reference(environment)
-        .text
-    )
+def _get_reference(username, password, mfa_secret, token, zonename, org,
+                   profile, name, environment, **kwargs):
+    return (References(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).get_reference(environment).text)
 
 
 @references.command(help="Get reference in an organization and environment.")

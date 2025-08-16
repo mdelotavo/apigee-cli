@@ -5,7 +5,8 @@ from functools import update_wrapper
 
 import click
 
-from apigee import (APIGEE_CLI_EXCEPTIONS_LOG_FILE, APIGEE_CLI_PLUGINS_DIRECTORY, CMD)
+from apigee import (APIGEE_CLI_EXCEPTIONS_LOG_FILE,
+                    APIGEE_CLI_PLUGINS_DIRECTORY, CMD)
 from apigee import __version__ as version
 from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
@@ -27,11 +28,11 @@ from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
-from apigee.utils import (import_plugins_from_directory, execute_function_on_directory_files)
+from apigee.utils import (import_plugins_from_directory,
+                          execute_function_on_directory_files)
 from apigee.virtualhosts.commands import virtualhosts
 
 # from click_aliases import ClickAliasedGroup
-
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
@@ -89,7 +90,7 @@ def main():
     execute_function_on_directory_files(
         APIGEE_CLI_PLUGINS_DIRECTORY,
         import_plugins_from_directory,
-        args=(cli_commands,),
+        args=(cli_commands, ),
         glob="[!.][!__]*/__init__.py",
     )
 

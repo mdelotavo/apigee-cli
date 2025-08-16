@@ -2,6 +2,7 @@ import json
 
 
 class AppsSerializer:
+
     def serialize_details(self, apps, format, prefix=None):
         resp = apps
         if format == "text":

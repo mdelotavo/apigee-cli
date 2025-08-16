@@ -21,6 +21,7 @@ UPDATE_KEY_FOR_A_DEVELOPER_APP_PATH = "{api_url}/v1/organizations/{org}/develope
 
 
 class Apps:
+
     def __init__(self, auth, org_name, app_name):
         self.auth = auth
         self.org_name = org_name
@@ -36,7 +37,10 @@ class Apps:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -62,14 +66,17 @@ class Apps:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
+
         # app = self.get_developer_app_details(developer)
         def _rand(length):
-            return "".join(
-                random.SystemRandom().choice(string.ascii_letters + string.digits)
-                for _ in range(length)
-            )
+            return "".join(random.SystemRandom().choice(string.ascii_letters +
+                                                        string.digits)
+                           for _ in range(length))
 
         if not consumer_key:
             consumer_key = _rand(key_length)
@@ -84,41 +91,56 @@ class Apps:
         if products:
             console.echo(resp.text)
             consumer_key = resp.json()["consumerKey"]
-            request_body = json.dumps(
-                {"apiProducts": products, "attributes": resp.json()["attributes"]}
-            )
+            request_body = json.dumps({
+                "apiProducts": products,
+                "attributes": resp.json()["attributes"]
+            })
             console.echo(
                 f"Adding API Products {products} to consumerKey {consumer_key}"
             )
-            return self.add_api_product_to_key(developer, consumer_key, request_body)
+            return self.add_api_product_to_key(developer, consumer_key,
+                                               request_body)
         return resp
 
     def create_developer_app(self, developer, request_body):
         # sourcery skip: class-extract-method
-        uri = CREATE_DEVELOPER_APP_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, developer=developer
-        )
+        uri = CREATE_DEVELOPER_APP_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                               org=self.org_name,
+                                               developer=developer)
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def create_empty_developer_app(self, developer, display_name="", callback_url=""):
+    def create_empty_developer_app(self,
+                                   developer,
+                                   display_name="",
+                                   callback_url=""):
         uri = CREATE_EMPTY_DEVELOPER_APP_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, developer=developer
-        )
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            developer=developer)
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = {
             "name": self.app_name,
             # "apiProducts": args.products,
-            "attributes": [{"name": "DisplayName", "value": display_name}],
+            "attributes": [{
+                "name": "DisplayName",
+                "value": display_name
+            }],
             # "scopes" : args.scopes,
             "callbackUrl": callback_url,
         }
@@ -130,8 +152,8 @@ class Apps:
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         self.delete_key_for_a_developer_app(
-            developer, resp.json()["credentials"][0]["consumerKey"]
-        )
+            developer,
+            resp.json()["credentials"][0]["consumerKey"])
         return self.get_developer_app_details(developer)
 
     def delete_developer_app(self, developer):
@@ -141,7 +163,8 @@ class Apps:
             developer=developer,
             name=self.app_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -154,7 +177,8 @@ class Apps:
             name=self.app_name,
             consumer_key=consumer_key,
         )
-        hdrs = auth.set_authentication_headers(self.auth, {"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(self.auth,
+                                               {"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -166,16 +190,20 @@ class Apps:
             developer=developer,
             name=self.app_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def get_org_app(self):
         uri = GET_ORGANIZATION_APP_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, name=self.app_name,
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            name=self.app_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -191,7 +219,8 @@ class Apps:
         progress_bar=False,
     ):
         return {
-            developer: self.list_developer_apps(
+            developer:
+            self.list_developer_apps(
                 developer,
                 prefix=prefix,
                 expand=expand,
@@ -211,18 +240,20 @@ class Apps:
         startkey="",
         format="json",
     ):
-        uri = LIST_DEVELOPER_APPS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, developer=developer
-        )
+        uri = LIST_DEVELOPER_APPS_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                              org=self.org_name,
+                                              developer=developer)
         uri += f"?expand={expand}" if expand else f"?count={count}&startKey={startkey}"
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return AppsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def list_org_apps(self, apptype, expand, rows, startkey, status):
         uri = LIST_ORGANIZATION_APPS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name,
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
         )
 
         params = {}
@@ -237,7 +268,8 @@ class Apps:
         if status:
             params['status'] = status
 
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs, params=params)
         resp.raise_for_status()
         return resp
@@ -246,18 +278,24 @@ class Apps:
         with open(file, "r") as f:
             app = json.loads(f.read())
         self.app_name = app["name"]
-        request_body = {"name": app["name"], "attributes": app.get("attributes")}
+        request_body = {
+            "name": app["name"],
+            "attributes": app.get("attributes")
+        }
         request_body["scopes"] = app.get("scopes")
         request_body["callbackUrl"] = app.get("callbackUrl")
         request_body = {k: v for k, v in request_body.items() if v}
-        resp = self.create_developer_app(app["developerId"], json.dumps(request_body))
+        resp = self.create_developer_app(app["developerId"],
+                                         json.dumps(request_body))
         consumer_key = resp.json()["credentials"][0]["consumerKey"]
         self.delete_key_for_a_developer_app(app["developerId"], consumer_key)
         if app["credentials"]:
             for cred in app["credentials"]:
                 consumer_key = cred["consumerKey"]
                 consumer_secret = cred["consumerSecret"]
-                products = [product["apiproduct"] for product in cred["apiProducts"]]
+                products = [
+                    product["apiproduct"] for product in cred["apiProducts"]
+                ]
                 resp = self.create_a_consumer_key_and_secret(
                     app["developerId"],
                     consumer_key=consumer_key,
@@ -276,7 +314,8 @@ class Apps:
         )
         uri += f"?action={action}"
 
-        hdrs = auth.set_authentication_headers(self.auth, {"Content-Type": "application/octet-stream"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, {"Content-Type": "application/octet-stream"})
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
         return resp

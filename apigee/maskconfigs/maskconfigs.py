@@ -14,6 +14,7 @@ LIST_DATA_MASKS_FOR_AN_ORGANIZATION_PATH = "{api_url}/v1/organizations/{org}/mas
 
 
 class Maskconfigs:
+
     def __init__(self, auth, org_name, api_name):
         self.auth = auth
         self.org_name = org_name
@@ -21,11 +22,15 @@ class Maskconfigs:
 
     def create_data_masks_for_an_api_proxy(self, request_body):
         uri = CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, api_name=self.api_name
-        )
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            api_name=self.api_name)
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -39,7 +44,8 @@ class Maskconfigs:
             api_name=self.api_name,
             maskconfig_name=maskconfig_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -55,20 +61,19 @@ class Maskconfigs:
 
     def list_data_masks_for_an_api_proxy(self):
         uri = LIST_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, api_name=self.api_name
-        )
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            api_name=self.api_name)
         return self.fetch_data_masks_for_organization(uri)
 
     def list_data_masks_for_an_organization(self):
         uri = LIST_DATA_MASKS_FOR_AN_ORGANIZATION_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name
-        )
+            api_url=APIGEE_ADMIN_API_URL, org=self.org_name)
         return self.fetch_data_masks_for_organization(uri)
 
     def fetch_data_masks_for_organization(self, uri):
         hdrs = auth.set_authentication_headers(
-            self.auth, custom_headers={"Accept": "application/json"}
-        )
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -80,12 +85,12 @@ class Maskconfigs:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)
             console.echo(f"Updating {maskconfig_name} for {self.api_name}")
             console.echo(
-                self.create_data_masks_for_an_api_proxy(json.dumps(maskconfig)).text
-            )
+                self.create_data_masks_for_an_api_proxy(
+                    json.dumps(maskconfig)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f"Creating {maskconfig_name} for {self.api_name}")
             console.echo(
-                self.create_data_masks_for_an_api_proxy(json.dumps(maskconfig)).text
-            )
+                self.create_data_masks_for_an_api_proxy(
+                    json.dumps(maskconfig)).text)

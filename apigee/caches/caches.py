@@ -17,6 +17,7 @@ DELETE_A_CACHE_PATH = "{api_url}/v1/organizations/{org}/environments/{environmen
 
 
 class Caches:
+
     def __init__(self, auth, org_name, cache_name):
         self.auth = auth
         self.org_name = org_name
@@ -69,7 +70,10 @@ class Caches:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -83,7 +87,8 @@ class Caches:
             environment=environment,
             name=self.cache_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -95,19 +100,27 @@ class Caches:
             environment=environment,
             name=self.cache_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_caches_in_an_environment(self, environment, prefix=None, format="json"):
+    def list_caches_in_an_environment(self,
+                                      environment,
+                                      prefix=None,
+                                      format="json"):
         uri = LIST_CACHES_IN_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, environment=environment
-        )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            environment=environment)
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return CachesSerializer().serialize_details(resp, format, prefix=prefix)
+        return CachesSerializer().serialize_details(resp,
+                                                    format,
+                                                    prefix=prefix)
 
     def push_cache(self, environment, file):
         cache = read_file_content(file, type="json")
@@ -116,19 +129,15 @@ class Caches:
             self.get_information_about_a_cache(environment)
             console.echo(f"Updating {self.cache_name}")
             console.echo(
-                self.update_a_cache_in_an_environment(
-                    environment, json.dumps(cache)
-                ).text
-            )
+                self.update_a_cache_in_an_environment(environment,
+                                                      json.dumps(cache)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f"Creating {self.cache_name}")
             console.echo(
-                self.create_a_cache_in_an_environment(
-                    environment, json.dumps(cache)
-                ).text
-            )
+                self.create_a_cache_in_an_environment(environment,
+                                                      json.dumps(cache)).text)
 
     def update_a_cache_in_an_environment(self, environment, request_body):
         uri = UPDATE_A_CACHE_IN_AN_ENVIRONMENT_PATH.format(
@@ -139,7 +148,10 @@ class Caches:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)

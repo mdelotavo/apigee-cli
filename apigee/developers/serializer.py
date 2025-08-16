@@ -2,6 +2,7 @@ import json
 
 
 class DevelopersSerializer:
+
     def serialize_details(self, developers, format, prefix=None):
         resp = developers
         if format == "text":
@@ -9,7 +10,8 @@ class DevelopersSerializer:
         developers = developers.json()
         if prefix:
             developers = [
-                developer for developer in developers if developer.startswith(prefix)
+                developer for developer in developers
+                if developer.startswith(prefix)
             ]
         if format == "dict":
             return developers

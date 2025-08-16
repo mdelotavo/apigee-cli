@@ -5,6 +5,7 @@ from pathlib import Path
 # references to the python standard library. Any other dependencies can cause the installation to fail,
 # as those libraries may not be available prior to installation.
 
+
 def join_path_components(*components):
     if not components:
         return
@@ -16,6 +17,6 @@ def join_path_components(*components):
             path /= component
     return str(path)
 
+
 def is_truthy_envvar(value):
     return value in (True, "True", "true", "1")
-

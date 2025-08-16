@@ -19,7 +19,8 @@ from apigee.permissions.permissions import Permissions
 from apigee.targetservers.targetservers import Targetservers
 from apigee.types import APIGEE_API_CHOICES, empty_snapshot, Struct
 from apigee.userroles.userroles import Userroles
-from apigee.utils import (extract_zip_file, filter_out_empty_values, get_resolved_directory_path, write_content_to_file)
+from apigee.utils import (extract_zip_file, filter_out_empty_values,
+                          get_resolved_directory_path, write_content_to_file)
 
 APIS_SNAPSHOT_TARGET_SUBPATH = "snapshots/apis/{api}.json"
 # APIS_TARGET_SUBPATH = 'apis/{api}/revision/{api}.zip'
@@ -55,18 +56,22 @@ class BackupConfig:
 
     def __post_init__(self):
         if not isinstance(self.api_choices, set):
-            self.api_choices = set(self.api_choices) if self.api_choices else APIGEE_API_CHOICES
+            self.api_choices = set(
+                self.api_choices) if self.api_choices else APIGEE_API_CHOICES
 
         self.api_choices = sorted(self.api_choices)
-        
+
         if self.environments is None:
             self.environments = []
-        
-        self.working_directory = get_resolved_directory_path(self.working_directory)
-        self.working_org_directory = Path(self.working_directory) / self.org_name
+
+        self.working_directory = get_resolved_directory_path(
+            self.working_directory)
+        self.working_org_directory = Path(
+            self.working_directory) / self.org_name
 
 
 class Backups:
+
     def __init__(self, config: BackupConfig):
         self.backupConfig = config
 
@@ -76,13 +81,16 @@ class Backups:
             if data == "apis":
                 total_size += len(self.backupConfig.snapshot_data.apis)
             elif data in ("keyvaluemaps", "targetservers", "caches"):
-                for _, environment_data in self.backupConfig.snapshot_data.__dict__[data].items():
+                for _, environment_data in self.backupConfig.snapshot_data.__dict__[
+                        data].items():
                     total_size += len(environment_data)
             elif data == "apps":
                 for _, apps in self.backupConfig.snapshot_data.apps.items():
                     total_size += len(apps)
-            elif isinstance(self.backupConfig.snapshot_data.__dict__[data], list):
-                total_size += len(self.backupConfig.snapshot_data.__dict__[data])
+            elif isinstance(self.backupConfig.snapshot_data.__dict__[data],
+                            list):
+                total_size += len(
+                    self.backupConfig.snapshot_data.__dict__[data])
         return total_size
 
     # GET (list) items from Apigee and write to files
@@ -130,7 +138,8 @@ class Backups:
     # write configs to file
 
     def save_content_to_file(self, content, subpath):
-        fullpath = self.get_full_path(self.backupConfig.working_org_directory, subpath)
+        fullpath = self.get_full_path(self.backupConfig.working_org_directory,
+                                      subpath)
         write_content_to_file(content, fullpath, indentation=2)
 
     def get_full_path(self, working_org_directory, subpath):
@@ -166,30 +175,28 @@ class Backups:
 
     def create_apis_snapshot(self):
         api_proxies = self.list_api_proxies()
-        self.backupConfig.snapshot_data.apis = self.get_api_details(api_proxies)
+        self.backupConfig.snapshot_data.apis = self.get_api_details(
+            api_proxies)
         self.save_apis_snapshot()
 
     def list_api_proxies(self):
-        return Apis(
-            self.backupConfig.authentication, self.backupConfig.org_name
-        ).list_api_proxies(prefix=self.backupConfig.prefix, format="dict")
+        return Apis(self.backupConfig.authentication,
+                    self.backupConfig.org_name).list_api_proxies(
+                        prefix=self.backupConfig.prefix, format="dict")
 
     def get_api_details(self, api_proxies):
         apis = {}
         for api in api_proxies:
             api_details = Apis(
                 self.backupConfig.authentication,
-                self.backupConfig.org_name
-            ).get_api_proxy(api).json()
+                self.backupConfig.org_name).get_api_proxy(api).json()
             apis[api] = api_details
         return apis
 
     def save_apis_snapshot(self):
         for api, content in self.backupConfig.snapshot_data.apis.items():
             path = APIS_SNAPSHOT_TARGET_SUBPATH.format(
-                org_path=self.backupConfig.working_org_directory,
-                api=api
-            )
+                org_path=self.backupConfig.working_org_directory, api=api)
             self.save_content_to_file(content, path)
 
     # apiproducts
@@ -200,9 +207,9 @@ class Backups:
         self.save_apiproducts_snapshot()
 
     def list_api_products(self):
-        return Apiproducts(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_api_products(prefix=self.backupConfig.prefix, format="dict")
+        return Apiproducts(self.backupConfig.authentication,
+                           self.backupConfig.org_name, None).list_api_products(
+                               prefix=self.backupConfig.prefix, format="dict")
 
     def save_apiproducts_snapshot(self):
         content = self.backupConfig.snapshot_data.apiproducts
@@ -211,37 +218,41 @@ class Backups:
     # apps
 
     def create_apps_snapshot(self, expand=False, count=1000, startkey=""):
-        developers = self.list_all_developers(expand=expand, count=count, startkey=startkey)
-        self.backupConfig.snapshot_data.apps = self.list_apps_for_developers(developers)
-        self.backupConfig.snapshot_data.apps = self.filter_empty_values(self.backupConfig.snapshot_data.apps)
+        developers = self.list_all_developers(expand=expand,
+                                              count=count,
+                                              startkey=startkey)
+        self.backupConfig.snapshot_data.apps = self.list_apps_for_developers(
+            developers)
+        self.backupConfig.snapshot_data.apps = self.filter_empty_values(
+            self.backupConfig.snapshot_data.apps)
         self.save_apps_snapshot()
 
     def list_all_developers(self, expand=False, count=1000, startkey=""):
-        return Developers(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_developers(
-            prefix=None,
-            expand=expand,
-            count=count,
-            startkey=startkey,
-            format="dict",
-        )
+        return Developers(self.backupConfig.authentication,
+                          self.backupConfig.org_name, None).list_developers(
+                              prefix=None,
+                              expand=expand,
+                              count=count,
+                              startkey=startkey,
+                              format="dict",
+                          )
 
     def list_apps_for_developers(self, developers):
-        return Apps(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_apps_for_all_developers(
-            developers,
-            prefix=self.backupConfig.prefix,
-            format="dict",
-        )
+        return Apps(self.backupConfig.authentication,
+                    self.backupConfig.org_name,
+                    None).list_apps_for_all_developers(
+                        developers,
+                        prefix=self.backupConfig.prefix,
+                        format="dict",
+                    )
 
     def filter_empty_values(self, apps):
         return filter_out_empty_values(apps)
 
     def save_apps_snapshot(self):
         for app_name, details in self.backupConfig.snapshot_data.apps.items():
-            self.save_content_to_file(details, APPS_SNAPSHOT_TARGET_SUBPATH.format(app=app_name))
+            self.save_content_to_file(
+                details, APPS_SNAPSHOT_TARGET_SUBPATH.format(app=app_name))
 
     # caches
 
@@ -252,11 +263,12 @@ class Backups:
             self.save_caches_snapshot(environment)
 
     def list_caches_in_environment(self, environment):
-        return Caches(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_caches_in_an_environment(
-            environment, prefix=self.backupConfig.prefix, format="dict"
-        )
+        return Caches(self.backupConfig.authentication,
+                      self.backupConfig.org_name,
+                      None).list_caches_in_an_environment(
+                          environment,
+                          prefix=self.backupConfig.prefix,
+                          format="dict")
 
     def save_caches_snapshot(self, environment):
         content = self.backupConfig.snapshot_data.caches[environment]
@@ -267,8 +279,9 @@ class Backups:
 
     def create_developers_snapshot(self):
         self.backupConfig.snapshot_data.developers = Developers(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_developers(prefix=self.backupConfig.prefix, format="dict")
+            self.backupConfig.authentication, self.backupConfig.org_name,
+            None).list_developers(prefix=self.backupConfig.prefix,
+                                  format="dict")
         content = self.backupConfig.snapshot_data.developers
         self.save_content_to_file(content, DEVELOPERS_SNAPSHOT_TARGET_SUBPATH)
 
@@ -277,19 +290,22 @@ class Backups:
     def create_keyvaluemaps_snapshot(self):
         for environment in self.backupConfig.environments:
             keyvaluemaps = self.list_keyvaluemaps_in_environment(environment)
-            self.backupConfig.snapshot_data.keyvaluemaps[environment] = keyvaluemaps
+            self.backupConfig.snapshot_data.keyvaluemaps[
+                environment] = keyvaluemaps
             self.save_keyvaluemaps_snapshot(environment)
 
     def list_keyvaluemaps_in_environment(self, environment):
-        return Keyvaluemaps(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_keyvaluemaps_in_an_environment(
-            environment, prefix=self.backupConfig.prefix, format="dict"
-        )
+        return Keyvaluemaps(self.backupConfig.authentication,
+                            self.backupConfig.org_name,
+                            None).list_keyvaluemaps_in_an_environment(
+                                environment,
+                                prefix=self.backupConfig.prefix,
+                                format="dict")
 
     def save_keyvaluemaps_snapshot(self, environment):
         content = self.backupConfig.snapshot_data.keyvaluemaps[environment]
-        path = KEYVALUEMAPS_SNAPSHOT_TARGET_SUBPATH.format(environment=environment)
+        path = KEYVALUEMAPS_SNAPSHOT_TARGET_SUBPATH.format(
+            environment=environment)
         self.save_content_to_file(content, path)
 
     # targetservers
@@ -297,19 +313,22 @@ class Backups:
     def create_targetservers_snapshot(self):
         for environment in self.backupConfig.environments:
             targetservers = self.list_targetservers_in_environment(environment)
-            self.backupConfig.snapshot_data.targetservers[environment] = targetservers
+            self.backupConfig.snapshot_data.targetservers[
+                environment] = targetservers
             self.save_targetservers_snapshot(environment)
 
     def list_targetservers_in_environment(self, environment):
-        return Targetservers(
-            self.backupConfig.authentication, self.backupConfig.org_name, None
-        ).list_targetservers_in_an_environment(
-            environment, prefix=self.backupConfig.prefix, format="dict"
-        )
+        return Targetservers(self.backupConfig.authentication,
+                             self.backupConfig.org_name,
+                             None).list_targetservers_in_an_environment(
+                                 environment,
+                                 prefix=self.backupConfig.prefix,
+                                 format="dict")
 
     def save_targetservers_snapshot(self, environment):
         content = self.backupConfig.snapshot_data.targetservers[environment]
-        path = TARGETSERVERS_SNAPSHOT_TARGET_SUBPATH.format(environment=environment)
+        path = TARGETSERVERS_SNAPSHOT_TARGET_SUBPATH.format(
+            environment=environment)
         self.save_content_to_file(content, path)
 
     # userroles
@@ -321,29 +340,19 @@ class Backups:
         self.save_userroles_snapshot()
 
     def list_user_roles(self):
-        return (
-            Userroles(
-                self.backupConfig.authentication, self.backupConfig.org_name, None
-            )
-            .list_user_roles()
-            .json()
-        )
+        return (Userroles(self.backupConfig.authentication,
+                          self.backupConfig.org_name,
+                          None).list_user_roles().json())
 
     def filter_userroles(self, userroles):
-        return (
-            [
-                role
-                for role in userroles
-                if role.startswith(self.backupConfig.prefix)
-            ]
-            if self.backupConfig.prefix
-            else userroles
-        )
+        return ([
+            role for role in userroles
+            if role.startswith(self.backupConfig.prefix)
+        ] if self.backupConfig.prefix else userroles)
 
     def save_userroles_snapshot(self):
         content = self.backupConfig.snapshot_data.userroles
         self.save_content_to_file(content, USERROLES_SNAPSHOT_TARGET_SUBPATH)
-
 
     # apis
 
@@ -353,37 +362,34 @@ class Backups:
                 output_file = self.get_output_file_path(api, revision)
                 work_dir = os.path.dirname(output_file)
                 try:
-                    self.export_and_extract_api(api, revision, output_file, work_dir)
+                    self.export_and_extract_api(api, revision, output_file,
+                                                work_dir)
                 except HTTPError as e:
                     self.handle_api_export_error(e, api, revision)
                 except Exception as e:
-                    self.handle_general_exception(type(e).__name__, api, revision)
+                    self.handle_general_exception(
+                        type(e).__name__, api, revision)
             self.update_progress_bar(description="APIs")
 
     def get_output_file_path(self, api, revision):
         return str(
-            Path(self.backupConfig.working_org_directory)
-            / "apis"
-            / api
-            / revision
-            / f"{api}.zip"
-        )
+            Path(self.backupConfig.working_org_directory) / "apis" / api /
+            revision / f"{api}.zip")
 
     def export_and_extract_api(self, api, revision, output_file, work_dir):
-        Apis(
-            self.backupConfig.authentication,
-            self.backupConfig.org_name
-        ).export_api_proxy(
-            api,
-            revision,
-            write_to_filesystem=True,
-            output_file=output_file
-        )
+        Apis(self.backupConfig.authentication,
+             self.backupConfig.org_name).export_api_proxy(
+                 api,
+                 revision,
+                 write_to_filesystem=True,
+                 output_file=output_file)
         extract_zip_file(output_file, work_dir)
         os.remove(output_file)
 
     def handle_api_export_error(self, error, api, revision):
-        log_and_echo_http_error(error, append_message=f" for API Proxy ({api}, revision {revision})")
+        log_and_echo_http_error(
+            error,
+            append_message=f" for API Proxy ({api}, revision {revision})")
 
     # apiproducts
 
@@ -400,22 +406,17 @@ class Backups:
             self.update_progress_bar(description="API Products")
 
     def get_apiproduct_content(self, apiproduct):
-        content = (
-            Apiproducts(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                apiproduct
-            )
-            .get_api_product()
-            .text
-        )
+        content = (Apiproducts(self.backupConfig.authentication,
+                               self.backupConfig.org_name,
+                               apiproduct).get_api_product().text)
         return content
 
     def get_apiproduct_path(self, apiproduct):
         return APIPRODUCTS_TARGET_SUBPATH.format(apiproduct=apiproduct)
 
     def handle_apiproduct_download_error(self, error, apiproduct):
-        log_and_echo_http_error(error, append_message=f" for API Product ({apiproduct})")
+        log_and_echo_http_error(
+            error, append_message=f" for API Product ({apiproduct})")
 
     # apps
 
@@ -433,22 +434,17 @@ class Backups:
                 self.update_progress_bar(description="Developer Apps")
 
     def get_developer_app_details(self, developer, app):
-        content = (
-            Apps(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                app
-            )
-            .get_developer_app_details(developer)
-            .text
-        )
+        content = (Apps(self.backupConfig.authentication,
+                        self.backupConfig.org_name,
+                        app).get_developer_app_details(developer).text)
         return content
 
     def get_app_path(self, developer, app):
         return APPS_TARGET_SUBPATH.format(developer=developer, app=app)
 
     def handle_app_download_error(self, error, app):
-        log_and_echo_http_error(error, append_message=f" for Developer App ({app})")
+        log_and_echo_http_error(error,
+                                append_message=f" for Developer App ({app})")
 
     def handle_general_exception(self, error, *args):
         console.echo(type(error).__name__, *args)
@@ -470,19 +466,14 @@ class Backups:
                 self.update_progress_bar(description="Caches")
 
     def get_cache_information(self, environment, cache):
-        content = (
-            Caches(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                cache
-            )
-            .get_information_about_a_cache(environment)
-            .text
-        )
+        content = (Caches(
+            self.backupConfig.authentication, self.backupConfig.org_name,
+            cache).get_information_about_a_cache(environment).text)
         return content
 
     def get_cache_path(self, environment, cache):
-        return CACHES_TARGET_SUBPATH.format(environment=environment, cache=cache)
+        return CACHES_TARGET_SUBPATH.format(environment=environment,
+                                            cache=cache)
 
     def handle_cache_download_error(self, error, cache):
         log_and_echo_http_error(error, append_message=f" for Cache ({cache})")
@@ -502,28 +493,24 @@ class Backups:
             self.update_progress_bar(description="Developers")
 
     def get_developer_details(self, developer):
-        content = (
-            Developers(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                developer
-            )
-            .get_developer()
-            .text
-        )
+        content = (Developers(self.backupConfig.authentication,
+                              self.backupConfig.org_name,
+                              developer).get_developer().text)
         return content
 
     def get_developer_path(self, developer):
         return DEVELOPERS_TARGET_SUBPATH.format(developer=developer)
 
     def handle_developer_download_error(self, error, developer):
-        log_and_echo_http_error(error, append_message=f" for Developer ({developer})")
+        log_and_echo_http_error(error,
+                                append_message=f" for Developer ({developer})")
 
     # keyvaluemaps
 
     def download_and_save_keyvaluemaps(self):
         for environment in self.backupConfig.environments:
-            keyvaluemaps = self.backupConfig.snapshot_data.keyvaluemaps[environment]
+            keyvaluemaps = self.backupConfig.snapshot_data.keyvaluemaps[
+                environment]
             for kvm in keyvaluemaps:
                 try:
                     content = self.get_keyvaluemap_content(environment, kvm)
@@ -536,19 +523,14 @@ class Backups:
                 self.update_progress_bar(description="KeyValueMaps")
 
     def get_keyvaluemap_content(self, environment, kvm):
-        content = (
-            Keyvaluemaps(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                kvm
-            )
-            .get_keyvaluemap_in_an_environment(environment)
-            .text
-        )
+        content = (Keyvaluemaps(
+            self.backupConfig.authentication, self.backupConfig.org_name,
+            kvm).get_keyvaluemap_in_an_environment(environment).text)
         return content
 
     def get_keyvaluemap_path(self, environment, kvm):
-        return KEYVALUEMAPS_TARGET_SUBPATH.format(environment=environment, kvm=kvm)
+        return KEYVALUEMAPS_TARGET_SUBPATH.format(environment=environment,
+                                                  kvm=kvm)
 
     def handle_keyvaluemap_download_error(self, error, kvm):
         log_and_echo_http_error(error, append_message=f" for KVM ({kvm})")
@@ -557,11 +539,14 @@ class Backups:
 
     def download_and_save_targetservers(self):
         for environment in self.backupConfig.environments:
-            targetservers = self.backupConfig.snapshot_data.targetservers[environment]
+            targetservers = self.backupConfig.snapshot_data.targetservers[
+                environment]
             for targetserver in targetservers:
                 try:
-                    content = self.get_targetserver_content(environment, targetserver)
-                    path = self.get_targetserver_path(environment, targetserver)
+                    content = self.get_targetserver_content(
+                        environment, targetserver)
+                    path = self.get_targetserver_path(environment,
+                                                      targetserver)
                     self.save_content_to_file(content, path)
                 except HTTPError as e:
                     self.handle_targetserver_download_error(e, targetserver)
@@ -570,24 +555,18 @@ class Backups:
                 self.update_progress_bar(description="TargetServers")
 
     def get_targetserver_content(self, environment, targetserver):
-        content = (
-            Targetservers(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                targetserver
-            )
-            .get_targetserver(environment)
-            .text
-        )
+        content = (Targetservers(
+            self.backupConfig.authentication, self.backupConfig.org_name,
+            targetserver).get_targetserver(environment).text)
         return content
 
     def get_targetserver_path(self, environment, targetserver):
-        return TARGETSERVERS_TARGET_SUBPATH.format(
-            environment=environment, targetserver=targetserver
-        )
+        return TARGETSERVERS_TARGET_SUBPATH.format(environment=environment,
+                                                   targetserver=targetserver)
 
     def handle_targetserver_download_error(self, error, targetserver):
-        log_and_echo_http_error(error, append_message=f" for TargetServer ({targetserver})")
+        log_and_echo_http_error(
+            error, append_message=f" for TargetServer ({targetserver})")
 
     # userroles
 
@@ -596,15 +575,20 @@ class Backups:
             try:
                 self.backupConfig.download_users_for_a_role(role_name)
             except HTTPError as e:
-                log_and_echo_http_error(e, append_message=" for User Role ({role_name}) users")
+                log_and_echo_http_error(
+                    e, append_message=" for User Role ({role_name}) users")
             except Exception as e:
                 self.handle_general_exception(e, role_name)
             try:
                 self.backupConfig.download_resource_permissions(role_name)
             except HTTPError as e:
-                log_and_echo_http_error(e, append_message=" for User Role ({role_name}) resource permissions")  
+                log_and_echo_http_error(
+                    e,
+                    append_message=
+                    " for User Role ({role_name}) resource permissions")
             except Exception as e:
-                self.handle_general_exception(e, role_name, "(resource permissions)")
+                self.handle_general_exception(e, role_name,
+                                              "(resource permissions)")
             self.update_progress_bar(description="User Roles")
 
     def download_users_for_a_role(self, role_name):
@@ -618,21 +602,16 @@ class Backups:
         self.save_content_to_file(content, path)
 
     def get_users_for_a_role_content(self, role_name):
-        return (
-            Userroles(
-                self.backupConfig.authentication,
-                self.backupConfig.org_name,
-                role_name,
-            )
-            .get_users_for_a_role()
-            .json()
-        )
-
-    def get_resource_permissions_content(self, role_name):
-        permissions = Permissions(
+        return (Userroles(
             self.backupConfig.authentication,
             self.backupConfig.org_name,
-            role_name
-        ).get_permissions(formatted=True, format="json")
+            role_name,
+        ).get_users_for_a_role().json())
+
+    def get_resource_permissions_content(self, role_name):
+        permissions = Permissions(self.backupConfig.authentication,
+                                  self.backupConfig.org_name,
+                                  role_name).get_permissions(formatted=True,
+                                                             format="json")
         content = Userroles.sort_resource_permissions(permissions)
         return json.dumps(content, indent=2)

@@ -15,18 +15,22 @@ UPDATE_A_TARGETSERVER_PATH = "{api_url}/v1/organizations/{org}/environments/{env
 
 
 class Targetservers:
+
     def __init__(self, auth, org_name, targetserver_name):
         self.auth = auth
         self.org_name = org_name
         self.targetserver_name = targetserver_name
 
     def create_a_targetserver(self, environment, request_body):
-        uri = CREATE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, environment=environment
-        )
+        uri = CREATE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                                org=self.org_name,
+                                                environment=environment)
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -40,19 +44,24 @@ class Targetservers:
             environment=environment,
             name=self.targetserver_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_targetservers_in_an_environment(
-        self, environment, prefix=None, format="json"
-    ):
+    def list_targetservers_in_an_environment(self,
+                                             environment,
+                                             prefix=None,
+                                             format="json"):
         uri = LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, environment=environment
-        )
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            environment=environment)
         resp = self.fetch_target_server_data(uri)
-        return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
+        return TargetserversSerializer().serialize_details(resp,
+                                                           format,
+                                                           prefix=prefix)
 
     def get_targetserver(self, environment):
         uri = GET_TARGETSERVER_PATH.format(
@@ -65,8 +74,7 @@ class Targetservers:
 
     def fetch_target_server_data(self, uri):
         hdrs = auth.set_authentication_headers(
-            self.auth, custom_headers={"Accept": "application/json"}
-        )
+            self.auth, custom_headers={"Accept": "application/json"})
         result = requests.get(uri, headers=hdrs)
         result.raise_for_status()
         return result
@@ -80,7 +88,10 @@ class Targetservers:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
@@ -94,12 +105,12 @@ class Targetservers:
             self.get_targetserver(environment)
             console.echo(f"Updating {self.targetserver_name}")
             console.echo(
-                self.update_a_targetserver(environment, json.dumps(targetserver)).text
-            )
+                self.update_a_targetserver(environment,
+                                           json.dumps(targetserver)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f"Creating {self.targetserver_name}")
             console.echo(
-                self.create_a_targetserver(environment, json.dumps(targetserver)).text
-            )
+                self.create_a_targetserver(environment,
+                                           json.dumps(targetserver)).text)

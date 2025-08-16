@@ -2,6 +2,7 @@ import json
 
 
 class VirtualhostsSerializer:
+
     def serialize_details(self, virtualhosts, format, prefix=None):
         resp = virtualhosts
         if format == "text":
@@ -9,8 +10,7 @@ class VirtualhostsSerializer:
         virtualhosts = virtualhosts.json()
         if prefix:
             virtualhosts = [
-                virtualhost
-                for virtualhost in virtualhosts
+                virtualhost for virtualhost in virtualhosts
                 if virtualhost.startswith(prefix)
             ]
         if format == "dict":

@@ -2,6 +2,7 @@ import json
 
 
 class TargetserversSerializer:
+
     def serialize_details(self, targetservers, format, prefix=None):
         resp = targetservers
         if format == "text":
@@ -9,8 +10,7 @@ class TargetserversSerializer:
         targetservers = targetservers.json()
         if prefix:
             targetservers = [
-                targetserver
-                for targetserver in targetservers
+                targetserver for targetserver in targetservers
                 if targetserver.startswith(prefix)
             ]
         if format == "dict":

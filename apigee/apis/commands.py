@@ -13,7 +13,8 @@ from apigee.verbose import common_verbose_options
 
 
 @click.group(
-    help="The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy."
+    help=
+    "The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy."
 )
 def apis():
     pass
@@ -31,23 +32,25 @@ def _delete_api_proxy_revision(
     revision_number,
     **kwargs,
 ):
-    return (
-        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .delete_api_proxy_revision(name, revision_number)
-        .text
-    )
+    return (Apis(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).delete_api_proxy_revision(name, revision_number).text)
 
 
 @apis.command(
-    help="Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it. The API proxy revision must be undeployed before you can delete it."
+    help=
+    "Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it. The API proxy revision must be undeployed before you can delete it."
 )
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 def delete_revision(*args, **kwargs):
     console.echo(_delete_api_proxy_revision(*args, **kwargs))
 
@@ -67,36 +70,42 @@ def _deploy_api_proxy_revision(
     override=False,
     **kwargs,
 ):
-    return (
-        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .deploy_api_proxy_revision(
-            name, environment, revision_number, delay=delay, override=override
-        )
-        .text
-    )
+    return (Apis(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).deploy_api_proxy_revision(name,
+                                       environment,
+                                       revision_number,
+                                       delay=delay,
+                                       override=override).text)
 
 
 @apis.command(
-    help="Deploys a revision of an existing API proxy to an environment in an organization."
+    help=
+    "Deploys a revision of an existing API proxy to an environment in an organization."
 )
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
 @click.option("-e", "--environment", help="environment", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 @click.option(
     "--delay",
     type=click.INT,
     default=0,
-    help="Enforces a delay, measured in seconds, before the currently deployed API proxy revision is undeployed and replaced by the new revision that is being deployed. Use this setting to minimize the impact of deployment on in-flight transactions. The default value is 0.",
+    help=
+    "Enforces a delay, measured in seconds, before the currently deployed API proxy revision is undeployed and replaced by the new revision that is being deployed. Use this setting to minimize the impact of deployment on in-flight transactions. The default value is 0.",
 )
 @click.option(
     "--override/--no-override",
     default=False,
-    help='Flag that specifies whether to use seamless deployment to ensure zero downtime. Set this flag to "true" to instruct Edge to deploy the new revision fully before undeploying the existing revision. Use in conjunction with the delay parameter to control when the existing revision is undeployed.',
+    help=
+    'Flag that specifies whether to use seamless deployment to ensure zero downtime. Set this flag to "true" to instruct Edge to deploy the new revision fully before undeploying the existing revision. Use in conjunction with the delay parameter to control when the existing revision is undeployed.',
 )
 def deploy_revision(*args, **kwargs):
     console.echo(_deploy_api_proxy_revision(*args, **kwargs))
@@ -116,12 +125,16 @@ def _delete_undeployed_revisions(
     **kwargs,
 ):
     return Apis(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).delete_undeployed_revisions(name, save_last=save_last, dry_run=dry_run)
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).delete_undeployed_revisions(name,
+                                         save_last=save_last,
+                                         dry_run=dry_run)
 
 
 @apis.command(
-    help="Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it."
+    help=
+    "Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it."
 )
 @common_auth_options
 @common_verbose_options
@@ -154,12 +167,13 @@ def _delete_api_proxy(
     **kwargs,
 ):
     return Apis(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).delete_api_proxy(name)
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org).delete_api_proxy(name)
 
 
 @apis.command(
-    help="Deletes an API proxy and all policies, resources, endpoints, and revisions associated with it."
+    help=
+    "Deletes an API proxy and all policies, resources, endpoints, and revisions associated with it."
 )
 @common_auth_options
 @common_verbose_options
@@ -184,25 +198,29 @@ def _export_api_proxy(
     **kwargs,
 ):
     return Apis(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).export_api_proxy(
-        name,
-        revision_number,
-        write_to_filesystem=True,
-        output_file=output_file if output_file else f"{name}.zip",
-    )
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).export_api_proxy(
+            name,
+            revision_number,
+            write_to_filesystem=True,
+            output_file=output_file if output_file else f"{name}.zip",
+        )
 
 
 @apis.command(
-    help="Outputs an API proxy revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts."
+    help=
+    "Outputs an API proxy revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts."
 )
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 @click.option(
     "-O",
     "--output-file",
@@ -213,18 +231,16 @@ def export(*args, **kwargs):
     _export_api_proxy(*args, **kwargs)
 
 
-def _get_api_proxy(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .get_api_proxy(name)
-        .text
-    )
+def _get_api_proxy(username, password, mfa_secret, token, zonename, org,
+                   profile, name, **kwargs):
+    return (Apis(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org).get_api_proxy(name).text)
 
 
 @apis.command(
-    help="Gets an API proxy by name, including a list of existing revisions of the proxy."
+    help=
+    "Gets an API proxy by name, including a list of existing revisions of the proxy."
 )
 @common_auth_options
 @common_verbose_options
@@ -247,12 +263,13 @@ def _list_api_proxies(
     **kwargs,
 ):
     return Apis(
-        generate_authentication(username, password, mfa_secret, token, zonename), org
-    ).list_api_proxies(prefix=prefix)
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org).list_api_proxies(prefix=prefix)
 
 
 @apis.command(
-    help="Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy."
+    help=
+    "Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy."
 )
 @common_auth_options
 @common_verbose_options
@@ -262,14 +279,12 @@ def list(*args, **kwargs):
     console.echo(_list_api_proxies(*args, **kwargs))
 
 
-def _list_api_proxy_revisions(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .list_api_proxy_revisions(name)
-        .text
-    )
+def _list_api_proxy_revisions(username, password, mfa_secret, token, zonename,
+                              org, profile, name, **kwargs):
+    return (Apis(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).list_api_proxy_revisions(name).text)
 
 
 @apis.command(help="List all revisions for an API proxy.")
@@ -294,11 +309,11 @@ def _undeploy_api_proxy_revision(
     revision_number,
     **kwargs,
 ):
-    return (
-        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .undeploy_api_proxy_revision(name, environment, revision_number)
-        .text
-    )
+    return (Apis(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).undeploy_api_proxy_revision(name, environment,
+                                         revision_number).text)
 
 
 @apis.command(help="Undeploys an API proxy revision from an environment.")
@@ -307,9 +322,11 @@ def _undeploy_api_proxy_revision(
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
 @click.option("-e", "--environment", help="environment", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 def undeploy_revision(*args, **kwargs):
     console.echo(_undeploy_api_proxy_revision(*args, **kwargs))
 
@@ -327,24 +344,25 @@ def _force_undeploy_api_proxy_revision(
     revision_number,
     **kwargs,
 ):
-    return (
-        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
-        .force_undeploy_api_proxy_revision(name, environment, revision_number)
-        .text
-    )
+    return (Apis(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
+        org).force_undeploy_api_proxy_revision(name, environment,
+                                               revision_number).text)
 
 
 @apis.command(
-    help="Force the undeployment of the API proxy that is partially deployed."
-)
+    help="Force the undeployment of the API proxy that is partially deployed.")
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
 @click.option("-e", "--environment", help="environment", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 def force_undeploy_revision(*args, **kwargs):
     console.echo(_force_undeploy_api_proxy_revision(*args, **kwargs))
 
@@ -368,7 +386,8 @@ def _pull(
     **kwargs,
 ):
     return ApiPullerWithDependencyExtraction(
-        generate_authentication(username, password, mfa_secret, token, zonename),
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename),
         org,
         revision_number,
         environment,
@@ -378,21 +397,28 @@ def _pull(
 
 
 @apis.command(
-    help="Downloads an API proxy revision, along with any referenced key/value maps, target servers and caches into the current working directory."
+    help=
+    "Downloads an API proxy revision, along with any referenced key/value maps, target servers and caches into the current working directory."
 )
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option("-n", "--name", help="name", required=True)
-@click.option(
-    "-r", "--revision-number", type=click.INT, help="revision number", required=True
-)
+@click.option("-r",
+              "--revision-number",
+              type=click.INT,
+              help="revision number",
+              required=True)
 @click.option("-e", "--environment", help="environment", required=True)
 @click.option(
     "--work-tree",
-    help="set the path to the working tree (defaults to current working directory)",
+    help=
+    "set the path to the working tree (defaults to current working directory)",
 )
-@click.option("--force/--no-force", "-f/-F", default=False, help="force write files")
+@click.option("--force/--no-force",
+              "-f/-F",
+              default=False,
+              help="force write files")
 # @click.option(
 #     '--prefix',
 #     help='prefix to prepend to names. WARNING: this is not foolproof. make sure to review the changes.',
@@ -433,12 +459,12 @@ def _deploy(
             mfa_secret=mfa_secret,
             token=token,
             zonename=zonename,
-        )
-    )
+        ))
 
 
 @apis.command(
-    help="""Deploy APIs using an improved version of the Apigee API Proxy Deploy Tool: https://github.com/apigee/api-platform-samples/tree/master/tools
+    help=
+    """Deploy APIs using an improved version of the Apigee API Proxy Deploy Tool: https://github.com/apigee/api-platform-samples/tree/master/tools
 
 \b
    =========================================================================
@@ -450,8 +476,7 @@ def _deploy(
 Apigee API Proxy Deploy Tool
 https://github.com/apigee/api-platform-samples/tree/master/tools
 These files are Copyright 2015 Apigee Corporation, released under the Apache2 License.
-"""
-)
+""")
 @common_auth_options
 @common_verbose_options
 @common_silent_options
@@ -461,7 +486,10 @@ These files are Copyright 2015 Apigee Corporation, released under the Apache2 Li
     "-d",
     "--directory",
     help="directory with the apiproxy/ bundle",
-    type=click.Path(exists=True, dir_okay=True, file_okay=False, resolve_path=False),
+    type=click.Path(exists=True,
+                    dir_okay=True,
+                    file_okay=False,
+                    resolve_path=False),
     required=True,
 )
 @optgroup.group(
