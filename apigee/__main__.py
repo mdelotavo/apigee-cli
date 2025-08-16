@@ -18,7 +18,8 @@ from apigee.cls import AliasedGroup
 from apigee.configure.commands import configure
 from apigee.deployments.commands import deployments
 from apigee.developers.commands import developers
-from apigee.exceptions import wrap_with_exception_handling, configure_global_logger
+from apigee.exceptions import (configure_global_logger,
+                               wrap_with_exception_handling)
 from apigee.keystores.commands import keystores
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
@@ -28,8 +29,8 @@ from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
-from apigee.utils import (import_plugins_from_directory,
-                          execute_function_on_directory_files)
+from apigee.utils import (execute_function_on_directory_files,
+                          import_plugins_from_directory)
 from apigee.virtualhosts.commands import virtualhosts
 
 # from click_aliases import ClickAliasedGroup

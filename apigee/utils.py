@@ -114,7 +114,8 @@ def import_plugins_from_directory(plugins_init_file, existing_commands):
         sys.modules[spec.name] = module
         spec.loader.exec_module(module)
         import plugins_modules  # type: ignore
-        from plugins_modules import __all__ as all_plugins_modules  # type: ignore
+        from plugins_modules import \
+            __all__ as all_plugins_modules  # type: ignore
 
         for module in all_plugins_modules:
             _module = getattr(plugins_modules, module)

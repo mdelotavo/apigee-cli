@@ -2,9 +2,10 @@ import click
 from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 
 from apigee import console
+from apigee.apis.api_puller_with_dependency_extraction import \
+    ApiPullerWithDependencyExtraction
 from apigee.apis.apis import Apis
 from apigee.apis.deploy import deploy as deploy_tool
-from apigee.apis.api_puller_with_dependency_extraction import ApiPullerWithDependencyExtraction
 from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options

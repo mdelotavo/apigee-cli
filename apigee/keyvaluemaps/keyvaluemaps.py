@@ -7,13 +7,11 @@ from requests.exceptions import HTTPError
 from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
-from apigee.encryption_utils import (
-    ENCRYPTED_HEADER_BEGIN,
-    ENCRYPTED_HEADER_END,
-    decrypt_message_with_gpg,
-    encrypt_message_with_gpg,
-    has_encrypted_header,
-)
+from apigee.encryption_utils import (ENCRYPTED_HEADER_BEGIN,
+                                     ENCRYPTED_HEADER_END,
+                                     decrypt_message_with_gpg,
+                                     encrypt_message_with_gpg,
+                                     has_encrypted_header)
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.utils import get_tqdm_kwargs, read_file_content
 

@@ -1,6 +1,7 @@
 import base64
 import binascii
 import configparser
+import contextlib
 import os
 import sys
 import time
@@ -10,7 +11,6 @@ import urllib.request
 import webbrowser
 
 import click
-import contextlib
 import jwt
 import pyotp
 import requests
@@ -19,9 +19,8 @@ from requests.exceptions import ConnectionError
 
 from apigee import (APIGEE_CLI_ACCESS_TOKEN_FILE, APIGEE_CLI_CREDENTIALS_FILE,
                     APIGEE_CLI_DIRECTORY, APIGEE_CLI_IS_MACHINE_USER,
-                    APIGEE_OAUTH_URL, APIGEE_SAML_LOGIN_URL,
-                    APIGEE_ZONENAME_OAUTH_URL, console,
-                    APIGEE_CLI_REFRESH_TOKEN_FILE)
+                    APIGEE_CLI_REFRESH_TOKEN_FILE, APIGEE_OAUTH_URL,
+                    APIGEE_SAML_LOGIN_URL, APIGEE_ZONENAME_OAUTH_URL, console)
 from apigee.cls import AliasedGroup
 from apigee.silent import common_silent_options
 from apigee.types import Struct

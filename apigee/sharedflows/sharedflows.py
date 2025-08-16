@@ -4,7 +4,8 @@ from requests.exceptions import HTTPError
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.deployments.deployments import Deployments
 from apigee.sharedflows.serializer import SharedflowsSerializer
-from apigee.utils import merge_dict_values, apply_function_on_iterable, write_content_to_zip
+from apigee.utils import (apply_function_on_iterable, merge_dict_values,
+                          write_content_to_zip)
 
 GET_A_LIST_OF_SHARED_FLOWS_PATH = "{api_url}/v1/organizations/{org}/sharedflows"
 IMPORT_A_SHARED_FLOW_PATH = "{api_url}/v1/organizations/{org}/sharedflows"

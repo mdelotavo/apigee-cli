@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+
 from apigee.console import echo
 
 

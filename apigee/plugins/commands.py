@@ -13,10 +13,9 @@ from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
                     APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
                     console)
 from apigee.silent import common_silent_options
-from apigee.utils import (is_directory, is_regular_file, create_directory,
-                          read_file_content,
-                          execute_function_on_directory_files,
-                          create_empty_file)
+from apigee.utils import (create_directory, create_empty_file,
+                          execute_function_on_directory_files, is_directory,
+                          is_regular_file, read_file_content)
 from apigee.verbose import common_verbose_options
 
 is_git_installed = False
