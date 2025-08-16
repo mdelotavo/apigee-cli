@@ -8,13 +8,10 @@ from apigee.apis.apis import Apis
 from apigee.caches.caches import Caches
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
-from apigee.utils import (extract_zip_file, create_directory,
-                          check_file_exists, check_files_exist,
+from apigee.utils import (apply_function_on_iterable, check_file_exists,
+                          check_files_exist, create_directory,
                           execute_function_on_directory_files,
-                          apply_function_on_iterable)
-
-import os
-from pathlib import Path
+                          extract_zip_file)
 
 
 class ApiPullerWithDependencyExtraction:

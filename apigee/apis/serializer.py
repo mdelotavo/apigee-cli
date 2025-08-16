@@ -1,6 +1,6 @@
 import json
 
-from apigee.utils import remove_last_elements, apply_function_on_iterable
+from apigee.utils import apply_function_on_iterable, remove_last_elements
 
 
 class ApisSerializer:

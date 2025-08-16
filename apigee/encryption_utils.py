@@ -1,4 +1,5 @@
 import base64
+
 import gnupg
 
 ENCRYPTED_HEADER_BEGIN = "-----BEGIN ENCRYPTED APIGEE CLI MESSAGE-----"

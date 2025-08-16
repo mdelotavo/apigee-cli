@@ -1,8 +1,8 @@
 import json
 import os
-from typing import Any, List, Optional, Set
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, List, Optional, Set
 
 from requests.exceptions import HTTPError
 from tqdm import tqdm
@@ -17,7 +17,7 @@ from apigee.exceptions import log_and_echo_http_error
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.permissions.permissions import Permissions
 from apigee.targetservers.targetservers import Targetservers
-from apigee.types import APIGEE_API_CHOICES, empty_snapshot, Struct
+from apigee.types import APIGEE_API_CHOICES, Struct, empty_snapshot
 from apigee.userroles.userroles import Userroles
 from apigee.utils import (extract_zip_file, filter_out_empty_values,
                           get_resolved_directory_path, write_content_to_file)

@@ -6,7 +6,7 @@ import logging
 import sys
 
 from apigee import console
-from apigee.utils import remove_file_if_above_size, create_empty_file
+from apigee.utils import create_empty_file, remove_file_if_above_size
 
 
 class InvalidApisError(Exception):

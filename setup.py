@@ -59,7 +59,7 @@ SETUP_ARGS = dict(
 )
 
 if __name__ == "__main__":
-    from setuptools import setup, find_packages
+    from setuptools import find_packages, setup
 
     SETUP_ARGS["packages"] = find_packages()
     setup(**SETUP_ARGS)
