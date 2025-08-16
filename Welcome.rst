@@ -8,15 +8,11 @@ apigee-cli
 
 The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication.
 
-Initially developed for Darumatic clients, this project remains available as a functional proof of concept and has proven reliable in production CI/CD pipelines. I do not plan to maintain this public version, but you're welcome to explore and learn from the code. The custom plugins feature will continue to work even if the Apigee Edge APIs become unavailable.
-
-*If you’re up for a challenge, try updating the code to work with Apigee X*
-
 -----------------------------------------
 Why use this instead of the official tool
 -----------------------------------------
 
-The `official Apigee CLI`_ is powerful and may suit your needs. However, I built this version to better support our CI/CD processes, self-service operations, and DevOps workflows that are difficult to manage with the official tool.
+While the `official Apigee CLI`_ is powerful, this tool was created to better support Darumatic clients’ CI/CD and self-service workflows that were difficult to manage with the official tool, using simple and easily editable code to demonstrate how to leverage the Apigee Admin APIs.
 
 ----------
 Disclaimer
