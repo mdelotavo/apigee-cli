@@ -18,129 +18,172 @@ from apigee.utils import (create_directory, create_empty_file,
                           is_regular_file, read_file_content)
 from apigee.verbose import common_verbose_options
 
+# ---- Global Variables ----
 is_git_installed = False
 plugins_command_help = (
-    "[Experimental] Simple plugins manager for distributing commands.")
+    "Originally meant to help Darumatic clients automate Apigee and API-related "
+    "tasks, but available for anyone to use. Refer to "
+    "https://github.com/mdelotavo/apigee-cli-plugins to learn how."
+)
 
 try:
     from git import Repo
-
     is_git_installed = True
 except ImportError:
-    plugins_command_help = "[Unavailable - Git not found] Simple plugins manager for distributing commands."
+    plugins_command_help = (
+        "Simple plugins manager for distributing commands. "
+        "[Warning: Git must be installed to use plugin commands]")
 
 
-def chmod_directory(directory, mode):
-    """
-    Recursively changes the permissions of a directory and its contents.
+# ---- Helper Classes ----
+class FileUtils:
+    """Internal helper class for file/directory operations."""
 
-    Reference: https://stackoverflow.com/a/58878271
-    
-    Args:
-        directory (str): Path to the directory.
-        mode (int): Permissions to be set (e.g., 0o0700).
-
-    """
-    for root, dirs, files in os.walk(directory):
-        for dir in dirs:
-            os.chmod(path.join(root, dir), mode)
-        for file in files:
-            os.chmod(path.join(root, file), mode)
+    @staticmethod
+    def chmod_directory(directory, mode):
+        """Recursively change permissions of a directory and its contents."""
+        for root, dirs, files in os.walk(directory):
+            for d in dirs:
+                os.chmod(path.join(root, d), mode)
+            for f in files:
+                os.chmod(path.join(root, f), mode)
 
 
-def clone_plugin_repositories(section="sources"):
-    initialize_apigee_cli_plugins()
-    config = load_plugin_config()
-    if not config._sections:
-        return
-    sources = dict(config._sections[section])
-    for name, uri in sources.items():
-        dest = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
-        if is_directory(dest):
-            continue
-        try:
-            console.echo(f"Installing {name}... ",
+class GitUtils:
+    """Internal helper class for Git operations."""
+
+    @staticmethod
+    def exit_if_not_installed():
+        if not is_git_installed:
+            sys.exit(0)
+
+
+class PluginManager:
+    """Internal helper class for Apigee CLI plugin management."""
+
+    @staticmethod
+    def initialize_plugins():
+        create_directory(APIGEE_CLI_PLUGINS_DIRECTORY)
+        create_empty_file(APIGEE_CLI_PLUGINS_PATH)
+        create_empty_file(APIGEE_CLI_PLUGINS_CONFIG_FILE)
+
+    @staticmethod
+    def load_config(config_file=APIGEE_CLI_PLUGINS_CONFIG_FILE):
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.read(config_file)
+        return config
+
+    @staticmethod
+    def clone_repositories(section="sources"):
+        PluginManager.initialize_plugins()
+        config = PluginManager.load_config()
+        if not config._sections:
+            return
+        sources = dict(config._sections[section])
+        for name, uri in sources.items():
+            dest = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
+            if is_directory(dest):
+                continue
+            try:
+                console.echo(f"Installing {name}... ",
+                             line_ending="",
+                             should_flush=True)
+                Repo.clone_from(uri, dest)
+                console.echo("Done")
+            except Exception as e:
+                console.echo(e)
+
+    @staticmethod
+    def prune_unused_directories(section="sources"):
+        PluginManager.initialize_plugins()
+        config = PluginManager.load_config()
+        if not config._sections:
+            return
+        sources = dict(config._sections[section])
+
+        def _func(path_):
+            if not is_directory(path_):
+                return
+            name = Path(path_).stem
+            if name in sources:
+                return
+            console.echo(f"Removing {name}... ",
                          line_ending="",
                          should_flush=True)
-            Repo.clone_from(uri, dest)
-            console.echo("Done")
-        except Exception as e:
-            console.echo(e)
+            plugin_directory = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
+            try:
+                FileUtils.chmod_directory(str(Path(plugin_directory) / ".git"),
+                                          stat.S_IRWXU)
+                shutil.rmtree(plugin_directory)
+                console.echo("Done")
+            except Exception as e:
+                console.echo(e)
+
+        return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
+                                                   _func,
+                                                   glob="[!.][!__]*")
+
+    @staticmethod
+    def update_repositories():
+
+        def _func(path_):
+            if not is_directory(path_):
+                return
+            console.echo(f"Updating {Path(path_).stem}... ",
+                         line_ending="",
+                         should_flush=True)
+            repo = Repo(path_)
+            if repo.bare:
+                return
+            try:
+                repo.remotes["origin"].pull()
+                console.echo("Done")
+            except Exception as e:
+                console.echo(e)
+
+        return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
+                                                   _func,
+                                                   glob="[!.][!__]*")
+
+    @staticmethod
+    def list_sources(section="sources"):
+        """Return a dictionary of plugin sources from config."""
+        config = PluginManager.load_config()
+        return dict(config._sections.get(section, {}))
+
+    @staticmethod
+    def get_plugin_info(name):
+        """Return the parsed plugin info JSON or None if file missing."""
+        info_file = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name / "apigee-cli.info"
+        if not is_regular_file(info_file):
+            return None
+        return read_file_content(info_file, type="json")
+
+    @staticmethod
+    def print_latest_commit(name):
+        """Print the latest Git commit of a plugin repository."""
+        GitUtils.exit_if_not_installed()
+        repo = Repo(Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name)
+        console.echo(
+            repo.git.log(
+                "--pretty=format:%Cred%h%Creset -%C(yellow)%d%Creset %s "
+                "%Cgreen(%cr) %C(bold blue)<%an>%Creset", "-1"))
+
+    @staticmethod
+    def print_dependencies(plugins_info):
+        """Print the 'Requires' field from plugin info, if any."""
+        requires = plugins_info.get("Requires")
+        if requires:
+            console.echo(requires)
+
+    @staticmethod
+    def print_full_info(plugins_info):
+        """Print all key/value pairs from plugin info."""
+        for key, value in plugins_info.items():
+            console.echo(f"{key}: {value}")
 
 
-def exit_quietly_if_git_not_installed():
-    if not is_git_installed:
-        sys.exit(0)
-
-
-def initialize_and_save_plugin_config():
-    initialize_apigee_cli_plugins()
-    config = load_plugin_config()
-    if not config._sections:
-        return
-
-
-def initialize_apigee_cli_plugins():
-    create_directory(APIGEE_CLI_PLUGINS_DIRECTORY)
-    create_empty_file(APIGEE_CLI_PLUGINS_PATH)
-    create_empty_file(APIGEE_CLI_PLUGINS_CONFIG_FILE)
-
-
-def load_plugin_config(config_file=APIGEE_CLI_PLUGINS_CONFIG_FILE):
-    config = configparser.ConfigParser(allow_no_value=True)
-    config.read(config_file)
-    return config
-
-
-def prune_unused_plugin_directories(section="sources"):
-    initialize_apigee_cli_plugins()
-    config = load_plugin_config()
-    if not config._sections:
-        return
-    sources = dict(config._sections[section])
-
-    def _func(path):
-        if not is_directory(path):
-            return
-        name = Path(path).stem
-        if name in sources:
-            return
-        console.echo(f"Removing {name}... ", line_ending="", should_flush=True)
-        plugin_directory = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
-        try:
-            chmod_directory(str(Path(plugin_directory) / ".git"), stat.S_IRWXU)
-            shutil.rmtree(plugin_directory)
-            console.echo("Done")
-        except Exception as e:
-            console.echo(e)
-
-    return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
-                                               _func,
-                                               glob="[!.][!__]*")
-
-
-def update_plugin_repositories():
-
-    def _func(path):
-        if not is_directory(path):
-            return
-        console.echo(f"Updating {Path(path).stem}... ",
-                     line_ending="",
-                     should_flush=True)
-        repo = Repo(path)
-        if repo.bare:
-            return
-        try:
-            repo.remotes["origin"].pull()
-            console.echo("Done")
-        except Exception as e:
-            console.echo(e)
-
-    return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
-                                               _func,
-                                               glob="[!.][!__]*")
-
-
+# ---- CLI Commands ----
 @click.group(help=plugins_command_help)
 def plugins():
     pass
@@ -157,12 +200,12 @@ def plugins():
     show_default=True,
 )
 def configure(silent, verbose, apply_changes):
-    exit_quietly_if_git_not_installed()
-    initialize_apigee_cli_plugins()
+    GitUtils.exit_if_not_installed()
+    PluginManager.initialize_plugins()
     click.edit(filename=APIGEE_CLI_PLUGINS_CONFIG_FILE)
     if apply_changes:
-        clone_plugin_repositories()
-        prune_unused_plugin_directories()
+        PluginManager.clone_repositories()
+        PluginManager.prune_unused_directories()
     else:
         console.echo("\n  Run `apigee plugins update` to apply any changes,")
         console.echo("    or rerun `apigee plugins configure` with `-a`")
@@ -173,68 +216,58 @@ def configure(silent, verbose, apply_changes):
 @common_silent_options
 @common_verbose_options
 def update(silent, verbose, section="sources"):
-    exit_quietly_if_git_not_installed()
-    clone_plugin_repositories()
-    update_plugin_repositories()
+    GitUtils.exit_if_not_installed()
+    PluginManager.clone_repositories()
+    PluginManager.update_repositories()
 
 
 @plugins.command(help="Show plugins information.")
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name of the plugins package")
+@click.option("-n", "--name", help="Name of the plugins package")
 @optgroup.group("Filter options",
                 cls=MutuallyExclusiveOptionGroup,
                 help="The filter options")
 @optgroup.option(
     "--show-commit-only/--no-show-commit-only",
     default=False,
-    help="only print latest Git commit log",
+    help="Only print latest Git commit log",
 )
 @optgroup.option(
     "--show-dependencies-only/--no-show-dependencies-only",
     default=False,
-    help="only print list of required packages",
+    help="Only print list of required packages",
 )
-def show(
-    silent,
-    verbose,
-    name,
-    section="sources",
-    show_commit_only=False,
-    show_dependencies_only=False,
-):
+def show(silent,
+         verbose,
+         name,
+         section="sources",
+         show_commit_only=False,
+         show_dependencies_only=False):
+    """Show plugins sources, info, commits, or dependencies based on options."""
+
     if not name:
-        config = load_plugin_config()
-        if not config._sections:
-            return
-        sources = dict(config._sections[section])
-        for name, uri in sources.items():
-            console.echo(f"{name}: {uri}")
+        # List all plugin sources
+        sources = PluginManager.list_sources(section)
+        for plugin_name, uri in sources.items():
+            console.echo(f"{plugin_name}: {uri}")
         return
-    plugins_info_file = Path(
-        APIGEE_CLI_PLUGINS_DIRECTORY) / name / "apigee-cli.info"
-    if not is_regular_file(plugins_info_file):
+
+    plugins_info = PluginManager.get_plugin_info(name)
+    if not plugins_info:
         return
-    plugins_info = read_file_content(plugins_info_file, type="json")
+
     if show_commit_only:
-        exit_quietly_if_git_not_installed()
-        console.echo(
-            Repo(Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name).git.log(
-                "--pretty=format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset",
-                "-1",
-            ))
-        return
-    if show_dependencies_only:
-        if plugins_info.get("Requires"):
-            console.echo(plugins_info.get("Requires"))
-        return
-    for k, v in plugins_info.items():
-        console.echo(f"{k}: {v}")
+        PluginManager.print_latest_commit(name)
+    elif show_dependencies_only:
+        PluginManager.print_dependencies(plugins_info)
+    else:
+        PluginManager.print_full_info(plugins_info)
 
 
 @plugins.command(help="Prune plugins with removed sources.")
 @common_silent_options
 @common_verbose_options
 def prune(silent, verbose, section="sources"):
-    exit_quietly_if_git_not_installed()
-    prune_unused_plugin_directories()
+    GitUtils.exit_if_not_installed()
+    PluginManager.prune_unused_directories()
