@@ -8,6 +8,7 @@ GET_SHARED_FLOW_DEPLOYMENT_DETAILS_PATH = "{api_url}/v1/organizations/{org}/shar
 
 
 class Deployments:
+
     def __init__(self, auth, org_name, name):
         self.auth = auth
         self.org_name = org_name
@@ -22,16 +23,17 @@ class Deployments:
         revision_name_only=False,
     ):
         uri = GET_API_PROXY_DEPLOYMENT_DETAILS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, api_name=self.name
-        )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self.org_name,
+            api_name=self.name)
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         if formatted:
             if revision_name_only:
                 return DeploymentsSerializer().serialize_details(
-                    resp, format, showindex=showindex, tablefmt=tablefmt
-                )
+                    resp, format, showindex=showindex, tablefmt=tablefmt)
             return DeploymentsSerializer().serialize_details(resp, "text")
         return resp
 
@@ -48,13 +50,13 @@ class Deployments:
             org=self.org_name,
             shared_flow_name=self.name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         if formatted:
             if revision_name_only:
                 return DeploymentsSerializer().serialize_details(
-                    resp, format, showindex=showindex, tablefmt=tablefmt
-                )
+                    resp, format, showindex=showindex, tablefmt=tablefmt)
             return DeploymentsSerializer().serialize_details(resp, "text")
         return resp

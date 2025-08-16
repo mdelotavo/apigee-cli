@@ -65,18 +65,25 @@ class BackupConfig:
 
     def __post_init__(self):
         # Normalize and sort choices once
-        self.api_choices = sorted(set(self.api_choices) if self.api_choices else APIGEE_API_CHOICES)
+        self.api_choices = sorted(
+            set(self.api_choices) if self.api_choices else APIGEE_API_CHOICES)
         # Resolve working paths once
-        self.working_directory = get_resolved_directory_path(self.working_directory)
-        self.working_org_directory = Path(self.working_directory) / self.org_name
+        self.working_directory = get_resolved_directory_path(
+            self.working_directory)
+        self.working_org_directory = Path(
+            self.working_directory) / self.org_name
 
 
 # ==============================
 # Helpers
 # ==============================
 class FileManager:
+
     @staticmethod
-    def write(content: Any, base_path: Path, subpath: str, indentation: int = 2):
+    def write(content: Any,
+              base_path: Path,
+              subpath: str,
+              indentation: int = 2):
         full_path = FileManager.resolve(base_path, subpath)
         write_content_to_file(content, full_path, indentation=indentation)
 
@@ -89,6 +96,7 @@ class FileManager:
 
 
 class ProgressTracker:
+
     def __init__(self, config: BackupConfig):
         self.config = config
 
@@ -113,6 +121,7 @@ class ProgressTracker:
 
 
 class ErrorHandler:
+
     @staticmethod
     def http(error: HTTPError, append_message: str):
         log_and_echo_http_error(error, append_message=append_message)
@@ -126,7 +135,9 @@ class ErrorHandler:
 # Resource Handlers (1 per domain)
 # ==============================
 class ApiHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
@@ -138,113 +149,140 @@ class ApiHandler:
         self._save_snapshot_files()
 
     def _list_apis(self) -> List[str]:
-        return Apis(self.cfg.authentication, self.cfg.org_name).list_api_proxies(
-            prefix=self.cfg.prefix, format="dict"
-        )
+        return Apis(self.cfg.authentication,
+                    self.cfg.org_name).list_api_proxies(prefix=self.cfg.prefix,
+                                                        format="dict")
 
     def _fetch_details(self, apis: List[str]) -> Dict[str, Dict]:
         result = {}
         for api in apis:
-            result[api] = Apis(self.cfg.authentication, self.cfg.org_name).get_api_proxy(api).json()
+            result[api] = Apis(self.cfg.authentication,
+                               self.cfg.org_name).get_api_proxy(api).json()
         return result
 
     def _save_snapshot_files(self):
         for api, content in self.cfg.snapshot_data.apis.items():
-            self.fm.write(content, self.cfg.working_org_directory, APIS_SNAPSHOT_TARGET_SUBPATH.format(api=api))
+            self.fm.write(content, self.cfg.working_org_directory,
+                          APIS_SNAPSHOT_TARGET_SUBPATH.format(api=api))
 
     # --- Download ---
     def download(self):
         for api, metadata in self.cfg.snapshot_data.apis.items():
             for revision in metadata.get("revision", []):
-                output_file = str(Path(self.cfg.working_org_directory) / "apis" / api / revision / f"{api}.zip")
+                output_file = str(
+                    Path(self.cfg.working_org_directory) / "apis" / api /
+                    revision / f"{api}.zip")
                 work_dir = os.path.dirname(output_file)
                 try:
-                    Apis(self.cfg.authentication, self.cfg.org_name).export_api_proxy(
-                        api,
-                        revision,
-                        write_to_filesystem=True,
-                        output_file=output_file,
-                    )
+                    Apis(self.cfg.authentication,
+                         self.cfg.org_name).export_api_proxy(
+                             api,
+                             revision,
+                             write_to_filesystem=True,
+                             output_file=output_file,
+                         )
                     extract_zip_file(output_file, work_dir)
                     os.remove(output_file)
                 except HTTPError as e:
-                    ErrorHandler.http(e, append_message=f" for API Proxy ({api}, revision {revision})")
+                    ErrorHandler.http(
+                        e,
+                        append_message=
+                        f" for API Proxy ({api}, revision {revision})")
                 except Exception as e:
                     ErrorHandler.generic(e, api, revision)
             self.progress.update("APIs")
 
 
 class ApiProductHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
 
     # --- Snapshot ---
     def snapshot(self):
-        apiproducts = Apiproducts(self.cfg.authentication, self.cfg.org_name, None).list_api_products(
-            prefix=self.cfg.prefix, format="dict"
-        )
+        apiproducts = Apiproducts(self.cfg.authentication, self.cfg.org_name,
+                                  None).list_api_products(
+                                      prefix=self.cfg.prefix, format="dict")
         self.cfg.snapshot_data.apiproducts = apiproducts
-        self.fm.write(apiproducts, self.cfg.working_org_directory, APIPRODUCTS_SNAPSHOT_TARGET_SUBPATH)
+        self.fm.write(apiproducts, self.cfg.working_org_directory,
+                      APIPRODUCTS_SNAPSHOT_TARGET_SUBPATH)
 
     # --- Download ---
     def download(self):
         for apiproduct in self.cfg.snapshot_data.apiproducts:
             try:
-                content = (
-                    Apiproducts(self.cfg.authentication, self.cfg.org_name, apiproduct)
-                    .get_api_product()
-                    .text
-                )
-                self.fm.write(content, self.cfg.working_org_directory, APIPRODUCTS_TARGET_SUBPATH.format(apiproduct=apiproduct))
+                content = (Apiproducts(self.cfg.authentication,
+                                       self.cfg.org_name,
+                                       apiproduct).get_api_product().text)
+                self.fm.write(
+                    content, self.cfg.working_org_directory,
+                    APIPRODUCTS_TARGET_SUBPATH.format(apiproduct=apiproduct))
             except HTTPError as e:
-                ErrorHandler.http(e, append_message=f" for API Product ({apiproduct})")
+                ErrorHandler.http(
+                    e, append_message=f" for API Product ({apiproduct})")
             except Exception as e:
                 ErrorHandler.generic(e, apiproduct)
             self.progress.update("API Products")
 
 
 class AppHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
 
     # --- Snapshot ---
-    def snapshot(self, expand: bool = False, count: int = 1000, startkey: str = ""):
-        developers = Developers(self.cfg.authentication, self.cfg.org_name, None).list_developers(
-            prefix=None, expand=expand, count=count, startkey=startkey, format="dict"
-        )
-        apps_by_developer = Apps(self.cfg.authentication, self.cfg.org_name, None).list_apps_for_all_developers(
-            developers, prefix=self.cfg.prefix, format="dict"
-        )
+    def snapshot(self,
+                 expand: bool = False,
+                 count: int = 1000,
+                 startkey: str = ""):
+        developers = Developers(self.cfg.authentication, self.cfg.org_name,
+                                None).list_developers(prefix=None,
+                                                      expand=expand,
+                                                      count=count,
+                                                      startkey=startkey,
+                                                      format="dict")
+        apps_by_developer = Apps(self.cfg.authentication, self.cfg.org_name,
+                                 None).list_apps_for_all_developers(
+                                     developers,
+                                     prefix=self.cfg.prefix,
+                                     format="dict")
         apps_by_developer = filter_out_empty_values(apps_by_developer)
         self.cfg.snapshot_data.apps = apps_by_developer
 
         for app_name, details in apps_by_developer.items():
-            self.fm.write(details, self.cfg.working_org_directory, APPS_SNAPSHOT_TARGET_SUBPATH.format(app=app_name))
+            self.fm.write(details, self.cfg.working_org_directory,
+                          APPS_SNAPSHOT_TARGET_SUBPATH.format(app=app_name))
 
     # --- Download ---
     def download(self):
         for developer, apps in self.cfg.snapshot_data.apps.items():
             for app in apps:
                 try:
-                    content = (
-                        Apps(self.cfg.authentication, self.cfg.org_name, app)
-                        .get_developer_app_details(developer)
-                        .text
-                    )
-                    self.fm.write(content, self.cfg.working_org_directory, APPS_TARGET_SUBPATH.format(developer=developer, app=app))
+                    content = (Apps(
+                        self.cfg.authentication, self.cfg.org_name,
+                        app).get_developer_app_details(developer).text)
+                    self.fm.write(
+                        content, self.cfg.working_org_directory,
+                        APPS_TARGET_SUBPATH.format(developer=developer,
+                                                   app=app))
                 except HTTPError as e:
-                    ErrorHandler.http(e, append_message=f" for Developer App ({app})")
+                    ErrorHandler.http(
+                        e, append_message=f" for Developer App ({app})")
                 except Exception as e:
                     ErrorHandler.generic(e, developer, app)
                 self.progress.update("Developer Apps")
 
 
 class CacheHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
@@ -252,11 +290,15 @@ class CacheHandler:
     # --- Snapshot ---
     def snapshot(self):
         for environment in self.cfg.environments:
-            caches = Caches(self.cfg.authentication, self.cfg.org_name, None).list_caches_in_an_environment(
-                environment, prefix=self.cfg.prefix, format="dict"
-            )
+            caches = Caches(self.cfg.authentication, self.cfg.org_name,
+                            None).list_caches_in_an_environment(
+                                environment,
+                                prefix=self.cfg.prefix,
+                                format="dict")
             self.cfg.snapshot_data.caches[environment] = caches
-            self.fm.write(caches, self.cfg.working_org_directory, CACHES_SNAPSHOT_TARGET_SUBPATH.format(environment=environment))
+            self.fm.write(
+                caches, self.cfg.working_org_directory,
+                CACHES_SNAPSHOT_TARGET_SUBPATH.format(environment=environment))
 
     # --- Download ---
     def download(self):
@@ -264,52 +306,60 @@ class CacheHandler:
             caches = self.cfg.snapshot_data.caches.get(environment, [])
             for cache in caches:
                 try:
-                    content = (
-                        Caches(self.cfg.authentication, self.cfg.org_name, cache)
-                        .get_information_about_a_cache(environment)
-                        .text
-                    )
-                    self.fm.write(content, self.cfg.working_org_directory, CACHES_TARGET_SUBPATH.format(environment=environment, cache=cache))
+                    content = (Caches(
+                        self.cfg.authentication, self.cfg.org_name,
+                        cache).get_information_about_a_cache(environment).text)
+                    self.fm.write(
+                        content, self.cfg.working_org_directory,
+                        CACHES_TARGET_SUBPATH.format(environment=environment,
+                                                     cache=cache))
                 except HTTPError as e:
-                    ErrorHandler.http(e, append_message=f" for Cache ({cache})")
+                    ErrorHandler.http(e,
+                                      append_message=f" for Cache ({cache})")
                 except Exception as e:
                     ErrorHandler.generic(e, environment, cache)
                 self.progress.update("Caches")
 
 
 class DeveloperHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
 
     # --- Snapshot ---
     def snapshot(self):
-        developers = Developers(self.cfg.authentication, self.cfg.org_name, None).list_developers(
-            prefix=self.cfg.prefix, format="dict"
-        )
+        developers = Developers(self.cfg.authentication, self.cfg.org_name,
+                                None).list_developers(prefix=self.cfg.prefix,
+                                                      format="dict")
         self.cfg.snapshot_data.developers = developers
-        self.fm.write(developers, self.cfg.working_org_directory, DEVELOPERS_SNAPSHOT_TARGET_SUBPATH)
+        self.fm.write(developers, self.cfg.working_org_directory,
+                      DEVELOPERS_SNAPSHOT_TARGET_SUBPATH)
 
     # --- Download ---
     def download(self):
         for developer in self.cfg.snapshot_data.developers:
             try:
-                content = (
-                    Developers(self.cfg.authentication, self.cfg.org_name, developer)
-                    .get_developer()
-                    .text
-                )
-                self.fm.write(content, self.cfg.working_org_directory, DEVELOPERS_TARGET_SUBPATH.format(developer=developer))
+                content = (Developers(self.cfg.authentication,
+                                      self.cfg.org_name,
+                                      developer).get_developer().text)
+                self.fm.write(
+                    content, self.cfg.working_org_directory,
+                    DEVELOPERS_TARGET_SUBPATH.format(developer=developer))
             except HTTPError as e:
-                ErrorHandler.http(e, append_message=f" for Developer ({developer})")
+                ErrorHandler.http(
+                    e, append_message=f" for Developer ({developer})")
             except Exception as e:
                 ErrorHandler.generic(e, developer)
             self.progress.update("Developers")
 
 
 class KeyValueMapHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
@@ -317,11 +367,16 @@ class KeyValueMapHandler:
     # --- Snapshot ---
     def snapshot(self):
         for environment in self.cfg.environments:
-            kvms = Keyvaluemaps(self.cfg.authentication, self.cfg.org_name, None).list_keyvaluemaps_in_an_environment(
-                environment, prefix=self.cfg.prefix, format="dict"
-            )
+            kvms = Keyvaluemaps(self.cfg.authentication, self.cfg.org_name,
+                                None).list_keyvaluemaps_in_an_environment(
+                                    environment,
+                                    prefix=self.cfg.prefix,
+                                    format="dict")
             self.cfg.snapshot_data.keyvaluemaps[environment] = kvms
-            self.fm.write(kvms, self.cfg.working_org_directory, KEYVALUEMAPS_SNAPSHOT_TARGET_SUBPATH.format(environment=environment))
+            self.fm.write(
+                kvms, self.cfg.working_org_directory,
+                KEYVALUEMAPS_SNAPSHOT_TARGET_SUBPATH.format(
+                    environment=environment))
 
     # --- Download ---
     def download(self):
@@ -329,12 +384,14 @@ class KeyValueMapHandler:
             kvms = self.cfg.snapshot_data.keyvaluemaps.get(environment, [])
             for kvm in kvms:
                 try:
-                    content = (
-                        Keyvaluemaps(self.cfg.authentication, self.cfg.org_name, kvm)
-                        .get_keyvaluemap_in_an_environment(environment)
-                        .text
-                    )
-                    self.fm.write(content, self.cfg.working_org_directory, KEYVALUEMAPS_TARGET_SUBPATH.format(environment=environment, kvm=kvm))
+                    content = (Keyvaluemaps(
+                        self.cfg.authentication, self.cfg.org_name,
+                        kvm).get_keyvaluemap_in_an_environment(
+                            environment).text)
+                    self.fm.write(
+                        content, self.cfg.working_org_directory,
+                        KEYVALUEMAPS_TARGET_SUBPATH.format(
+                            environment=environment, kvm=kvm))
                 except HTTPError as e:
                     ErrorHandler.http(e, append_message=f" for KVM ({kvm})")
                 except Exception as e:
@@ -343,7 +400,9 @@ class KeyValueMapHandler:
 
 
 class TargetServerHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
@@ -351,76 +410,94 @@ class TargetServerHandler:
     # --- Snapshot ---
     def snapshot(self):
         for environment in self.cfg.environments:
-            targetservers = Targetservers(self.cfg.authentication, self.cfg.org_name, None).list_targetservers_in_an_environment(
-                environment, prefix=self.cfg.prefix, format="dict"
-            )
+            targetservers = Targetservers(
+                self.cfg.authentication, self.cfg.org_name,
+                None).list_targetservers_in_an_environment(
+                    environment, prefix=self.cfg.prefix, format="dict")
             self.cfg.snapshot_data.targetservers[environment] = targetservers
             self.fm.write(
                 targetservers,
                 self.cfg.working_org_directory,
-                TARGETSERVERS_SNAPSHOT_TARGET_SUBPATH.format(environment=environment),
+                TARGETSERVERS_SNAPSHOT_TARGET_SUBPATH.format(
+                    environment=environment),
             )
 
     # --- Download ---
     def download(self):
         for environment in self.cfg.environments:
-            targetservers = self.cfg.snapshot_data.targetservers.get(environment, [])
+            targetservers = self.cfg.snapshot_data.targetservers.get(
+                environment, [])
             for targetserver in targetservers:
                 try:
-                    content = (
-                        Targetservers(self.cfg.authentication, self.cfg.org_name, targetserver)
-                        .get_targetserver(environment)
-                        .text
-                    )
+                    content = (Targetservers(
+                        self.cfg.authentication, self.cfg.org_name,
+                        targetserver).get_targetserver(environment).text)
                     self.fm.write(
                         content,
                         self.cfg.working_org_directory,
-                        TARGETSERVERS_TARGET_SUBPATH.format(environment=environment, targetserver=targetserver),
+                        TARGETSERVERS_TARGET_SUBPATH.format(
+                            environment=environment,
+                            targetserver=targetserver),
                     )
                 except HTTPError as e:
-                    ErrorHandler.http(e, append_message=f" for TargetServer ({targetserver})")
+                    ErrorHandler.http(
+                        e,
+                        append_message=f" for TargetServer ({targetserver})")
                 except Exception as e:
                     ErrorHandler.generic(e, environment, targetserver)
                 self.progress.update("TargetServers")
 
 
 class UserRoleHandler:
-    def __init__(self, cfg: BackupConfig, fm: FileManager, progress: ProgressTracker):
+
+    def __init__(self, cfg: BackupConfig, fm: FileManager,
+                 progress: ProgressTracker):
         self.cfg = cfg
         self.fm = fm
         self.progress = progress
 
     # --- Snapshot ---
     def snapshot(self):
-        roles = Userroles(self.cfg.authentication, self.cfg.org_name, None).list_user_roles().json()
+        roles = Userroles(self.cfg.authentication, self.cfg.org_name,
+                          None).list_user_roles().json()
         if self.cfg.prefix:
             roles = [r for r in roles if r.startswith(self.cfg.prefix)]
         self.cfg.snapshot_data.userroles = roles
-        self.fm.write(roles, self.cfg.working_org_directory, USERROLES_SNAPSHOT_TARGET_SUBPATH)
+        self.fm.write(roles, self.cfg.working_org_directory,
+                      USERROLES_SNAPSHOT_TARGET_SUBPATH)
 
     # --- Download ---
     def download(self):
         for role_name in self.cfg.snapshot_data.userroles:
             try:
-                users_content = (
-                    Userroles(self.cfg.authentication, self.cfg.org_name, role_name)
-                    .get_users_for_a_role()
-                    .json()
-                )
-                self.fm.write(users_content, self.cfg.working_org_directory, USERROLES_FOR_A_ROLE_TARGET_SUBPATH.format(role_name=role_name))
+                users_content = (Userroles(
+                    self.cfg.authentication, self.cfg.org_name,
+                    role_name).get_users_for_a_role().json())
+                self.fm.write(
+                    users_content, self.cfg.working_org_directory,
+                    USERROLES_FOR_A_ROLE_TARGET_SUBPATH.format(
+                        role_name=role_name))
             except HTTPError as e:
-                ErrorHandler.http(e, append_message=" for User Role ({role_name}) users")
+                ErrorHandler.http(
+                    e, append_message=" for User Role ({role_name}) users")
             except Exception as e:
                 ErrorHandler.generic(e, role_name)
 
             try:
-                permissions = Permissions(self.cfg.authentication, self.cfg.org_name, role_name).get_permissions(
-                    formatted=True, format="json"
-                )
+                permissions = Permissions(
+                    self.cfg.authentication, self.cfg.org_name,
+                    role_name).get_permissions(formatted=True, format="json")
                 content = Userroles.sort_resource_permissions(permissions)
-                self.fm.write(json.dumps(content, indent=2), self.cfg.working_org_directory, RESOURCE_PERMISSIONS_TARGET_SUBPATH.format(role_name=role_name))
+                self.fm.write(
+                    json.dumps(content, indent=2),
+                    self.cfg.working_org_directory,
+                    RESOURCE_PERMISSIONS_TARGET_SUBPATH.format(
+                        role_name=role_name))
             except HTTPError as e:
-                ErrorHandler.http(e, append_message=" for User Role ({role_name}) resource permissions")
+                ErrorHandler.http(
+                    e,
+                    append_message=
+                    " for User Role ({role_name}) resource permissions")
             except Exception as e:
                 ErrorHandler.generic(e, role_name, "(resource permissions)")
 
@@ -443,13 +520,17 @@ class BackupCoordinator:
 
         # Handlers per domain
         self.api_handler = ApiHandler(self.cfg, self.fm, self.progress)
-        self.apiproduct_handler = ApiProductHandler(self.cfg, self.fm, self.progress)
+        self.apiproduct_handler = ApiProductHandler(self.cfg, self.fm,
+                                                    self.progress)
         self.app_handler = AppHandler(self.cfg, self.fm, self.progress)
         self.cache_handler = CacheHandler(self.cfg, self.fm, self.progress)
-        self.developer_handler = DeveloperHandler(self.cfg, self.fm, self.progress)
+        self.developer_handler = DeveloperHandler(self.cfg, self.fm,
+                                                  self.progress)
         self.kvm_handler = KeyValueMapHandler(self.cfg, self.fm, self.progress)
-        self.targetserver_handler = TargetServerHandler(self.cfg, self.fm, self.progress)
-        self.userrole_handler = UserRoleHandler(self.cfg, self.fm, self.progress)
+        self.targetserver_handler = TargetServerHandler(
+            self.cfg, self.fm, self.progress)
+        self.userrole_handler = UserRoleHandler(self.cfg, self.fm,
+                                                self.progress)
 
     # ---------- Public entry points (compat with original intent) ----------
 
@@ -503,7 +584,8 @@ class BackupCoordinator:
             "userroles": self.userrole_handler.snapshot,
         }
         if api_choice not in mapping:
-            raise ValueError(f"Unsupported api_choice for snapshot: {api_choice}")
+            raise ValueError(
+                f"Unsupported api_choice for snapshot: {api_choice}")
         mapping[api_choice]()
 
     def _download_dispatch(self, api_choice: str):
@@ -519,7 +601,8 @@ class BackupCoordinator:
             "userroles": self.userrole_handler.download,
         }
         if api_choice not in mapping:
-            raise ValueError(f"Unsupported api_choice for download: {api_choice}")
+            raise ValueError(
+                f"Unsupported api_choice for download: {api_choice}")
         mapping[api_choice]()
 
     def _count_snapshot_items(self) -> int:
@@ -531,7 +614,8 @@ class BackupCoordinator:
         for key, value in data.items():
             if key == "apis" and isinstance(value, dict):
                 total_size += len(value)
-            elif key in ("keyvaluemaps", "targetservers", "caches") and isinstance(value, dict):
+            elif key in ("keyvaluemaps", "targetservers",
+                         "caches") and isinstance(value, dict):
                 for _, env_items in value.items():
                     total_size += len(env_items)
             elif key == "apps" and isinstance(value, dict):

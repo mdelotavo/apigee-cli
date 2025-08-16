@@ -11,12 +11,16 @@ from pathlib import Path
 import click
 
 
-def apply_function_on_iterable(iterable, func, state_op="append", args=(), kwargs=None):
+def apply_function_on_iterable(iterable,
+                               func,
+                               state_op="append",
+                               args=(),
+                               kwargs=None):
     if kwargs is None:
         kwargs = {}
     state = []
     for item in iterable:
-        _tuple = (item,)
+        _tuple = (item, )
         result = func(*(_tuple + args), **kwargs)
         if result:
             getattr(state, state_op)(result)
@@ -40,7 +44,8 @@ def create_directory(path):
         try:
             os.makedirs(path)
         except FileExistsError:
-            logging.warning(f"{inspect.stack()[0][3]}; will ignore FileExistsError")
+            logging.warning(
+                f"{inspect.stack()[0][3]}; will ignore FileExistsError")
 
 
 def create_empty_file(path):
@@ -50,19 +55,25 @@ def create_empty_file(path):
             with open(path, "x"):
                 os.utime(path, None)
     except FileExistsError:
-        logging.warning(f"{inspect.stack()[0][3]}; will ignore FileExistsError")
+        logging.warning(
+            f"{inspect.stack()[0][3]}; will ignore FileExistsError")
 
 
 def ensure_set(iterable):
     return iterable if isinstance(iterable, set) else set(iterable)
 
 
-def execute_function_on_directory_files(dir, func, glob="**/*", args=(), kwargs=None):
+def execute_function_on_directory_files(dir,
+                                        func,
+                                        glob="**/*",
+                                        args=(),
+                                        kwargs=None):
     if kwargs is None:
         kwargs = {}
     state = []
-    for file_path in Path(get_resolved_directory_path(dir)).resolve().glob(glob):
-        _tuple = (str(file_path),)
+    for file_path in Path(
+            get_resolved_directory_path(dir)).resolve().glob(glob):
+        _tuple = (str(file_path), )
         result = func(*(_tuple + args), **kwargs)
         if result:
             state.append(result)
@@ -75,9 +86,7 @@ def extract_zip_file(source, dest):
 
 
 def filter_out_empty_values(dictionary):
-    return {
-        k: v for k, v in dictionary.items() if v
-    }
+    return {k: v for k, v in dictionary.items() if v}
 
 
 def get_resolved_directory_path(target_directory=None):
@@ -99,14 +108,13 @@ def get_tqdm_kwargs(desc):
 
 def import_plugins_from_directory(plugins_init_file, existing_commands):
     try:
-        spec = importlib.util.spec_from_file_location(
-            "plugins_modules", plugins_init_file
-        )
+        spec = importlib.util.spec_from_file_location("plugins_modules",
+                                                      plugins_init_file)
         module = importlib.util.module_from_spec(spec)
         sys.modules[spec.name] = module
         spec.loader.exec_module(module)
-        import plugins_modules # type: ignore
-        from plugins_modules import __all__ as all_plugins_modules # type: ignore
+        import plugins_modules  # type: ignore
+        from plugins_modules import __all__ as all_plugins_modules  # type: ignore
 
         for module in all_plugins_modules:
             _module = getattr(plugins_modules, module)
@@ -158,7 +166,11 @@ def split_path_by_delimiter(path, delimiter="[/\\\\]"):
     return re.split(delimiter, path)
 
 
-def write_content_to_file(content, file_path, write_to_filesystem=True, indentation=None, append_eof=True):
+def write_content_to_file(content,
+                          file_path,
+                          write_to_filesystem=True,
+                          indentation=None,
+                          append_eof=True):
     if not write_to_filesystem:
         return
     create_empty_file(file_path)

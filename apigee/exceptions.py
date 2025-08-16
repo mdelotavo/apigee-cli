@@ -30,6 +30,7 @@ def log_and_echo_http_error(error, append_message=""):
 
 
 def wrap_with_exception_handling(func):
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:

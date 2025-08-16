@@ -2,6 +2,7 @@ import json
 
 
 class KeystoresSerializer:
+
     def serialize_details(self, keystores, format, prefix=None):
         resp = keystores
         if format == "text":
@@ -9,7 +10,8 @@ class KeystoresSerializer:
         keystores = keystores.json()
         if prefix:
             keystores = [
-                keystore for keystore in keystores if keystore.startswith(prefix)
+                keystore for keystore in keystores
+                if keystore.startswith(prefix)
             ]
         if format == "dict":
             return keystores

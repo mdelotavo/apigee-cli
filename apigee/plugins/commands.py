@@ -13,14 +13,15 @@ from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
                     APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
                     console)
 from apigee.silent import common_silent_options
-from apigee.utils import (is_directory, is_regular_file, create_directory, read_file_content,
-                          execute_function_on_directory_files, create_empty_file)
+from apigee.utils import (is_directory, is_regular_file, create_directory,
+                          read_file_content,
+                          execute_function_on_directory_files,
+                          create_empty_file)
 from apigee.verbose import common_verbose_options
 
 is_git_installed = False
 plugins_command_help = (
-    "[Experimental] Simple plugins manager for distributing commands."
-)
+    "[Experimental] Simple plugins manager for distributing commands.")
 
 try:
     from git import Repo
@@ -59,7 +60,9 @@ def clone_plugin_repositories(section="sources"):
         if is_directory(dest):
             continue
         try:
-            console.echo(f"Installing {name}... ", line_ending="", should_flush=True)
+            console.echo(f"Installing {name}... ",
+                         line_ending="",
+                         should_flush=True)
             Repo.clone_from(uri, dest)
             console.echo("Done")
         except Exception as e:
@@ -112,14 +115,19 @@ def prune_unused_plugin_directories(section="sources"):
         except Exception as e:
             console.echo(e)
 
-    return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY, _func, glob="[!.][!__]*")
+    return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
+                                               _func,
+                                               glob="[!.][!__]*")
 
 
 def update_plugin_repositories():
+
     def _func(path):
         if not is_directory(path):
             return
-        console.echo(f"Updating {Path(path).stem}... ", line_ending="", should_flush=True)
+        console.echo(f"Updating {Path(path).stem}... ",
+                     line_ending="",
+                     should_flush=True)
         repo = Repo(path)
         if repo.bare:
             return
@@ -129,7 +137,9 @@ def update_plugin_repositories():
         except Exception as e:
             console.echo(e)
 
-    return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY, _func, glob="[!.][!__]*")
+    return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
+                                               _func,
+                                               glob="[!.][!__]*")
 
 
 @click.group(help=plugins_command_help)
@@ -173,9 +183,9 @@ def update(silent, verbose, section="sources"):
 @common_silent_options
 @common_verbose_options
 @click.option("-n", "--name", help="name of the plugins package")
-@optgroup.group(
-    "Filter options", cls=MutuallyExclusiveOptionGroup, help="The filter options"
-)
+@optgroup.group("Filter options",
+                cls=MutuallyExclusiveOptionGroup,
+                help="The filter options")
 @optgroup.option(
     "--show-commit-only/--no-show-commit-only",
     default=False,
@@ -202,7 +212,8 @@ def show(
         for name, uri in sources.items():
             console.echo(f"{name}: {uri}")
         return
-    plugins_info_file = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name / "apigee-cli.info"
+    plugins_info_file = Path(
+        APIGEE_CLI_PLUGINS_DIRECTORY) / name / "apigee-cli.info"
     if not is_regular_file(plugins_info_file):
         return
     plugins_info = read_file_content(plugins_info_file, type="json")
@@ -212,8 +223,7 @@ def show(
             Repo(Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name).git.log(
                 "--pretty=format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset",
                 "-1",
-            )
-        )
+            ))
         return
     if show_dependencies_only:
         if plugins_info.get("Requires"):

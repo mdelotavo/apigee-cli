@@ -11,27 +11,25 @@ description = "(DEPRECATED) apigeecli simplifies and automates Apigee Edge API u
 long_description = """The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication."""
 
 APIGEE_CLI_DIRECTORY = utils_init.join_path_components(Path.home(), ".apigee")
-APIGEE_CLI_PLUGINS_DIRECTORY = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "plugins")
+APIGEE_CLI_PLUGINS_DIRECTORY = utils_init.join_path_components(
+    APIGEE_CLI_DIRECTORY, "plugins")
 
 APIGEE_ADMIN_API_URL = "https://api.enterprise.apigee.com"
 APIGEE_CLI_ACCESS_TOKEN_FILE = utils_init.join_path_components(
-    APIGEE_CLI_DIRECTORY, "access_token"
-)
+    APIGEE_CLI_DIRECTORY, "access_token")
 APIGEE_CLI_REFRESH_TOKEN_FILE = utils_init.join_path_components(
-    APIGEE_CLI_DIRECTORY, "refresh_token"
-)
-APIGEE_CLI_CREDENTIALS_FILE = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "credentials")
+    APIGEE_CLI_DIRECTORY, "refresh_token")
+APIGEE_CLI_CREDENTIALS_FILE = utils_init.join_path_components(
+    APIGEE_CLI_DIRECTORY, "credentials")
 # APIGEE_CLI_EXCEPTION_LOG_FILE = utils.build_path_str(APIGEE_CLI_DIRECTORY, 'exception.log')
 APIGEE_CLI_EXCEPTIONS_LOG_FILE = utils_init.join_path_components(
-    APIGEE_CLI_DIRECTORY, "exceptions.log"
-)
-APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy_envvar(getenv("APIGEE_CLI_IS_MACHINE_USER"))
+    APIGEE_CLI_DIRECTORY, "exceptions.log")
+APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy_envvar(
+    getenv("APIGEE_CLI_IS_MACHINE_USER"))
 APIGEE_CLI_PLUGINS_CONFIG_FILE = utils_init.join_path_components(
-    APIGEE_CLI_PLUGINS_DIRECTORY, "config"
-)
+    APIGEE_CLI_PLUGINS_DIRECTORY, "config")
 APIGEE_CLI_PLUGINS_PATH = utils_init.join_path_components(
-    APIGEE_CLI_PLUGINS_DIRECTORY, "__init__.py"
-)
+    APIGEE_CLI_PLUGINS_DIRECTORY, "__init__.py")
 APIGEE_CLI_PREFIX = getenv("APIGEE_CLI_PREFIX")
 APIGEE_CLI_SYMMETRIC_KEY = getenv("APIGEE_CLI_SYMMETRIC_KEY")
 APIGEE_CLI_TOGGLE_SILENT = False

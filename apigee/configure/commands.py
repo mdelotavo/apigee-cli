@@ -9,6 +9,7 @@ from apigee.utils_init import is_truthy_envvar
 
 
 class HiddenSecret(object):
+
     def __init__(self, secret=""):
         self.secret = secret
 
@@ -102,7 +103,8 @@ except KeyError:
     default="default",
     show_default=True,
 )
-def configure(username, password, mfa_secret, token, zonename, org, prefix, profile):
+def configure(username, password, mfa_secret, token, zonename, org, prefix,
+              profile):
     if isinstance(password, HiddenSecret):
         password = password.secret
     if isinstance(mfa_secret, HiddenSecret):

@@ -17,12 +17,13 @@ from apigee.utils import (
     apply_function_on_iterable,
 )
 
-
 # ---------------------------
 # Internal Helper for XML Parsing
 # ---------------------------
 
+
 class _SyncHelper:
+
     @staticmethod
     def extract_cache_dependencies(file, _state):
         try:
@@ -62,7 +63,9 @@ class _SyncHelper:
 # Resource Exporter Classes
 # ---------------------------
 
+
 class KeyValueMapsExporter:
+
     def __init__(self, auth, org_name, environment, output_dir):
         self.auth = auth
         self.org_name = org_name
@@ -71,21 +74,29 @@ class KeyValueMapsExporter:
         create_directory(self.output_dir)
 
     def export(self, keyvaluemaps, force=False, expected_verbosity=1):
+
         def _func(kvm):
             kvm_file = self.output_dir / f"{kvm}.json"
             if not force:
                 check_file_exists(os.path.relpath(kvm_file))
-            resp = Keyvaluemaps(self.auth, self.org_name, kvm).get_keyvaluemap_in_an_environment(self.environment).text
+            resp = Keyvaluemaps(self.auth, self.org_name,
+                                kvm).get_keyvaluemap_in_an_environment(
+                                    self.environment).text
             console.echo(resp, expected_verbosity=expected_verbosity)
             with open(kvm_file, "w") as f:
                 f.write(resp)
+
         return apply_function_on_iterable(keyvaluemaps, _func)
 
     def get_dependencies(self, files):
-        return apply_function_on_iterable(files, _SyncHelper.extract_keyvaluemap_dependencies, args=(set(),))
+        return apply_function_on_iterable(
+            files,
+            _SyncHelper.extract_keyvaluemap_dependencies,
+            args=(set(), ))
 
 
 class CachesExporter:
+
     def __init__(self, auth, org_name, environment, output_dir):
         self.auth = auth
         self.org_name = org_name
@@ -94,21 +105,27 @@ class CachesExporter:
         create_directory(self.output_dir)
 
     def export(self, caches, force=False, expected_verbosity=1):
+
         def _func(cache):
             cache_file = self.output_dir / f"{cache}.json"
             if not force:
                 check_file_exists(os.path.relpath(cache_file))
-            resp = Caches(self.auth, self.org_name, cache).get_information_about_a_cache(self.environment).text
+            resp = Caches(self.auth, self.org_name,
+                          cache).get_information_about_a_cache(
+                              self.environment).text
             console.echo(resp, expected_verbosity=expected_verbosity)
             with open(cache_file, "w") as f:
                 f.write(resp)
+
         return apply_function_on_iterable(caches, _func)
 
     def get_dependencies(self, files):
-        return apply_function_on_iterable(files, _SyncHelper.extract_cache_dependencies, args=(set(),))
+        return apply_function_on_iterable(
+            files, _SyncHelper.extract_cache_dependencies, args=(set(), ))
 
 
 class TargetServersExporter:
+
     def __init__(self, auth, org_name, environment, output_dir):
         self.auth = auth
         self.org_name = org_name
@@ -117,30 +134,42 @@ class TargetServersExporter:
         create_directory(self.output_dir)
 
     def export(self, targetservers, force=False, expected_verbosity=1):
+
         def _func(ts):
             ts_file = self.output_dir / f"{ts}.json"
             if not force:
                 check_file_exists(os.path.relpath(ts_file))
-            resp = Targetservers(self.auth, self.org_name, ts).get_targetserver(self.environment).text
+            resp = Targetservers(self.auth, self.org_name,
+                                 ts).get_targetserver(self.environment).text
             console.echo(resp, expected_verbosity=expected_verbosity)
             with open(ts_file, "w") as f:
                 f.write(resp)
+
         return apply_function_on_iterable(targetservers, _func)
 
     def get_dependencies(self, files):
-        return apply_function_on_iterable(files, _SyncHelper.extract_targetserver_dependencies, args=(set(),))
+        return apply_function_on_iterable(
+            files,
+            _SyncHelper.extract_targetserver_dependencies,
+            args=(set(), ))
 
 
 # ---------------------------
 # Main API Puller
 # ---------------------------
 
+
 class ApiPullerWithDependencyExtraction:
     """
     Orchestrates exporting an API proxy along with all dependent resources.
     """
 
-    def __init__(self, auth, org_name, revision_number, environment, working_directory=None):
+    def __init__(self,
+                 auth,
+                 org_name,
+                 revision_number,
+                 environment,
+                 working_directory=None):
         self.auth = auth
         self.org_name = org_name
         self.revision_number = revision_number
@@ -148,9 +177,14 @@ class ApiPullerWithDependencyExtraction:
         self.working_directory = Path(working_directory or os.getcwd())
 
         # Initialize resource exporters
-        self.keyvaluemaps_exporter = KeyValueMapsExporter(auth, org_name, environment, self.working_directory / "keyvaluemaps")
-        self.caches_exporter = CachesExporter(auth, org_name, environment, self.working_directory / "caches")
-        self.targetservers_exporter = TargetServersExporter(auth, org_name, environment, self.working_directory / "targetservers")
+        self.keyvaluemaps_exporter = KeyValueMapsExporter(
+            auth, org_name, environment,
+            self.working_directory / "keyvaluemaps")
+        self.caches_exporter = CachesExporter(
+            auth, org_name, environment, self.working_directory / "caches")
+        self.targetservers_exporter = TargetServersExporter(
+            auth, org_name, environment,
+            self.working_directory / "targetservers")
 
         self.apiproxy_dir = self.working_directory
         self.zip_file = self.working_directory.with_suffix(".zip")
@@ -164,11 +198,14 @@ class ApiPullerWithDependencyExtraction:
         self.apiproxy_dir = self.working_directory / api_name
 
         if not force:
-            check_files_exist((os.path.relpath(self.zip_file), os.path.relpath(self.apiproxy_dir)))
+            check_files_exist((os.path.relpath(self.zip_file),
+                               os.path.relpath(self.apiproxy_dir)))
 
         exported_api = Apis(self.auth, self.org_name).export_api_proxy(
-            api_name, self.revision_number, write_to_filesystem=True, output_file=str(self.zip_file)
-        )
+            api_name,
+            self.revision_number,
+            write_to_filesystem=True,
+            output_file=str(self.zip_file))
 
         create_directory(self.apiproxy_dir)
         extract_zip_file(str(self.zip_file), str(self.apiproxy_dir))
@@ -176,7 +213,9 @@ class ApiPullerWithDependencyExtraction:
 
         files = self.get_apiproxy_files(self.apiproxy_dir)
         for resource_type in ("keyvaluemap", "targetserver", "cache"):
-            self.export_resource_dependencies(resource_type, files, force=force)
+            self.export_resource_dependencies(resource_type,
+                                              files,
+                                              force=force)
 
         return exported_api
 
@@ -196,4 +235,5 @@ class ApiPullerWithDependencyExtraction:
         return resource_files
 
     def get_apiproxy_files(self, directory):
-        return execute_function_on_directory_files(str(Path(directory) / "apiproxy"), lambda f: f)
+        return execute_function_on_directory_files(
+            str(Path(directory) / "apiproxy"), lambda f: f)

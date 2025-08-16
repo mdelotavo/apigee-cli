@@ -35,9 +35,10 @@ class _EncryptionHelper:
         Matches original behavior (no header/footer added).
         """
         try:
-            encrypted = self.gpg.encrypt(
-                message, symmetric="AES256", passphrase=self.secret, recipients=None
-            )
+            encrypted = self.gpg.encrypt(message,
+                                         symmetric="AES256",
+                                         passphrase=self.secret,
+                                         recipients=None)
             if not encrypted.ok:
                 raise ValueError(f"GPG encryption failed: {encrypted.status}")
             result = str(encrypted)
@@ -56,7 +57,8 @@ class _EncryptionHelper:
             return ""
         try:
             # Strip header/footer for backward compatibility
-            payload = message[len(ENCRYPTED_HEADER_BEGIN) : -len(ENCRYPTED_HEADER_END)]
+            payload = message[len(ENCRYPTED_HEADER_BEGIN
+                                  ):-len(ENCRYPTED_HEADER_END)]
             if encoded:
                 payload_bytes = _safe_base64_decode(payload)
                 payload = payload_bytes.decode()
@@ -72,12 +74,17 @@ class _EncryptionHelper:
 # Public API (Backward Compatible)
 # ---------------------------
 
-def encrypt_message_with_gpg(secret: str, message: str, encoded: bool = True) -> str:
+
+def encrypt_message_with_gpg(secret: str,
+                             message: str,
+                             encoded: bool = True) -> str:
     helper = _EncryptionHelper(secret)
     return helper.encrypt(message, encoded=encoded)
 
 
-def decrypt_message_with_gpg(secret: str, message: str, encoded: bool = True) -> str:
+def decrypt_message_with_gpg(secret: str,
+                             message: str,
+                             encoded: bool = True) -> str:
     helper = _EncryptionHelper(secret)
     return helper.decrypt(message, encoded=encoded)
 
@@ -85,4 +92,5 @@ def decrypt_message_with_gpg(secret: str, message: str, encoded: bool = True) ->
 def has_encrypted_header(message: str) -> bool:
     if not isinstance(message, str):
         return False
-    return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(ENCRYPTED_HEADER_END)
+    return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(
+        ENCRYPTED_HEADER_END)

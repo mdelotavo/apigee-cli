@@ -38,16 +38,12 @@ def permissions():
     pass
 
 
-def _create_permissions(
-    username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
-):
-    return (
-        Permissions(
-            generate_authentication(username, password, mfa_secret, token, zonename), org, name
-        )
-        .create_role_permissions(body)
-        .text
-    )
+def _create_permissions(username, password, mfa_secret, token, zonename, org,
+                        profile, name, body, **kwargs):
+    return (Permissions(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).create_role_permissions(body).text)
 
 
 @permissions.command(help="Create permissions for a role.")
@@ -60,29 +56,25 @@ def create(*args, **kwargs):
     console.echo(_create_permissions(*args, **kwargs))
 
 
-def _team_permissions(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    file,
-    placeholder_key=None,
-    placeholder_value="",
-    **kwargs
-):
-    return (
-        Permissions(
-            generate_authentication(username, password, mfa_secret, token, zonename), org, name
-        )
-        .apply_team_permissions_template(
-            file, placeholder_key=placeholder_key, placeholder_value=placeholder_value
-        )
-        .text
-    )
+def _team_permissions(username,
+                      password,
+                      mfa_secret,
+                      token,
+                      zonename,
+                      org,
+                      profile,
+                      name,
+                      file,
+                      placeholder_key=None,
+                      placeholder_value="",
+                      **kwargs):
+    return (Permissions(
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).apply_team_permissions_template(
+            file,
+            placeholder_key=placeholder_key,
+            placeholder_value=placeholder_value).text)
 
 
 @permissions.command(
@@ -96,7 +88,10 @@ def _team_permissions(
 @click.option(
     "-f",
     "--file",
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
+    type=click.Path(exists=True,
+                    dir_okay=False,
+                    file_okay=True,
+                    resolve_path=False),
     required=True,
 )
 @click.option(
@@ -114,28 +109,27 @@ def template(*args, **kwargs):
     console.echo(_team_permissions(*args, **kwargs))
 
 
-def _get_permissions(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    format,
-    showindex=False,
-    tablefmt="plain",
-    **kwargs
-):
+def _get_permissions(username,
+                     password,
+                     mfa_secret,
+                     token,
+                     zonename,
+                     org,
+                     profile,
+                     name,
+                     format,
+                     showindex=False,
+                     tablefmt="plain",
+                     **kwargs):
     return Permissions(
-        generate_authentication(username, password, mfa_secret, token, zonename), org, name
-    ).get_permissions(
-        formatted=True,
-        format="text" if format == "json" else format,
-        showindex=showindex,
-        tablefmt=tablefmt,
-    )
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).get_permissions(
+            formatted=True,
+            format="text" if format == "json" else format,
+            showindex=showindex,
+            tablefmt=tablefmt,
+        )
 
 
 @permissions.command(help="Get permissions for a role.")

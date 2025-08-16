@@ -4,9 +4,12 @@ from apigee.utils import remove_last_elements, apply_function_on_iterable
 
 
 class ApisSerializer:
+
     @staticmethod
     def filter_deployed_revisions(revision_details):
-        revisions = apply_function_on_iterable(revision_details, lambda d: d["revision"], state_op="extend")
+        revisions = apply_function_on_iterable(revision_details,
+                                               lambda d: d["revision"],
+                                               state_op="extend")
         unique_revisions = set(revisions)
         return list(unique_revisions)
 
@@ -21,8 +24,13 @@ class ApisSerializer:
         )
 
     @staticmethod
-    def filter_undeployed_revisions(all_revisions, deployed_revisions, save_last=0):
-        undeployed_revisions = [int(rev) for rev in all_revisions if rev not in set(deployed_revisions)]
+    def filter_undeployed_revisions(all_revisions,
+                                    deployed_revisions,
+                                    save_last=0):
+        undeployed_revisions = [
+            int(rev) for rev in all_revisions
+            if rev not in set(deployed_revisions)
+        ]
         sorted_undeployed_revisions = sorted(undeployed_revisions)
         return remove_last_elements(sorted_undeployed_revisions, save_last)
 

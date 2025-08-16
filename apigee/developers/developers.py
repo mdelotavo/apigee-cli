@@ -20,20 +20,25 @@ UPDATE_ALL_DEVELOPER_ATTRIBUTES_PATH = "{api_url}/v1/organizations/{org}/develop
 
 
 class Developers:
+
     def __init__(self, auth, org_name, developer_email):
         self.auth = auth
         self.org_name = org_name
         self.developer_email = developer_email
 
-    def create_developer(
-        self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'
-    ):
-        uri = CREATE_DEVELOPER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name
-        )
+    def create_developer(self,
+                         first_name,
+                         last_name,
+                         user_name,
+                         attributes='{"attributes" : [ ]}'):
+        uri = CREATE_DEVELOPER_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                           org=self.org_name)
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = {
             "email": self.developer_email,
@@ -52,7 +57,8 @@ class Developers:
             org=self.org_name,
             developer_email=self.developer_email,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -64,7 +70,8 @@ class Developers:
             developer_email=self.developer_email,
             attribute_name=attribute_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -75,7 +82,8 @@ class Developers:
             org=self.org_name,
             developer_email=self.developer_email,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -86,7 +94,8 @@ class Developers:
             org=self.org_name,
             developer_email=self.developer_email,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -98,23 +107,28 @@ class Developers:
             developer_email=self.developer_email,
             attribute_name=attribute_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def get_developer_by_app(self, app_name):
-        uri = GET_DEVELOPER_BY_APP_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, app_name=app_name
-        )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        uri = GET_DEVELOPER_BY_APP_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                               org=self.org_name,
+                                               app_name=app_name)
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_developers(
-        self, prefix=None, expand=False, count=1000, startkey="", format="json"
-    ):
+    def list_developers(self,
+                        prefix=None,
+                        expand=False,
+                        count=1000,
+                        startkey="",
+                        format="json"):
         uri = LIST_DEVELOPERS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self.org_name,
@@ -122,10 +136,13 @@ class Developers:
             count=count,
             startkey=startkey,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return DevelopersSerializer().serialize_details(resp, format, prefix=prefix)
+        return DevelopersSerializer().serialize_details(resp,
+                                                        format,
+                                                        prefix=prefix)
 
     def set_developer_status(self, action):
         uri = SET_DEVELOPER_STATUS_PATH.format(
@@ -152,7 +169,8 @@ class Developers:
             developer_email=self.developer_email,
             attribute_name=attribute_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         body = {"value": updated_value}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -166,7 +184,10 @@ class Developers:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -181,7 +202,10 @@ class Developers:
         )
         hdrs = auth.set_authentication_headers(
             self.auth,
-            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
+            custom_headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)

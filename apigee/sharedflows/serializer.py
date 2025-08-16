@@ -4,15 +4,14 @@ from apigee.utils import remove_last_elements, apply_function_on_iterable
 
 
 class SharedflowsSerializer:
+
     @staticmethod
     def filter_deployed_revisions(details):
         return list(
             set(
-                apply_function_on_iterable(
-                    details, lambda d: d["revision"], state_op="extend"
-                )
-            )
-        )
+                apply_function_on_iterable(details,
+                                           lambda d: d["revision"],
+                                           state_op="extend")))
 
     @staticmethod
     def filter_deployment_details(details):
@@ -37,8 +36,7 @@ class SharedflowsSerializer:
         sharedflows = sharedflows.json()
         if prefix:
             sharedflows = [
-                sharedflow
-                for sharedflow in sharedflows
+                sharedflow for sharedflow in sharedflows
                 if sharedflow.startswith(prefix)
             ]
         return json.dumps(sharedflows) if format == "json" else resp

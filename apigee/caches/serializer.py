@@ -2,6 +2,7 @@ import json
 
 
 class CachesSerializer:
+
     def serialize_details(self, caches, format, prefix=None):
         resp = caches
         if format == "text":

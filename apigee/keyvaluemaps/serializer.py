@@ -2,6 +2,7 @@ import json
 
 
 class KeyvaluemapsSerializer:
+
     def serialize_details(self, maps, format, prefix=None):
         resp = maps
         if format == "text":

@@ -17,17 +17,20 @@ FORCE_UNDEPLOY_API_PROXY_REVISION_PATH = "{api_url}/v1/organizations/{org}/apis/
 
 
 class Apis:
+
     def __init__(self, auth, org_name):
         self.auth = auth
         self.org_name = org_name
 
-    def delete_api_proxy(self, api_name):  # sourcery skip: class-extract-method
+    def delete_api_proxy(self,
+                         api_name):  # sourcery skip: class-extract-method
         uri = DELETE_API_PROXY_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self.org_name,
             api_name=api_name,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -39,23 +42,26 @@ class Apis:
             api_name=api_name,
             revision_number=revision_number,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
+    def delete_undeployed_revisions(self,
+                                    api_name,
+                                    save_last=0,
+                                    dry_run=False):
         details = ApisSerializer.filter_deployment_details(
-            Deployments(self.auth, self.org_name, api_name)
-            .get_api_proxy_deployment_details()
-            .json()
-        )
+            Deployments(self.auth, self.org_name,
+                        api_name).get_api_proxy_deployment_details().json())
         undeployed_revisions = ApisSerializer.filter_undeployed_revisions(
             self.list_api_proxy_revisions(api_name).json(),
             ApisSerializer.filter_deployed_revisions(details),
             save_last=save_last,
         )
-        console.echo(f"Undeployed revisions to be deleted: {undeployed_revisions}")
+        console.echo(
+            f"Undeployed revisions to be deleted: {undeployed_revisions}")
         if dry_run:
             return undeployed_revisions
 
@@ -65,9 +71,12 @@ class Apis:
 
         return apply_function_on_iterable(undeployed_revisions, _func)
 
-    def deploy_api_proxy_revision(
-        self, api_name, environment, revision_number, delay=0, override=False
-    ):
+    def deploy_api_proxy_revision(self,
+                                  api_name,
+                                  environment,
+                                  revision_number,
+                                  delay=0,
+                                  override=False):
         uri = DEPLOY_API_PROXY_REVISION_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self.org_name,
@@ -84,28 +93,33 @@ class Apis:
             },
         )
         resp = requests.post(
-            uri, headers=hdrs, data={"override": "true" if override else "false"}
-        )
+            uri,
+            headers=hdrs,
+            data={"override": "true" if override else "false"})
         resp.raise_for_status()
         return resp
 
-    def export_api_proxy(
-        self, api_name, revision_number, write_to_filesystem=True, output_file=None
-    ):
+    def export_api_proxy(self,
+                         api_name,
+                         revision_number,
+                         write_to_filesystem=True,
+                         output_file=None):
         uri = EXPORT_API_PROXY_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self.org_name,
             api_name=api_name,
             revision_number=revision_number,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         if write_to_filesystem:
             write_content_to_zip(output_file, resp.content)
         return resp
 
-    def force_undeploy_api_proxy_revision(self, api_name, environment, revision_number):
+    def force_undeploy_api_proxy_revision(self, api_name, environment,
+                                          revision_number):
         uri = FORCE_UNDEPLOY_API_PROXY_REVISION_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self.org_name,
@@ -113,39 +127,42 @@ class Apis:
             revision_number=revision_number,
             environment=environment,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def get_api_proxy(self, api_name):
-        uri = GET_API_PROXY_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, api_name=api_name
-        )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        uri = GET_API_PROXY_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                        org=self.org_name,
+                                        api_name=api_name)
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def list_api_proxies(self, prefix=None, format="json"):
-        uri = LIST_API_PROXIES_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name
-        )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        uri = LIST_API_PROXIES_PATH.format(api_url=APIGEE_ADMIN_API_URL,
+                                           org=self.org_name)
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return ApisSerializer.serialize_details(resp, format, prefix=prefix)
 
     def list_api_proxy_revisions(self, api_name):
         uri = LIST_API_PROXY_REVISIONS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, api_name=api_name
-        )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, api_name=api_name)
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def undeploy_api_proxy_revision(self, api_name, environment, revision_number):
+    def undeploy_api_proxy_revision(self, api_name, environment,
+                                    revision_number):
         uri = UNDEPLOY_API_PROXY_REVISION_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self.org_name,
@@ -153,7 +170,8 @@ class Apis:
             api_name=api_name,
             revision_number=revision_number,
         )
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp

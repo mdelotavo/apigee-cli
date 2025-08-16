@@ -52,7 +52,9 @@ SETUP_ARGS = dict(
         "tabulate==0.9.0",
         "tqdm==4.64.1",
     ],
-    project_urls={"Documentation": "https://darumatic.github.io/apigee-cli/index.html"},
+    project_urls={
+        "Documentation": "https://darumatic.github.io/apigee-cli/index.html"
+    },
     python_requires=">=3.7",
 )
 

@@ -31,41 +31,33 @@ TABLEFMT_CHOICES = [
 
 
 @click.group(
-    help="API proxies and shared flows that are actively deployed in environments on Apigee Edge.",
+    help=
+    "API proxies and shared flows that are actively deployed in environments on Apigee Edge.",
     cls=ClickAliasedGroup,
 )
 def deployments():
     pass
 
 
-def _get_api_proxy_deployment_details(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    format,
-    showindex,
-    tablefmt,
-    revision_name_only,
-    **kwargs
-):
+def _get_api_proxy_deployment_details(username, password, mfa_secret, token,
+                                      zonename, org, profile, name, format,
+                                      showindex, tablefmt, revision_name_only,
+                                      **kwargs):
     return Deployments(
-        generate_authentication(username, password, mfa_secret, token, zonename), org, name
-    ).get_api_proxy_deployment_details(
-        formatted=True,
-        format=format,
-        showindex=showindex,
-        tablefmt=tablefmt,
-        revision_name_only=revision_name_only,
-    )
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).get_api_proxy_deployment_details(
+            formatted=True,
+            format=format,
+            showindex=showindex,
+            tablefmt=tablefmt,
+            revision_name_only=revision_name_only,
+        )
 
 
 @deployments.command(
-    help="Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.",
+    help=
+    "Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.",
     aliases=["get-api-proxy-deployment-details"],
 )
 @common_auth_options
@@ -87,39 +79,32 @@ def _get_api_proxy_deployment_details(
     default="plain",
     show_default=True,
 )
-@click.option("--revision-name-only/--no-revision-name-only", "-r/-R", default=False)
+@click.option("--revision-name-only/--no-revision-name-only",
+              "-r/-R",
+              default=False)
 def get(*args, **kwargs):
     console.echo(_get_api_proxy_deployment_details(*args, **kwargs))
 
 
-def _get_shared_flow_deployment_details(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    format,
-    showindex,
-    tablefmt,
-    revision_name_only,
-    **kwargs
-):
+def _get_shared_flow_deployment_details(username, password, mfa_secret, token,
+                                        zonename, org, profile, name, format,
+                                        showindex, tablefmt,
+                                        revision_name_only, **kwargs):
     return Deployments(
-        generate_authentication(username, password, mfa_secret, token, zonename), org, name
-    ).get_shared_flow_deployment_details(
-        formatted=True,
-        format=format,
-        showindex=showindex,
-        tablefmt=tablefmt,
-        revision_name_only=revision_name_only,
-    )
+        generate_authentication(username, password, mfa_secret, token,
+                                zonename), org,
+        name).get_shared_flow_deployment_details(
+            formatted=True,
+            format=format,
+            showindex=showindex,
+            tablefmt=tablefmt,
+            revision_name_only=revision_name_only,
+        )
 
 
 @deployments.command(
-    help="Returns detail on all deployments of the shared flow for all environments.",
+    help=
+    "Returns detail on all deployments of the shared flow for all environments.",
 )
 @common_auth_options
 @common_silent_options
@@ -140,6 +125,8 @@ def _get_shared_flow_deployment_details(
     default="plain",
     show_default=True,
 )
-@click.option("--revision-name-only/--no-revision-name-only", "-r/-R", default=False)
+@click.option("--revision-name-only/--no-revision-name-only",
+              "-r/-R",
+              default=False)
 def get_shared_flow_deployment_details(*args, **kwargs):
     console.echo(_get_api_proxy_deployment_details(*args, **kwargs))

@@ -2,7 +2,9 @@ import unittest
 from unittest.mock import patch
 from apigee.console import echo
 
+
 class TestEcho(unittest.TestCase):
+
     @patch('builtins.print')
     @patch('sys.exit')
     def test_echo_silent(self, mock_exit, mock_print):
@@ -30,6 +32,7 @@ class TestEcho(unittest.TestCase):
         echo('Hello', current_verbosity=0, expected_verbosity=1)
         mock_print.assert_not_called()
         mock_exit.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()
