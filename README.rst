@@ -103,6 +103,18 @@ Run the following command to get a list of API proxies in your ``default`` Apige
     $ apigee apis list
     ["helloworld", "oauth"]
 
+^^^^^^^^^^^^^^^
+Troubleshooting
+^^^^^^^^^^^^^^^
+
+If you encounter issues with commands, check the log file for detailed debug information and error messages::
+
+    ~/.apigee/exceptions.log
+
+This file can help diagnose installation problems, missing dependencies, or errors related to Apigee Edge.
+
+You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more detailed request information.
+
 -------------
 Running Tests
 -------------
