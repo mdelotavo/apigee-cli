@@ -758,13 +758,13 @@
 </li>
       <li><a href="source/apigee.html#apigee.utils.check_files_exist">check_files_exist() (in module apigee.utils)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.chmod_directory">chmod_directory() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.FileUtils.chmod_directory">chmod_directory() (apigee.plugins.commands.FileUtils static method)</a>
 </li>
       <li><a href="source/apigee.caches.html#apigee.caches.caches.Caches.clear_a_cache_entry">clear_a_cache_entry() (apigee.caches.caches.Caches method)</a>
 </li>
       <li><a href="source/apigee.caches.html#apigee.caches.caches.Caches.clear_all_cache_entries">clear_all_cache_entries() (apigee.caches.caches.Caches method)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.clone_plugin_repositories">clone_plugin_repositories() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.clone_repositories">clone_repositories() (apigee.plugins.commands.PluginManager static method)</a>
 </li>
       <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.close_progress_bar">close_progress_bar() (apigee.backups.backups.Backups method)</a>
 </li>
@@ -946,7 +946,7 @@
 </li>
       <li><a href="source/apigee.html#apigee.utils.execute_function_on_directory_files">execute_function_on_directory_files() (in module apigee.utils)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.exit_quietly_if_git_not_installed">exit_quietly_if_git_not_installed() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.GitUtils.exit_if_not_installed">exit_if_not_installed() (apigee.plugins.commands.GitUtils static method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -989,6 +989,8 @@
       <li><a href="source/apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.fetch_shared_flow_revisions">fetch_shared_flow_revisions() (apigee.sharedflows.sharedflows.Sharedflows method)</a>
 </li>
       <li><a href="source/apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.fetch_target_server_data">fetch_target_server_data() (apigee.targetservers.targetservers.Targetservers method)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.FileUtils">FileUtils (class in apigee.plugins.commands)</a>
 </li>
       <li><a href="source/apigee.apis.html#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions">filter_deployed_revisions() (apigee.apis.serializer.ApisSerializer static method)</a>
 
@@ -1094,14 +1096,14 @@
 </li>
       <li><a href="source/apigee.developers.html#apigee.developers.developers.Developers.get_developer">get_developer() (apigee.developers.developers.Developers method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.apps.html#apigee.apps.apps.Apps.get_developer_app_details">get_developer_app_details() (apigee.apps.apps.Apps method)</a>
 
       <ul>
         <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.get_developer_app_details">(apigee.backups.backups.Backups method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.developers.html#apigee.developers.developers.Developers.get_developer_attribute">get_developer_attribute() (apigee.developers.developers.Developers method)</a>
 </li>
       <li><a href="source/apigee.developers.html#apigee.developers.developers.Developers.get_developer_by_app">get_developer_by_app() (apigee.developers.developers.Developers method)</a>
@@ -1127,6 +1129,8 @@
       <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.get_output_file_path">get_output_file_path() (apigee.backups.backups.Backups method)</a>
 </li>
       <li><a href="source/apigee.permissions.html#apigee.permissions.permissions.Permissions.get_permissions">get_permissions() (apigee.permissions.permissions.Permissions method)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.get_plugin_info">get_plugin_info() (apigee.plugins.commands.PluginManager static method)</a>
 </li>
       <li><a href="source/apigee.references.html#apigee.references.references.References.get_reference">get_reference() (apigee.references.references.References method)</a>
 </li>
@@ -1165,6 +1169,8 @@
       <li><a href="source/apigee.apis.html#apigee.apis.deploy.getElementText">getElementText() (in module apigee.apis.deploy)</a>
 </li>
       <li><a href="source/apigee.apis.html#apigee.apis.deploy.getElementVal">getElementVal() (in module apigee.apis.deploy)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.GitUtils">GitUtils (class in apigee.plugins.commands)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1208,14 +1214,12 @@
 </li>
       <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.increment_progress_bar">increment_progress_bar() (apigee.backups.backups.Backups method)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.initialize_and_save_plugin_config">initialize_and_save_plugin_config() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.initialize_plugins">initialize_plugins() (apigee.plugins.commands.PluginManager static method)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.initialize_apigee_cli_plugins">initialize_apigee_cli_plugins() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.initialize_progress_bar">initialize_progress_bar() (apigee.backups.backups.Backups method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.initialize_progress_bar">initialize_progress_bar() (apigee.backups.backups.Backups method)</a>
-</li>
       <li><a href="source/apigee.html#apigee.exceptions.InvalidApisError">InvalidApisError</a>
 </li>
       <li><a href="source/apigee.html#apigee.utils.is_directory">is_directory() (in module apigee.utils)</a>
@@ -1290,10 +1294,10 @@
 </li>
       <li><a href="source/apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy">list_data_masks_for_an_api_proxy() (apigee.maskconfigs.maskconfigs.Maskconfigs method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_organization">list_data_masks_for_an_organization() (apigee.maskconfigs.maskconfigs.Maskconfigs method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.apps.html#apigee.apps.apps.Apps.list_developer_apps">list_developer_apps() (apigee.apps.apps.Apps method)</a>
 </li>
       <li><a href="source/apigee.developers.html#apigee.developers.developers.Developers.list_developers">list_developers() (apigee.developers.developers.Developers method)</a>
@@ -1308,6 +1312,8 @@
 </li>
       <li><a href="source/apigee.userroles.html#apigee.userroles.userroles.Userroles.list_permissions_for_a_resource">list_permissions_for_a_resource() (apigee.userroles.userroles.Userroles method)</a>
 </li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.list_sources">list_sources() (apigee.plugins.commands.PluginManager static method)</a>
+</li>
       <li><a href="source/apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.list_targetservers_in_an_environment">list_targetservers_in_an_environment() (apigee.targetservers.targetservers.Targetservers method)</a>
 </li>
       <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.list_targetservers_in_environment">list_targetservers_in_environment() (apigee.backups.backups.Backups method)</a>
@@ -1320,7 +1326,7 @@
       </ul></li>
       <li><a href="source/apigee.virtualhosts.html#apigee.virtualhosts.virtualhosts.Virtualhosts.list_virtual_hosts_for_an_environment">list_virtual_hosts_for_an_environment() (apigee.virtualhosts.virtualhosts.Virtualhosts method)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.load_plugin_config">load_plugin_config() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.load_config">load_config() (apigee.plugins.commands.PluginManager static method)</a>
 </li>
       <li><a href="source/apigee.html#apigee.exceptions.log_and_echo_http_error">log_and_echo_http_error() (in module apigee.exceptions)</a>
 </li>
@@ -1525,15 +1531,23 @@
 </li>
       <li><a href="source/apigee.permissions.html#apigee.permissions.serializer.PermissionsSerializer">PermissionsSerializer (class in apigee.permissions.serializer)</a>
 </li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager">PluginManager (class in apigee.plugins.commands)</a>
+</li>
       <li><a href="source/apigee.backups.html#apigee.backups.backups.BackupConfig.prefix">prefix (apigee.backups.backups.BackupConfig attribute)</a>
 </li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.print_dependencies">print_dependencies() (apigee.plugins.commands.PluginManager static method)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.print_full_info">print_full_info() (apigee.plugins.commands.PluginManager static method)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.print_latest_commit">print_latest_commit() (apigee.plugins.commands.PluginManager static method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.apis.html#apigee.apis.deploy.printDeployments">printDeployments() (in module apigee.apis.deploy)</a>
 </li>
       <li><a href="source/apigee.backups.html#apigee.backups.backups.BackupConfig.progress_bar">progress_bar (apigee.backups.backups.BackupConfig attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.prune_unused_plugin_directories">prune_unused_plugin_directories() (in module apigee.plugins.commands)</a>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.prune_unused_directories">prune_unused_directories() (apigee.plugins.commands.PluginManager static method)</a>
 </li>
       <li><a href="source/apigee.apiproducts.html#apigee.apiproducts.apiproducts.Apiproducts.push_apiproducts">push_apiproducts() (apigee.apiproducts.apiproducts.Apiproducts method)</a>
 </li>
@@ -1709,9 +1723,9 @@
 </li>
       <li><a href="source/apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment">update_keyvaluemap_in_an_environment() (apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps method)</a>
 </li>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.update_plugin_repositories">update_plugin_repositories() (in module apigee.plugins.commands)</a>
-</li>
       <li><a href="source/apigee.backups.html#apigee.backups.backups.Backups.update_progress_bar">update_progress_bar() (apigee.backups.backups.Backups method)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.PluginManager.update_repositories">update_repositories() (apigee.plugins.commands.PluginManager static method)</a>
 </li>
       <li><a href="source/apigee.userroles.html#apigee.userroles.userroles.Userroles">Userroles (class in apigee.userroles.userroles)</a>
 </li>
