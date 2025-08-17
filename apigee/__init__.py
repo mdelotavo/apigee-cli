@@ -26,6 +26,8 @@ APIGEE_CLI_EXCEPTIONS_LOG_FILE = utils_init.join_path_components(
     APIGEE_CLI_DIRECTORY, "exceptions.log")
 APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy_envvar(
     getenv("APIGEE_CLI_IS_MACHINE_USER"))
+APIGEE_CLI_PLUGIN_INFO_FILE = "apigee-cli-info.json"
+APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY = "apigee-cli.info"
 APIGEE_CLI_PLUGINS_CONFIG_FILE = utils_init.join_path_components(
     APIGEE_CLI_PLUGINS_DIRECTORY, "config")
 APIGEE_CLI_PLUGINS_PATH = utils_init.join_path_components(

@@ -9,7 +9,9 @@ from pathlib import Path
 import click
 from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 
-from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
+from apigee import (APIGEE_CLI_PLUGIN_INFO_FILE,
+                    APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY,
+                    APIGEE_CLI_PLUGINS_CONFIG_FILE,
                     APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
                     console)
 from apigee.silent import common_silent_options
@@ -19,18 +21,17 @@ from apigee.utils import (create_directory, create_empty_file,
 from apigee.verbose import common_verbose_options
 
 # ---- Global Variables ----
-is_git_installed = False
-plugins_command_help = (
+IS_GIT_INSTALLED = False
+PLUGINS_COMMAND_HELP = (
     "Originally meant to help Darumatic clients automate Apigee and API-related "
     "tasks, but available for anyone to use. Refer to "
-    "https://github.com/mdelotavo/apigee-cli-plugins to learn how."
-)
+    "https://github.com/mdelotavo/apigee-cli-plugins to learn how.")
 
 try:
     from git import Repo
-    is_git_installed = True
+    IS_GIT_INSTALLED = True
 except ImportError:
-    plugins_command_help = (
+    PLUGINS_COMMAND_HELP = (
         "Simple plugins manager for distributing commands. "
         "[Warning: Git must be installed to use plugin commands]")
 
@@ -54,7 +55,7 @@ class GitUtils:
 
     @staticmethod
     def exit_if_not_installed():
-        if not is_git_installed:
+        if not IS_GIT_INSTALLED:
             sys.exit(0)
 
 
@@ -119,9 +120,8 @@ class PluginManager:
             except Exception as e:
                 console.echo(e)
 
-        return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
-                                                   _func,
-                                                   glob="[!.][!__]*")
+        return execute_function_on_directory_files(
+            APIGEE_CLI_PLUGINS_DIRECTORY, _func, glob="[!.][!__]*")
 
     @staticmethod
     def update_repositories():
@@ -141,9 +141,8 @@ class PluginManager:
             except Exception as e:
                 console.echo(e)
 
-        return execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY,
-                                                   _func,
-                                                   glob="[!.][!__]*")
+        return execute_function_on_directory_files(
+            APIGEE_CLI_PLUGINS_DIRECTORY, _func, glob="[!.][!__]*")
 
     @staticmethod
     def list_sources(section="sources"):
@@ -154,7 +153,10 @@ class PluginManager:
     @staticmethod
     def get_plugin_info(name):
         """Return the parsed plugin info JSON or None if file missing."""
-        info_file = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name / "apigee-cli.info"
+        plugin_directory = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
+        info_json = plugin_directory / APIGEE_CLI_PLUGIN_INFO_FILE
+        info_legacy = plugin_directory / APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY
+        info_file = info_json if info_json.exists() else info_legacy
         if not is_regular_file(info_file):
             return None
         return read_file_content(info_file, type="json")
@@ -184,7 +186,7 @@ class PluginManager:
 
 
 # ---- CLI Commands ----
-@click.group(help=plugins_command_help)
+@click.group(help=PLUGINS_COMMAND_HELP)
 def plugins():
     pass
 
@@ -207,9 +209,9 @@ def configure(silent, verbose, apply_changes):
         PluginManager.clone_repositories()
         PluginManager.prune_unused_directories()
     else:
-        console.echo("\n  Run `apigee plugins update` to apply any changes,")
-        console.echo("    or rerun `apigee plugins configure` with `-a`")
-        console.echo("    to apply changes automatically.\n")
+        console.echo("\n  Run `apigee plugins update` to apply any changes, "
+                     "or rerun `apigee plugins configure` with `-a` "
+                     "to apply changes automatically.\n")
 
 
 @plugins.command(help="Update or install plugins.")
