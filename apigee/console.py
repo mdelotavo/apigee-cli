@@ -15,7 +15,7 @@ def echo(*message,
         if exit_status:
             sys.exit(exit_status)
         return
-    if current_verbosity or toggle_verbose >= expected_verbosity:
+    if max(current_verbosity, toggle_verbose) >= expected_verbosity:
         print(*message, end=line_ending, flush=should_flush)
     if exit_status:
         sys.exit(exit_status)
