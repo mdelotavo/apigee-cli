@@ -51,9 +51,9 @@ def cli(ctx):
     """Welcome to the (Unofficial) Apigee Management API command-line interface!
 
     \b
-    Docs:    https://darumatic.github.io/apigee-cli/
-    PyPI:    https://pypi.org/project/apigeecli/
-    GitHub:  https://github.com/darumatic/apigee-cli
+    https://pypi.org/project/apigeecli
+    https://github.com/darumatic/apigee-cli
+    https://darumatic.github.io/apigee-cli
 
     \f
 

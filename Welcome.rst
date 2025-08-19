@@ -8,7 +8,7 @@ apigee-cli
 
 .. warning::
 
-   We primarily use and test with SSO; basic and MFA authentication may still work, but we no longer actively use or verify them.
+   We primarily use and test with SSO; basic and MFA authentication may still work, but we no longer use or test them.
 
 The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication.
 
