@@ -1,7 +1,3 @@
-import os
-import re
-import sys
-# read the contents of your README file
 from os import path
 
 from apigee import APP
@@ -31,26 +27,19 @@ SETUP_ARGS = dict(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
     ],
-    # py_modules = ['apigee',],
-    # entry_points='''
-    #     [console_scripts]
-    #     apigee=apigee.__main__:main
-    # ''',
     entry_points={"console_scripts": ["apigee=apigee.__main__:main"]},
     install_requires=[
-        "click==8.1.3",
-        "click-aliases==1.0.1",
-        "click-option-group==0.5.5",
-        "colorama==0.4.6",
-        "coverage==7.0.1",
-        "GitPython==3.1.30",
-        "pudb==2022.1.3",
-        "PyJWT==2.6.0",
-        "pyotp==2.8.0",
-        "python-gnupg>=0.3.5,<0.5.0",  # Note the updated version range
-        "requests==2.28.1",
-        "tabulate==0.9.0",
-        "tqdm==4.64.1",
+        "click>=8.1.3",
+        "click-aliases>=1.0.1",
+        "click-option-group>=0.5.5",
+        "colorama>=0.4.6",
+        "GitPython>=3.1.34",
+        "PyJWT>=2.6.0",
+        "pyotp>=2.8.0",
+        "python-gnupg>=0.3.5",
+        "requests>=2.31.0",
+        "tabulate>=0.9.0",
+        "tqdm>=4.64.1",
     ],
     project_urls={
         "Documentation": "https://darumatic.github.io/apigee-cli/index.html"
