@@ -11,7 +11,7 @@ For a more stable experience, install version **0.53.11 or earlier**:
 
 ::
 
-   pip install "apigee-cli<=0.53.11"
+   pip install apigeecli==0.53.11
 
 
 Maintenance Status
