@@ -3,15 +3,20 @@ import json
 
 class VirtualhostsSerializer:
 
-    def serialize_details(self, virtualhosts, format, prefix=None):
-        resp = virtualhosts
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return virtualhosts.text
-        virtualhosts = virtualhosts.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            virtualhosts = [virtualhost for virtualhost in virtualhosts if virtualhost.startswith(prefix)]
+            data = [v for v in data if v.startswith(prefix)]
+
         if format == "dict":
-            return virtualhosts
-        elif format == "json":
-            return json.dumps(virtualhosts)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp
