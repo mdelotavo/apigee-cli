@@ -51,17 +51,26 @@ APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY = "apigee-cli.info"
 # Environment variables
 # --------------------
 
-APIGEE_ORG = getenv("APIGEE_ORG")
+# ---- Core auth inputs ----
 APIGEE_USERNAME = getenv("APIGEE_USERNAME")
 APIGEE_PASSWORD = getenv("APIGEE_PASSWORD")
 APIGEE_MFA_SECRET = getenv("APIGEE_MFA_SECRET")
 APIGEE_ZONENAME = getenv("APIGEE_ZONENAME")
+APIGEE_ORG = getenv("APIGEE_ORG")
 
+# ---- Auth mode / behaviour ----
 APIGEE_IS_TOKEN = getenv("APIGEE_IS_TOKEN")
+APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy_envvar(getenv("APIGEE_CLI_IS_MACHINE_USER"))
+
+# ---- CLI configuration ----
 APIGEE_CLI_PREFIX = getenv("APIGEE_CLI_PREFIX")
 APIGEE_CLI_SYMMETRIC_KEY = getenv("APIGEE_CLI_SYMMETRIC_KEY")
 
-APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy_envvar(getenv("APIGEE_CLI_IS_MACHINE_USER"))
+# ---- Network / runtime settings ----
+APIGEE_CLI_ENABLE_SSL_VERIFY = utils_init.is_truthy_envvar((getenv("APIGEE_CLI_ENABLE_SSL_VERIFY") or "").lower())
+
+# ---- Misc ----
+APIGEE_QUERY_PARAMETERS = getenv("APIGEE_QUERY_PARAMETERS")
 
 # --------------------
 # Runtime flags

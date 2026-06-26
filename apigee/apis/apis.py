@@ -1,8 +1,9 @@
-import requests
+# import requests
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.apis.serializer import ApisSerializer
 from apigee.deployments.deployments import Deployments
+from apigee.request import request
 from apigee.utils import apply_function_on_iterable, write_content_to_zip
 
 DELETE_API_PROXY_PATH = "/v1/organizations/{org}/apis/{api_name}"
@@ -33,7 +34,8 @@ class Apis:
 
     def _request(self, method, path, **kwargs):
         url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
+        # resp = requests.request(method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
+        resp = request(self.auth, method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
         resp.raise_for_status()
         return resp
 
