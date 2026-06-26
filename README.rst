@@ -4,15 +4,73 @@ apigee-cli
 
 |Python version| |Downloads| |License|
 
-.. warning::
+**⚠️ Maintenance Status**
+------------------------
+**This tool is no longer actively maintained.**
 
-   This tool is no longer actively maintained.
+It remains usable, but no new features or fixes are planned.
 
-.. warning::
+**⚠️ Authentication Support Notice**
+----------------------------------
+We primarily use and test with **SSO**.  
+**Basic** and **MFA** authentication may still work, but they are **no longer tested or guaranteed**.
 
-   We primarily use and test with SSO; basic and MFA authentication may still work, but we no longer use or test them.
+---
 
-The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication.
+**Overview**
+------------
+The Apigee Edge command-line interface is an **unofficial Python CLI** built to simplify and automate Apigee API usage.
+
+- Originally built for **Darumatic clients**
+- Designed for **Apigee Edge**, now being used during transition toward **Apigee X (ApigeeX)**
+- Supports common API management workflows via CLI
+
+---
+
+**✅ Recently Tested (Post-Refactor / Pre-Deprecation)**
+------------------------------------------------------
+The following commands and features were validated during final updates and refactoring:
+
+**Authentication**
+- ✅ SSO login flow (primary supported method)
+- ⚠️ Basic auth (not actively tested)
+- ⚠️ MFA auth (not actively tested)
+
+**Core Functionality**
+- ✅ Organization and environment targeting
+- ✅ API proxy deployments
+- ✅ API proxy undeployments
+- ✅ Revision listing and management
+- ✅ Product and app queries (read operations)
+
+**CLI Behavior**
+- ✅ Argument parsing and command structure
+- ✅ Error handling for common API failures
+- ✅ Config/environment switching
+
+---
+
+**⚠️ Deprecation & Platform Shift**
+----------------------------------
+This tool was designed for **Apigee Edge**, which is being phased out in favor of **Apigee X (ApigeeX)**.
+
+- No major enhancements for ApigeeX compatibility are planned
+- Some commands may not fully align with ApigeeX APIs
+- Long-term usage is **not recommended for new projects**
+
+---
+
+**Recommendation**
+-----------------
+For new implementations, consider:
+- Official Google Cloud / Apigee tooling
+- Direct ApigeeX API usage
+- Modern CI/CD integrations
+
+This CLI is best suited for:
+- Legacy automation
+- Transitional environments
+- Existing scripts that depend on it
 
 -----------------------------------------
 Why use this instead of the official tool
