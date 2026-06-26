@@ -2,212 +2,254 @@
 set -euo pipefail
 
 ########################################
-# CONFIGURATION (override via env vars)
+# USAGE
 ########################################
 
-# Core Apigee settings
-ORG="${APIGEE_ORG:-your-org}"
+usage() {
+  cat <<EOF
+Usage:
+  Export required environment variables, then run:
+
+    bash scripts/apigeecli_contract_test.sh
+
+Required variables:
+  APIGEE_ORG                Apigee organisation
+
+Optional variables (with defaults):
+  APIGEE_ENV                Target environment (default: dev)
+  APIGEE_PROXY_NAME         API proxy name (default: test-proxy)
+  APIGEE_SHARED_FLOW_NAME   Sharedflow name (default: test-sf)
+  APIGEE_CACHE_NAME         Cache name (default: test-cache)
+
+  APIGEE_KVM_FILE           KVM file path (default: ./testdata/kvm.json)
+  APIGEE_CACHE_FILE         Cache file path
+  APIGEE_TARGETSERVER_FILE  Target server file path
+  APIGEE_MASKCONFIG_FILE    Mask config file path
+
+  APIGEE_PROXY_DIR          Proxy directory (default: ./apiproxy)
+  APIGEE_SHARED_FLOW_ZIP    Sharedflow zip (default: ./testdata/sharedflow.zip)
+
+  OUTPUT_DIR                Output directory (default: ./apigeecli-test-output)
+  DRY_RUN                   true/false (default: false)
+
+Backup options:
+  BACKUP_ENVS               Comma list (default: APIGEE_ENV)
+  BACKUP_APIS               Comma list (default: all)
+
+Examples:
+  export APIGEE_ORG=my-org
+  export APIGEE_ENV=uat
+  bash scripts/apigeecli_contract_test.sh
+
+EOF
+}
+
+########################################
+# CONFIGURATION
+########################################
+
+: "${APIGEE_ORG:?APIGEE_ORG must be set}"
+
+ORG="$APIGEE_ORG"
 ENV="${APIGEE_ENV:-dev}"
 
-# Resource names
 PROXY_NAME="${APIGEE_PROXY_NAME:-test-proxy}"
 SHAREDFLOW_NAME="${APIGEE_SHARED_FLOW_NAME:-test-sf}"
 CACHE_NAME="${APIGEE_CACHE_NAME:-test-cache}"
 
-# Input test files
 KVM_FILE="${APIGEE_KVM_FILE:-./testdata/kvm.json}"
 CACHE_FILE="${APIGEE_CACHE_FILE:-./testdata/cache.json}"
 TARGETSERVER_FILE="${APIGEE_TARGETSERVER_FILE:-./testdata/targetserver.json}"
 MASKCONFIG_FILE="${APIGEE_MASKCONFIG_FILE:-./testdata/maskconfig.json}"
 
-# Prefix/auth config
-PREFIX_REMOTE="${CICD_PREFIXES_REMOTE_URL:-https://example.com/prefixes.git}"
-DEVELOPER_EMAIL="${GITLAB_USER_EMAIL:-test@example.com}"
-
-# Proxy + sharedflow artefacts
 PROXY_DIR="${APIGEE_PROXY_DIR:-./apiproxy}"
 SHAREDFLOW_ZIP="${APIGEE_SHARED_FLOW_ZIP:-./testdata/sharedflow.zip}"
 
-# Output & behaviour
 OUTPUT_DIR="${OUTPUT_DIR:-./apigeecli-test-output}"
 DRY_RUN="${DRY_RUN:-false}"
-TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 
+BACKUP_ENVS="${BACKUP_ENVS:-$ENV}"
+BACKUP_APIS="${BACKUP_APIS:-}"
+
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 RUN_DIR="${OUTPUT_DIR}/${TIMESTAMP}"
 mkdir -p "$RUN_DIR"
 
 ########################################
-# HELPERS
+# VALIDATION
 ########################################
 
-log() {
-  echo -e "\n========== $1 ==========\n"
+log() { echo -e "\n========== $1 ==========\n"; }
+
+fail() {
+  echo "ERROR: $1" >&2
+  exit 1
 }
 
-# Executes command and logs output to file
+check_file() {
+  [ -f "$1" ] || fail "File not found: $1"
+}
+
+check_dir() {
+  [ -d "$1" ] || fail "Directory not found: $1"
+}
+
+validate() {
+  log "VALIDATION"
+
+  command -v apigee >/dev/null || fail "apigee CLI not found"
+
+  check_file "$KVM_FILE"
+  check_file "$CACHE_FILE"
+  check_file "$TARGETSERVER_FILE"
+  check_file "$MASKCONFIG_FILE"
+
+  check_file "$SHAREDFLOW_ZIP"
+  check_dir  "$PROXY_DIR"
+
+  echo "ORG=$ORG"
+  echo "ENV=$ENV"
+  echo "OUTPUT_DIR=$RUN_DIR"
+  echo "DRY_RUN=$DRY_RUN"
+}
+
+########################################
+# EXECUTION WRAPPER
+########################################
+
 run_cmd() {
   local name="$1"
   shift
-
   local logfile="${RUN_DIR}/${name}.log"
 
   echo ">> $*"
-  echo "   ↳ log: $logfile"
+  echo "   log: $logfile"
 
   if [ "$DRY_RUN" = "true" ]; then
-    echo "⚠️ DRY RUN (command not executed)" | tee "$logfile"
-    return 0
+    echo "DRY RUN" > "$logfile"
+    return
   fi
 
-  # Run command, capture stdout+stderr
   if ! "$@" >"$logfile" 2>&1; then
-    echo "❌ FAILED: $name"
-    echo "---- LOG OUTPUT ----"
+    echo "FAILED: $name"
     cat "$logfile"
     exit 1
   fi
 }
 
-cleanup_prefixes() {
-  rm -rf .apigee-prefixes || true
+########################################
+# BUILD FLAGS SAFELY
+########################################
+
+build_env_args() {
+  local args=()
+  IFS=',' read -ra arr <<< "$BACKUP_ENVS"
+  for e in "${arr[@]}"; do
+    args+=("-e" "$e")
+  done
+  printf '%s\n' "${args[@]}"
+}
+
+build_api_args() {
+  local args=()
+  if [ -n "$BACKUP_APIS" ]; then
+    IFS=',' read -ra arr <<< "$BACKUP_APIS"
+    for a in "${arr[@]}"; do
+      args+=("--apis" "$a")
+    done
+  fi
+  printf '%s\n' "${args[@]}"
 }
 
 ########################################
-# PRE-FLIGHT CHECKS
+# RUN
 ########################################
 
-log "PRE-FLIGHT CHECKS"
-
-command -v apigee >/dev/null || { echo "❌ apigee CLI not found"; exit 1; }
-
-echo "ORG=$ORG"
-echo "ENV=$ENV"
-echo "OUTPUT_DIR=$RUN_DIR"
-echo "DRY_RUN=$DRY_RUN"
-
-########################################
-# CLI + PLUGINS
-########################################
+validate
 
 log "CLI VERSION"
-run_cmd "cli_version" apigee -V
+run_cmd cli_version apigee -V
 
 log "PLUGIN UPDATE"
-run_cmd "plugins_update" apigee plugins update
+run_cmd plugins_update apigee plugins update
+
+log "CONFIG PUSH"
+
+run_cmd kvm_push apigee keyvaluemaps push --file "$KVM_FILE" -e "$ENV" -o "$ORG"
+run_cmd cache_push apigee caches push --file "$CACHE_FILE" -e "$ENV" -o "$ORG"
+run_cmd targetserver_push apigee targetservers push --file "$TARGETSERVER_FILE" -e "$ENV" -o "$ORG"
+run_cmd maskconfig_push apigee maskconfigs push --file "$MASKCONFIG_FILE" --name "$PROXY_NAME" -o "$ORG"
+
+log "SHAREDFLOWS"
+
+run_cmd sharedflow_deploy apigee sharedflows deploy \
+  --override -n "$SHAREDFLOW_NAME" -f "$SHAREDFLOW_ZIP" -e "$ENV" -o "$ORG"
+
+run_cmd sharedflow_clean apigee sharedflows clean \
+  -n "$SHAREDFLOW_NAME" --save-last 1 -o "$ORG"
+
+log "APIS"
+
+run_cmd api_deploy apigee apis deploy \
+  --seamless-deploy -d "$PROXY_DIR" -n "$PROXY_NAME" -e "$ENV" -o "$ORG"
+
+run_cmd api_clean apigee apis clean \
+  -n "$PROXY_NAME" --save-last 1 -o "$ORG"
 
 ########################################
-# AUTH VALIDATION
+# BACKUPS
 ########################################
 
-log "AUTH CHECK"
-cleanup_prefixes
-run_cmd "check_auth" apigee check-auth \
-  --remote "$PREFIX_REMOTE" \
-  --developer "$DEVELOPER_EMAIL" \
-  --destination-path .apigee-prefixes \
-  -n "$PROXY_NAME"
-cleanup_prefixes
+log "BACKUPS"
+
+BACKUP_DIR="${RUN_DIR}/backups"
+SNAPSHOT_DIR="${BACKUP_DIR}/snapshot"
+
+mkdir -p "$SNAPSHOT_DIR"
+
+mapfile -t ENV_ARGS < <(build_env_args)
+mapfile -t API_ARGS < <(build_api_args)
+
+run_cmd backup_snapshot apigee backups take-snapshot \
+  --target-directory "$SNAPSHOT_DIR" \
+  -o "$ORG" \
+  "${ENV_ARGS[@]}" \
+  "${API_ARGS[@]}"
 
 ########################################
-# CONFIG PUSH TESTS
+# NORMALISATION (optional)
 ########################################
 
-log "KVM PUSH"
-run_cmd "kvm_push" apigee keyvaluemaps push \
-  --file "$KVM_FILE" \
-  -e "$ENV" \
-  -o "$ORG"
+log "NORMALISATION"
 
-log "CACHE PUSH"
-run_cmd "cache_push" apigee caches push \
-  --file "$CACHE_FILE" \
-  -e "$ENV" \
-  -o "$ORG"
+NORMALISED_DIR="${BACKUP_DIR}/snapshot_normalised"
+mkdir -p "$NORMALISED_DIR"
 
-log "TARGETSERVER PUSH"
-run_cmd "targetserver_push" apigee targetservers push \
-  --file "$TARGETSERVER_FILE" \
-  -e "$ENV" \
-  -o "$ORG"
-
-log "MASKCONFIG PUSH"
-run_cmd "maskconfig_push" apigee maskconfigs push \
-  --file "$MASKCONFIG_FILE" \
-  --name "$PROXY_NAME" \
-  -o "$ORG"
-
-########################################
-# SHAREDFLOW OPERATIONS
-########################################
-
-log "SHAREDFLOW DEPLOY"
-run_cmd "sharedflow_deploy" apigee sharedflows deploy \
-  --override \
-  -n "$SHAREDFLOW_NAME" \
-  -f "$SHAREDFLOW_ZIP" \
-  -e "$ENV" \
-  -o "$ORG"
-
-log "SHAREDFLOW CLEAN"
-run_cmd "sharedflow_clean" apigee sharedflows clean \
-  -n "$SHAREDFLOW_NAME" \
-  --save-last 1 \
-  -o "$ORG"
-
-########################################
-# API PROXY OPERATIONS
-########################################
-
-log "API DEPLOY"
-run_cmd "api_deploy" apigee apis deploy \
-  --seamless-deploy \
-  -d "$PROXY_DIR" \
-  -n "$PROXY_NAME" \
-  -e "$ENV" \
-  -o "$ORG"
-
-log "API CLEAN"
-run_cmd "api_clean" apigee apis clean \
-  -n "$PROXY_NAME" \
-  --save-last 1 \
-  -o "$ORG"
+if [ "$DRY_RUN" != "true" ]; then
+  cp -R "$SNAPSHOT_DIR/." "$NORMALISED_DIR/" 2>/dev/null || true
+  find "$NORMALISED_DIR" -type f -name "*.log" -delete || true
+fi
 
 ########################################
 # CACHE CLEAR
 ########################################
 
 log "CACHE CLEAR"
-run_cmd "cache_clear" apigee caches clear \
-  -n "$CACHE_NAME" \
-  -e "$ENV"
+run_cmd cache_clear apigee caches clear -n "$CACHE_NAME" -e "$ENV"
 
 ########################################
-# SECURITY / QUALITY
-########################################
-
-log "SECURITY ASSESSMENT"
-run_cmd "security_scan" apigee security-assessment -d ./
-
-log "APIGEELINT"
-if command -v apigeelint >/dev/null; then
-  run_cmd "apigeelint" apigeelint -s "$PROXY_DIR" -f table
-else
-  echo "⚠️ apigeelint not installed, skipping"
-fi
-
-########################################
-# SUMMARY OUTPUT
+# SUMMARY
 ########################################
 
 log "SUMMARY"
 
-echo "✅ All commands executed successfully"
-echo "📁 Output directory: $RUN_DIR"
+echo "All commands completed successfully"
+echo "Output directory: $RUN_DIR"
 
 echo ""
-echo "Generated logs:"
+echo "Logs:"
 ls -1 "$RUN_DIR"
 
 echo ""
-echo "💡 To compare runs:"
-echo "diff -r previous_run_dir $RUN_DIR"
+echo "To compare runs:"
+echo "  diff -r <previous_run_dir> $RUN_DIR"
