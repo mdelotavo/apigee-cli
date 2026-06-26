@@ -3,15 +3,20 @@ import json
 
 class ApiproductsSerializer:
 
-    def serialize_details(self, apiproducts, format, prefix=None):
-        resp = apiproducts
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return apiproducts.text
-        apiproducts = apiproducts.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            apiproducts = [apiproduct for apiproduct in apiproducts if apiproduct.startswith(prefix)]
+            data = [p for p in data if p.startswith(prefix)]
+
         if format == "dict":
-            return apiproducts
-        elif format == "json":
-            return json.dumps(apiproducts)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp
