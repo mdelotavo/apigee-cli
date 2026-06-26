@@ -13,9 +13,11 @@ class KeyValueMapsBackup(BaseBackup):
     async def snapshot(self):
         result = {}
 
+        client = Keyvaluemaps(self.config.authentication, self.config.org_name, None)
+
         for env in self.config.environments:
             kvms = await run_blocking(
-              Keyvaluemaps(self.config.authentication, self.config.org_name, None).list_keyvaluemaps_in_an_environment,
+              client.list_keyvaluemaps,
               env,
               self.config.prefix,
               "dict",
@@ -42,18 +44,23 @@ class KeyValueMapsBackup(BaseBackup):
 
     async def _download(self, env, kvm):
         try:
-            content = await run_blocking(
-              Keyvaluemaps(self.config.authentication, self.config.org_name, kvm).get_keyvaluemap_in_an_environment,
+            client = Keyvaluemaps(self.config.authentication, self.config.org_name, kvm)
+
+            resp = await run_blocking(
+              client.get_keyvaluemap,
               env,
             )
 
             path = self.full_path(f"keyvaluemaps/{env}/{kvm}.json")
 
-            await run_blocking(write_content_to_file, content.text, path, 2)
+            await run_blocking(write_content_to_file, resp.text, path, 2)
 
             self.progress("KeyValueMaps")
 
         except HTTPError as e:
+            if e.response.status_code != 404:
+                raise
             self.handle_http_error(e, f" for KVM ({kvm})")
+
         except Exception as e:
             self.handle_error(e, env, kvm)

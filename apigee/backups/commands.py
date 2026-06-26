@@ -1,8 +1,7 @@
-import asyncio
 import click
 
 from apigee.auth import common_auth_options, generate_authentication
-from apigee.backups import BackupConfig, BackupRunner
+from apigee.backups import BackupConfig, Backups
 from apigee.exceptions import InvalidApisError
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -15,8 +14,13 @@ def backups():
     pass
 
 
+# --------------------
+# validation
+# --------------------
+
+
 def validate_resources(apis):
-    invalid = [choice for choice in apis if choice not in APIGEE_API_CHOICES]
+    invalid = [a for a in apis if a not in APIGEE_API_CHOICES]
 
     if invalid:
         raise InvalidApisError(f"Invalid API choices: {', '.join(invalid)}")
@@ -24,32 +28,35 @@ def validate_resources(apis):
     return set(apis)
 
 
-def _take_snapshot(
-  username,
-  password,
-  mfa_secret,
-  token,
-  zonename,
-  org,
-  profile,
-  target_directory,
-  prefix,
-  environments,
-  apis,
-  **kwargs,
-):
-    api_choices = validate_resources(apis)
+# --------------------
+# execution
+# --------------------
+
+
+def _take_snapshot(**kwargs):
+    api_choices = validate_resources(kwargs["apis"])
 
     config = BackupConfig(
-      authentication=generate_authentication(username, password, mfa_secret, token, zonename),
-      org_name=org,
-      working_directory=target_directory,
-      prefix=prefix,
+      authentication=generate_authentication(
+        kwargs["username"],
+        kwargs["password"],
+        kwargs["mfa_secret"],
+        kwargs["token"],
+        kwargs["zonename"],
+      ),
+      org_name=kwargs["org"],
+      working_directory=kwargs["target_directory"],
+      prefix=kwargs.get("prefix"),
       api_choices=api_choices,
-      environments=list(environments),
+      environments=list(kwargs["environments"]),
     )
 
-    asyncio.run(BackupRunner(config).run())
+    Backups(config).run()
+
+
+# --------------------
+# command
+# --------------------
 
 
 @backups.command(help="Downloads and generates local snapshots of specified Apigee resources.")
@@ -76,5 +83,5 @@ def _take_snapshot(
   default=["test", "prod"],
   show_default=True,
 )
-def take_snapshot(*args, **kwargs):
-    _take_snapshot(*args, **kwargs)
+def take_snapshot(**kwargs):
+    _take_snapshot(**kwargs)
