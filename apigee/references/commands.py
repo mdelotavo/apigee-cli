@@ -17,11 +17,6 @@ def _client(username, password, mfa_secret, token, zonename, org, name=None):
     return References(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
 
 
-# --------------------
-# list
-# --------------------
-
-
 @references.command(help="List references.")
 @common_auth_options
 @common_prefix_options
@@ -30,11 +25,6 @@ def _client(username, password, mfa_secret, token, zonename, org, name=None):
 @click.option("-e", "--environment", required=True)
 def list(username, password, mfa_secret, token, zonename, org, profile, environment, prefix, **_):
     console.echo(_client(username, password, mfa_secret, token, zonename, org).list(environment, prefix=prefix))
-
-
-# --------------------
-# get
-# --------------------
 
 
 @references.command(help="Get a reference.")
