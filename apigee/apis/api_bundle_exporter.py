@@ -9,12 +9,12 @@ from apigee.caches.caches import Caches
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
 from apigee.utils import (
-    apply_function_on_iterable,
-    check_file_exists,
-    check_files_exist,
-    create_directory,
-    execute_function_on_directory_files,
-    extract_zip_file,
+  apply_function_on_iterable,
+  check_file_exists,
+  check_files_exist,
+  create_directory,
+  execute_function_on_directory_files,
+  extract_zip_file,
 )
 
 
@@ -43,9 +43,7 @@ class ApiBundleExporter:
 
         create_directory(str(self.root))
 
-        exported = Apis(self.auth, self.org_name).export_api_proxy(
-            api_name, self.revision, write_to_filesystem=True, output_file=zip_file
-        )
+        exported = Apis(self.auth, self.org_name).export_api_proxy(api_name, self.revision, write_to_filesystem=True, output_file=zip_file)
 
         create_directory(str(api_dir))
         extract_zip_file(zip_file, str(api_dir))
@@ -99,6 +97,7 @@ class ApiBundleExporter:
         return execute_function_on_directory_files(str(Path(directory) / "apiproxy"), lambda f: f)
 
     def _get_caches(self, files):
+
         def fn(f, seen):
             try:
                 name = et.parse(f).find(".//CacheResource").text
@@ -108,9 +107,10 @@ class ApiBundleExporter:
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 
-        return apply_function_on_iterable(files, fn, args=(set(),))
+        return apply_function_on_iterable(files, fn, args=(set(), ))
 
     def _get_kvms(self, files):
+
         def fn(f, seen):
             try:
                 root = et.parse(f).getroot()
@@ -122,9 +122,10 @@ class ApiBundleExporter:
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 
-        return apply_function_on_iterable(files, fn, args=(set(),))
+        return apply_function_on_iterable(files, fn, args=(set(), ))
 
     def _get_targets(self, files):
+
         def fn(f, seen):
             try:
                 root = et.parse(f).getroot()
@@ -136,4 +137,4 @@ class ApiBundleExporter:
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 
-        return apply_function_on_iterable(files, fn, args=(set(),))
+        return apply_function_on_iterable(files, fn, args=(set(), ))

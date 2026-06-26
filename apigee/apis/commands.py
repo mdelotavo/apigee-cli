@@ -42,9 +42,8 @@ def delete_revision(username, password, mfa_secret, token, zonename, org, profil
 @click.option("--override/--no-override", default=False)
 def deploy_revision(username, password, mfa_secret, token, zonename, org, profile, name, environment, revision_number, delay, override, **_):
     console.echo(
-        _client(username, password, mfa_secret, token, zonename, org)
-        .deploy_api_proxy_revision(name, environment, revision_number, delay=delay, override=override)
-        .text
+      _client(username, password, mfa_secret, token, zonename,
+              org).deploy_api_proxy_revision(name, environment, revision_number, delay=delay, override=override).text
     )
 
 
@@ -77,10 +76,10 @@ def delete(username, password, mfa_secret, token, zonename, org, profile, name, 
 @click.option("-O", "--output-file", default=None)
 def export(username, password, mfa_secret, token, zonename, org, profile, name, revision_number, output_file, **_):
     _client(username, password, mfa_secret, token, zonename, org).export_api_proxy(
-        name,
-        revision_number,
-        write_to_filesystem=True,
-        output_file=output_file or f"{name}.zip",
+      name,
+      revision_number,
+      write_to_filesystem=True,
+      output_file=output_file or f"{name}.zip",
     )
 
 
@@ -119,11 +118,7 @@ def list_revisions(username, password, mfa_secret, token, zonename, org, profile
 @click.option("-e", "--environment", required=True)
 @click.option("-r", "--revision-number", type=int, required=True)
 def undeploy_revision(username, password, mfa_secret, token, zonename, org, profile, name, environment, revision_number, **_):
-    console.echo(
-        _client(username, password, mfa_secret, token, zonename, org)
-        .undeploy_api_proxy_revision(name, environment, revision_number)
-        .text
-    )
+    console.echo(_client(username, password, mfa_secret, token, zonename, org).undeploy_api_proxy_revision(name, environment, revision_number).text)
 
 
 @apis.command(help="Force undeploy an API proxy revision.")
@@ -134,11 +129,7 @@ def undeploy_revision(username, password, mfa_secret, token, zonename, org, prof
 @click.option("-e", "--environment", required=True)
 @click.option("-r", "--revision-number", type=int, required=True)
 def force_undeploy_revision(username, password, mfa_secret, token, zonename, org, profile, name, environment, revision_number, **_):
-    console.echo(
-        _client(username, password, mfa_secret, token, zonename, org)
-        .force_undeploy_api_proxy_revision(name, environment, revision_number)
-        .text
-    )
+    console.echo(_client(username, password, mfa_secret, token, zonename, org).force_undeploy_api_proxy_revision(name, environment, revision_number).text)
 
 
 @apis.command(help="Download API proxy with dependencies.")
@@ -153,11 +144,11 @@ def force_undeploy_revision(username, password, mfa_secret, token, zonename, org
 def pull(username, password, mfa_secret, token, zonename, org, profile, name, revision_number, environment, work_tree, force, **_):
 
     exporter = ApiBundleExporter(
-        generate_authentication(username, password, mfa_secret, token, zonename),
-        org,
-        revision_number,
-        environment,
-        working_directory=work_tree,
+      generate_authentication(username, password, mfa_secret, token, zonename),
+      org,
+      revision_number,
+      environment,
+      working_directory=work_tree,
     )
 
     exporter.export(name, force=force)
@@ -170,27 +161,27 @@ def pull(username, password, mfa_secret, token, zonename, org, profile, name, re
 @click.option("-e", "--environment", required=True)
 @click.option("-n", "--name", required=True)
 @click.option(
-    "-d",
-    "--directory",
-    type=click.Path(exists=True, dir_okay=True, file_okay=False),
-    required=True,
+  "-d",
+  "--directory",
+  type=click.Path(exists=True, dir_okay=True, file_okay=False),
+  required=True,
 )
 @optgroup.group("Deployment options", cls=MutuallyExclusiveOptionGroup)
 @optgroup.option("--import-only/--no-import-only", "-i/-I", default=False)
 @optgroup.option("--seamless-deploy/--no-seamless-deploy", "-s/-S", default=False)
 def deploy(username, password, mfa_secret, token, zonename, org, profile, name, directory, import_only, seamless_deploy, environment, **_):
     deploy_tool(
-        Struct(
-            username=username,
-            password=password,
-            directory=directory,
-            org=org,
-            name=name,
-            environment=environment,
-            import_only=import_only,
-            seamless_deploy=seamless_deploy,
-            mfa_secret=mfa_secret,
-            token=token,
-            zonename=zonename,
-        )
+      Struct(
+        username=username,
+        password=password,
+        directory=directory,
+        org=org,
+        name=name,
+        environment=environment,
+        import_only=import_only,
+        seamless_deploy=seamless_deploy,
+        mfa_secret=mfa_secret,
+        token=token,
+        zonename=zonename,
+      )
     )

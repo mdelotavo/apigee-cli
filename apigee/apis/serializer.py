@@ -7,21 +7,14 @@ class ApisSerializer:
 
     @staticmethod
     def filter_deployed_revisions(details):
-        return list({
-            rev["revision"]
-            for env in details
-            for rev in env.get("revision", [])
-        })
+        return list({rev["revision"] for env in details for rev in env.get("revision", [])})
 
     @staticmethod
     def filter_deployment_details(details):
-        return [
-            {
-                "name": env["name"],
-                "revision": [r["name"] for r in env.get("revision", [])],
-            }
-            for env in details.get("environment", [])
-        ]
+        return [{
+          "name": env["name"],
+          "revision": [r["name"] for r in env.get("revision", [])],
+        } for env in details.get("environment", [])]
 
     @staticmethod
     def filter_undeployed_revisions(all_revisions, deployed_revisions, save_last=0):
