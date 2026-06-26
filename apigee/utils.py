@@ -163,22 +163,25 @@ def execute_function_on_directory_files(directory, func, glob="**/*", args=(), k
     return results
 
 
-def import_plugins_from_directory(init_file, commands):
+def import_plugins_from_directory(plugins_init_file, existing_commands):
     try:
-        spec = importlib.util.spec_from_file_location("plugins_modules", init_file)
+        spec = importlib.util.spec_from_file_location("plugins_modules", plugins_init_file)
         module = importlib.util.module_from_spec(spec)
         sys.modules[spec.name] = module
         spec.loader.exec_module(module)
+        import plugins_modules  # type: ignore
+        from plugins_modules import \
+            __all__ as all_plugins_modules  # type: ignore
 
-        plugins = getattr(module, "__all__", [])
-
-        for name in plugins:
-            obj = getattr(module, name)
-            if isinstance(obj, (click.Command, click.Group)):
-                commands.add(obj)
-
+        for module in all_plugins_modules:
+            _module = getattr(plugins_modules, module)
+            if isinstance(_module, (click.core.Command, click.core.Group)):
+                existing_commands.add(_module)
     except ImportError:
-        logging.warning("Failed to load plugin", exc_info=True)
+        logging.warning(
+          f"{inspect.stack()[0][3]}; will skip loading plugin: {module}",
+          exc_info=True,
+        )
 
 
 # --------------------

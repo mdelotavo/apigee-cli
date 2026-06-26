@@ -12,7 +12,7 @@ from apigee import (
   APIGEE_CLI_PLUGIN_INFO_FILE,
   APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY,
   APIGEE_CLI_PLUGINS_CONFIG_FILE,
-  APIGEE_CLI_PLUGINS_DIRECTORY,
+  PLUGINS_DIR,
   APIGEE_CLI_PLUGINS_PATH,
   console,
 )
@@ -43,7 +43,7 @@ def require_git():
 
 
 def init():
-    create_directory(APIGEE_CLI_PLUGINS_DIRECTORY)
+    create_directory(PLUGINS_DIR)
     create_empty_file(APIGEE_CLI_PLUGINS_PATH)
     create_empty_file(APIGEE_CLI_PLUGINS_CONFIG_FILE)
 
@@ -57,7 +57,7 @@ def config(section="sources"):
 def clone():
     init()
     for name, uri in config().items():
-        dest = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
+        dest = Path(PLUGINS_DIR) / name
         if is_directory(dest):
             continue
 
@@ -85,7 +85,7 @@ def update_repos():
         except Exception as e:
             console.echo(e)
 
-    execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY, fn, glob="[!.][!__]*")
+    execute_function_on_directory_files(PLUGINS_DIR, fn, glob="[!.][!__]*")
 
 
 def prune():
@@ -107,7 +107,7 @@ def prune():
         except Exception as e:
             console.echo(e)
 
-    execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY, fn, glob="[!.][!__]*")
+    execute_function_on_directory_files(PLUGINS_DIR, fn, glob="[!.][!__]*")
 
 
 def _chmod(func, p, _):
@@ -134,7 +134,7 @@ def _chmod(func, p, _):
 #         except Exception as e:
 #             console.echo(e)
 
-#     execute_function_on_directory_files(APIGEE_CLI_PLUGINS_DIRECTORY, fn, glob="[!.][!__]*")
+#     execute_function_on_directory_files(PLUGINS_DIR, fn, glob="[!.][!__]*")
 
 # def _chmod(func, path, exc):
 #     os.chmod(path, stat.S_IRWXU)
@@ -142,7 +142,7 @@ def _chmod(func, p, _):
 
 
 def plugin_info(name):
-    base = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
+    base = Path(PLUGINS_DIR) / name
     f = base / APIGEE_CLI_PLUGIN_INFO_FILE
     if not f.exists():
         f = base / APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY
@@ -154,7 +154,7 @@ def plugin_info(name):
 
 
 def print_commit(name):
-    repo = Repo(Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name)
+    repo = Repo(Path(PLUGINS_DIR) / name)
     console.echo(repo.git.log("--pretty=format:%h - %s (%cr) <%an>", "-1"))
 
 
