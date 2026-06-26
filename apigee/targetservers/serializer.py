@@ -3,15 +3,20 @@ import json
 
 class TargetserversSerializer:
 
-    def serialize_details(self, targetservers, format, prefix=None):
-        resp = targetservers
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return targetservers.text
-        targetservers = targetservers.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            targetservers = [targetserver for targetserver in targetservers if targetserver.startswith(prefix)]
+            data = [t for t in data if t.startswith(prefix)]
+
         if format == "dict":
-            return targetservers
-        elif format == "json":
-            return json.dumps(targetservers)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp
