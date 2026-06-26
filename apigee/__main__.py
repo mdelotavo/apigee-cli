@@ -46,63 +46,45 @@ def cli(ctx):
     ctx.ensure_object(dict)
 
 
-# --------------------
-# command registry
-# --------------------
-
-DEFAULT_COMMANDS = [
-  backups,
-  configure,
-  deployments,
-  caches,
-  keyvaluemaps,
-  targetservers,
-  apis,
-  apiproducts,
-  apps,
-  developers,
-  auth,
-  maskconfigs,
-  userroles,
-  permissions,
-  sharedflows,
-  keystores,
-  references,
-  virtualhosts,
-  plugins,
-]
-
-
-def _load_plugins(commands):
-    execute_function_on_directory_files(
-      PLUGINS_DIR,
-      import_plugins_from_directory,
-      args=(commands, ),
-      glob="[!.][!__]*/__init__.py",
-    )
-
-
-def _register_commands(commands):
-    for cmd in commands:
-        cli.add_command(cmd)
-
-
-# --------------------
-# entrypoint
-# --------------------
-
-
 @wrap_with_exception_handling
 def main():
     configure_global_logger(APIGEE_CLI_EXCEPTIONS_LOG_FILE)
 
-    commands = list(DEFAULT_COMMANDS)
+    cli_commands = {
+      backups,
+      configure,
+      deployments,
+      caches,
+      keyvaluemaps,
+      targetservers,
+      apis,
+      apiproducts,
+      apps,
+      developers,
+      auth,
+      maskconfigs,
+      userroles,
+      permissions,
+      sharedflows,
+      keystores,
+      references,
+      virtualhosts,
+      plugins,
+    }
 
-    _load_plugins(commands)
-    _register_commands(commands)
+    execute_function_on_directory_files(
+      PLUGINS_DIR,
+      import_plugins_from_directory,
+      args=(cli_commands, ),
+      glob="[!.][!__]*/__init__.py",
+    )
+
+    for command in cli_commands:
+        cli.add_command(command)
 
     cli(prog_name=CMD, obj={})
 
 
 if __name__ == "__main__":
+
     main()
