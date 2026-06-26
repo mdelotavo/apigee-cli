@@ -78,7 +78,7 @@ class ApiBundleExporter:
         if not force:
             check_file_exists(os.path.relpath(path))
 
-        resp = Keyvaluemaps(self.auth, self.org_name, name).get_keyvaluemap_in_an_environment(self.environment).text
+        resp = Keyvaluemaps(self.auth, self.org_name, name).get_keyvaluemap(self.environment).text
         console.echo(resp, expected_verbosity=1)
         path.write_text(resp)
 
