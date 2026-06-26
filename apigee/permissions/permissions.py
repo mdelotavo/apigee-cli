@@ -1,61 +1,78 @@
 import json
-
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL, auth
 from apigee.permissions.serializer import PermissionsSerializer
 
-CREATE_PERMISSIONS_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions"
-TEAM_PERMISSIONS_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions"
-GET_PERMISSIONS_PATH = "{api_url}/v1/o/{org}/userroles/{role_name}/permissions"
+PERMISSIONS_PATH = "/v1/organizations/{org}/userroles/{role}/resourcepermissions"
+GET_PERMISSIONS_PATH = "/v1/o/{org}/userroles/{role}/permissions"
 
 
 class Permissions:
 
-    def __init__(self, auth, org_name, role_name):
-        self.auth = auth
-        self.org_name = org_name
-        self.role_name = role_name
+    def __init__(self, auth_config, org, role):
+        self.auth = auth_config
+        self.org = org
+        self.role = role
 
-    def create_role_permissions(self, request_body):
-        uri = CREATE_PERMISSIONS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self.org_name, role_name=self.role_name)
-        hdrs = auth.set_authentication_headers(
+    def _headers(self, extra=None):
+        return auth.set_authentication_headers(
           self.auth,
           custom_headers={
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            **(extra or {})
           },
         )
-        body = json.loads(request_body)
-        return self.send_create_role_permissions_request(uri, hdrs, body)
 
-    def apply_team_permissions_template(self, template_file, placeholder_key=None, placeholder_value=""):
-        uri = TEAM_PERMISSIONS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self.org_name, role_name=self.role_name)
-        hdrs = auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
+    def _request(self, method, path, **kwargs):
+        url = f"{APIGEE_ADMIN_API_URL}{path}"
+        resp = requests.request(
+          method,
+          url,
+          headers=self._headers(kwargs.pop("headers", None)),
+          **kwargs,
         )
-        with open(template_file) as f:
-            body = json.loads(f.read())
+        resp.raise_for_status()
+        return resp
+
+    # --------------------
+    # core
+    # --------------------
+
+    def create(self, body):
+        return self._request(
+          "post",
+          PERMISSIONS_PATH.format(org=self.org, role=self.role),
+          headers={"Content-Type": "application/json"},
+          json=json.loads(body),
+        )
+
+    def apply_template(self, file, placeholder_key=None, placeholder_value=""):
+        data = json.loads(open(file).read())
+
         if placeholder_key:
-            for index, resource_permission in enumerate(body["resourcePermission"]):
-                path = resource_permission["path"]
-                body["resourcePermission"][index]["path"] = path.replace(placeholder_key, placeholder_value)
-        return self.send_create_role_permissions_request(uri, hdrs, body)
+            for rp in data.get("resourcePermission", []):
+                rp["path"] = rp["path"].replace(placeholder_key, placeholder_value)
 
-    def send_create_role_permissions_request(self, uri, hdrs, body):
-        resp = requests.post(uri, headers=hdrs, json=body)
-        resp.raise_for_status()
-        return resp
+        return self._request(
+          "post",
+          PERMISSIONS_PATH.format(org=self.org, role=self.role),
+          headers={"Content-Type": "application/json"},
+          json=data,
+        )
 
-    def get_permissions(self, formatted=False, format="text", showindex=False, tablefmt="plain"):
-        uri = GET_PERMISSIONS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self.org_name, role_name=self.role_name)
-        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        if formatted:
-            return PermissionsSerializer().serialize_details(resp, format, showindex=showindex, tablefmt=tablefmt)
-        return resp
+    def get(self, formatted=False, format="text", showindex=False, tablefmt="plain"):
+        resp = self._request(
+          "get",
+          GET_PERMISSIONS_PATH.format(org=self.org, role=self.role),
+        )
+
+        if not formatted:
+            return resp
+
+        return PermissionsSerializer().serialize_details(
+          resp,
+          format,
+          showindex=showindex,
+          tablefmt=tablefmt,
+        )
