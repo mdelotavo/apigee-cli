@@ -5,19 +5,25 @@ import logging
 import click
 
 
-def verbose_callback(ctx, param, value):
+def _set_verbose(ctx, param, value):
     builtins.APIGEE_CLI_TOGGLE_VERBOSE = value
+
     http_client.HTTPConnection.debuglevel = value
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.DEBUG)
+
+    if value > 0:
+        logging.basicConfig()
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    return value
 
 
 def common_verbose_options(func):
-    func = click.option(
+    return click.option(
       "-v",
       "--verbose",
-      show_default="toggle verbose output",
       count=True,
-      callback=verbose_callback,
+      default=0,
+      show_default=True,
+      help="increase verbosity (use multiple times for more detail)",
+      callback=_set_verbose,
     )(func)
-    return func

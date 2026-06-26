@@ -8,15 +8,10 @@ from pathlib import Path
 
 def join_path_components(*components):
     if not components:
-        return
-    path = None
-    for component in components:
-        if not path:
-            path = Path(component)
-        else:
-            path /= component
-    return str(path)
+        return ""
+
+    return str(Path(components[0]).joinpath(*components[1:]))
 
 
 def is_truthy_envvar(value):
-    return value in (True, "True", "true", "1")
+    return str(value) in {"True", "true", "1"}
