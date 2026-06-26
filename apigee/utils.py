@@ -185,6 +185,14 @@ def import_plugins_from_directory(init_file, commands):
 # misc
 # --------------------
 
+def get_progress_kwargs(desc):
+    return {
+        "desc": desc,
+        "unit": "entries",
+        "bar_format": "{l_bar}{bar:32}{r_bar}{bar:-10b}",
+        "leave": False,
+    }
+
 
 def show_message(msg):
     print(msg)

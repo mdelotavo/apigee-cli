@@ -1,11 +1,12 @@
 import json
 import sys
+from pathlib import Path
 
-import requests
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+import apigee.request
+from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.encryption_utils import (
   ENCRYPTED_HEADER_BEGIN,
   ENCRYPTED_HEADER_END,
@@ -14,84 +15,89 @@ from apigee.encryption_utils import (
   has_encrypted_header,
 )
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
-from apigee.utils import read_file_content
+from apigee.utils import get_progress_kwargs, read_file_content
 
-CREATE_KEYVALUEMAP_PATH = "/v1/organizations/{org}/environments/{env}/keyvaluemaps"
-KVM_PATH = "/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}"
-KVM_ENTRY_PATH = "/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}/entries/{entry}"
-KVM_ENTRIES_PATH = "/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}/entries"
-LIST_KVMS_PATH = "/v1/organizations/{org}/environments/{env}/keyvaluemaps"
-LIST_KEYS_PATH = "/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}/keys"
+# --------------------
+# paths
+# --------------------
 
-
-def _progress(desc):
-    return {"desc": desc, "unit": "entries", "leave": False, "bar_format": "{l_bar}{bar:32}{r_bar}{bar:-10b}"}
+CREATE_KVM = "{api}/v1/organizations/{org}/environments/{env}/keyvaluemaps"
+KVM = "{api}/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}"
+KVM_ENTRY = "{api}/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}/entries/{entry}"
+KVM_ENTRIES = "{api}/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}/entries"
+LIST_KVMS = "{api}/v1/organizations/{org}/environments/{env}/keyvaluemaps"
+LIST_KEYS = "{api}/v1/organizations/{org}/environments/{env}/keyvaluemaps/{name}/keys"
 
 
 class Keyvaluemaps:
 
-    def __init__(self, auth_config, org, name):
-        self.auth = auth_config
+    def __init__(self, auth, org, name):
+        self.auth = auth
         self.org = org
         self.name = name
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
+    def _url(self, template, **kwargs):
+        return template.format(api=APIGEE_ADMIN_API_URL, org=self.org, name=self.name, **kwargs)
+
+    # --------------------
+    # kvm
+    # --------------------
+
+    def create_keyvaluemap(self, env, body):
+        return apigee.request.post(
+          self._url(CREATE_KVM, env=env),
           self.auth,
-          custom_headers={
+          json=json.loads(body),
+          headers={
             "Accept": "application/json",
-            **(extra or {})
+            "Content-Type": "application/json"
           },
         )
 
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
-        resp.raise_for_status()
-        return resp
+    def delete_keyvaluemap(self, env):
+        return apigee.request.delete(self._url(KVM, env=env), self.auth)
 
-    def create_kvm(self, env, body):
-        return self._request(
-          "post",
-          CREATE_KEYVALUEMAP_PATH.format(org=self.org, env=env),
-          headers={"Content-Type": "application/json"},
-          json=json.loads(body),
-        )
+    def get_keyvaluemap(self, env):
+        return apigee.request.get(self._url(KVM, env=env), self.auth)
 
-    def delete_kvm(self, env):
-        return self._request("delete", KVM_PATH.format(org=self.org, env=env, name=self.name))
+    def list_keyvaluemaps(self, env, prefix=None, format="json"):
+        resp = apigee.request.get(self._url(LIST_KVMS, env=env), self.auth)
+        return KeyvaluemapsSerializer.serialize_details(resp, format, prefix=prefix)
 
-    def get_kvm(self, env):
-        return self._request("get", KVM_PATH.format(org=self.org, env=env, name=self.name))
-
-    def list_kvms(self, env, prefix=None, format="json"):
-        resp = self._request("get", LIST_KVMS_PATH.format(org=self.org, env=env))
-        return KeyvaluemapsSerializer().serialize_details(resp, format, prefix=prefix)
+    # --------------------
+    # entries
+    # --------------------
 
     def create_entry(self, env, name, value):
-        return self._request(
-          "post",
-          KVM_ENTRIES_PATH.format(org=self.org, env=env, name=self.name),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          self._url(KVM_ENTRIES, env=env),
+          self.auth,
           json={
             "name": name,
             "value": value
+          },
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json"
           },
         )
 
     def update_entry(self, env, name, value):
-        return self._request(
-          "post",
-          KVM_ENTRY_PATH.format(org=self.org, env=env, name=self.name, entry=name),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          self._url(KVM_ENTRY, env=env, entry=name),
+          self.auth,
           json={
             "name": name,
             "value": value
           },
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
         )
 
     def delete_entry(self, env, name):
-        return self._request("delete", KVM_ENTRY_PATH.format(org=self.org, env=env, name=self.name, entry=name))
+        return apigee.request.delete(self._url(KVM_ENTRY, env=env, entry=name), self.auth)
 
     def create_or_update_entry(self, env, entry):
         try:
@@ -101,10 +107,14 @@ class Keyvaluemaps:
                 raise
             self.create_entry(env, entry["name"], entry["value"])
 
+    # --------------------
+    # keys
+    # --------------------
+
     def list_keys(self, env, startkey="", count=1000):
-        return self._request(
-          "get",
-          LIST_KEYS_PATH.format(org=self.org, env=env, name=self.name),
+        return apigee.request.get(
+          self._url(LIST_KEYS, env=env),
+          self.auth,
           params={
             "startkey": startkey,
             "count": count
@@ -112,11 +122,15 @@ class Keyvaluemaps:
         )
 
     def get_key(self, env, name):
-        return self._request("get", KVM_ENTRY_PATH.format(org=self.org, env=env, name=self.name, entry=name))
+        return apigee.request.get(self._url(KVM_ENTRY, env=env, entry=name), self.auth)
 
     def delete_entries(self, env, entries):
-        for e in tqdm(entries, **_progress("Deleting")):
+        for e in tqdm(entries, **get_progress_kwargs("Deleting")):
             self.delete_entry(env, e["name"])
+
+    # --------------------
+    # encryption
+    # --------------------
 
     @staticmethod
     def encrypt(kvm, secret):
@@ -124,7 +138,9 @@ class Keyvaluemaps:
         for e in kvm.get("entry", []):
             val = e.get("value")
             if val and not has_encrypted_header(val):
-                e["value"] = f"{ENCRYPTED_HEADER_BEGIN}{encrypt_with_gpg(secret, val)}{ENCRYPTED_HEADER_END}"
+                e["value"] = (f"{ENCRYPTED_HEADER_BEGIN}"
+                              f"{encrypt_with_gpg(secret, val)}"
+                              f"{ENCRYPTED_HEADER_END}")
                 count += 1
         return kvm, count
 
@@ -135,7 +151,7 @@ class Keyvaluemaps:
             val = e.get("value")
             if val and has_encrypted_header(val):
                 decrypted = decrypt_with_gpg(secret, val)
-                if decrypted == "":
+                if not decrypted:
                     sys.exit("Incorrect symmetric key.")
                 e["value"] = decrypted
                 count += 1
@@ -143,8 +159,12 @@ class Keyvaluemaps:
 
     @staticmethod
     def diff(local, remote):
-        remote_names = {e["name"] for e in remote["entry"]}
-        return [e for e in local["entry"] if e["name"] not in remote_names]
+        remote_keys = {e["name"] for e in remote["entry"]}
+        return [e for e in local["entry"] if e["name"] not in remote_keys]
+
+    # --------------------
+    # sync
+    # --------------------
 
     def push(self, env, file, secret=None):
         local = read_file_content(file, type="json")
@@ -164,10 +184,10 @@ class Keyvaluemaps:
             if e.response.status_code != 404:
                 raise
             console.echo(f"Creating {self.name}")
-            console.echo(self.create_kvm(env, json.dumps(local)).text)
+            console.echo(self.create_keyvaluemap(env, json.dumps(local)).text)
 
     def sync(self, env, local):
-        remote = self.get_kvm(env).json()
+        remote = self.get_keyvaluemap(env).json()
 
         removed = self.diff(remote, local)
         updated = [e for e in local["entry"] if e not in remote["entry"]]
@@ -177,7 +197,7 @@ class Keyvaluemaps:
             console.echo("Removed entries.")
 
         if updated:
-            for e in tqdm(updated, **_progress("Updating")):
+            for e in tqdm(updated, **get_progress_kwargs("Updating")):
                 self.create_or_update_entry(env, e)
             console.echo("Updated entries.")
 
