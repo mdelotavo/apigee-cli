@@ -9,8 +9,8 @@ from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.encryption_utils import (
   ENCRYPTED_HEADER_BEGIN,
   ENCRYPTED_HEADER_END,
-  decrypt_message_with_gpg,
-  encrypt_message_with_gpg,
+  decrypt_with_gpg,
+  encrypt_with_gpg,
   has_encrypted_header,
 )
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
@@ -124,7 +124,7 @@ class Keyvaluemaps:
         for e in kvm.get("entry", []):
             val = e.get("value")
             if val and not has_encrypted_header(val):
-                e["value"] = f"{ENCRYPTED_HEADER_BEGIN}{encrypt_message_with_gpg(secret, val)}{ENCRYPTED_HEADER_END}"
+                e["value"] = f"{ENCRYPTED_HEADER_BEGIN}{encrypt_with_gpg(secret, val)}{ENCRYPTED_HEADER_END}"
                 count += 1
         return kvm, count
 
@@ -134,7 +134,7 @@ class Keyvaluemaps:
         for e in kvm.get("entry", []):
             val = e.get("value")
             if val and has_encrypted_header(val):
-                decrypted = decrypt_message_with_gpg(secret, val)
+                decrypted = decrypt_with_gpg(secret, val)
                 if decrypted == "":
                     sys.exit("Incorrect symmetric key.")
                 e["value"] = decrypted
