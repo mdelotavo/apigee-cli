@@ -59,7 +59,7 @@ def _session():
 
 
 # --------------------
-# option attachers (KEPT)
+# option attachers
 # --------------------
 
 
@@ -129,7 +129,7 @@ def generate_authentication_error_message(e):
 
 
 # --------------------
-# token logic (FULL PARITY)
+# token logic
 # --------------------
 
 
