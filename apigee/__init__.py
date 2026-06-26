@@ -6,9 +6,9 @@ from apigee import utils_init
 
 APP = "apigeecli"
 CMD = "apigee"
-__version__ = "0.53.12"
-description = "(DEPRECATED) apigeecli simplifies and automates Apigee Edge API usage."
-long_description = """The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication."""
+__version__ = "0.54.0"
+description = "(DEPRECATED) User-friendly wrapper for the Apigee Edge admin APIs."
+long_description = """apigeecli is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication."""
 
 APIGEE_CLI_DIRECTORY = utils_init.join_path_components(Path.home(), ".apigee")
 APIGEE_CLI_PLUGINS_DIRECTORY = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "plugins")
