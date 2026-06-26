@@ -31,86 +31,95 @@ TABLEFMT_CHOICES = [
 
 
 @click.group(
-  help="API proxies and shared flows that are actively deployed in environments on Apigee Edge.",
+  help="View API proxy and shared flow deployments.",
   cls=ClickAliasedGroup,
 )
 def deployments():
     pass
 
 
-def _get_api_proxy_deployment_details(
-  username, password, mfa_secret, token, zonename, org, profile, name, format, showindex, tablefmt, revision_name_only, **kwargs
-):
-    return Deployments(generate_authentication(username, password, mfa_secret, token, zonename), org, name).get_api_proxy_deployment_details(
-      formatted=True,
-      format=format,
-      showindex=showindex,
-      tablefmt=tablefmt,
-      revision_name_only=revision_name_only,
-    )
+def _client(username, password, mfa_secret, token, zonename, org, name):
+    return Deployments(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
 
 
+# --------------------
+# API proxy
+# --------------------
 @deployments.command(
-  help=
-  "Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.",
+  help="Get API proxy deployment details.",
   aliases=["get-api-proxy-deployment-details"],
 )
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-# @click.option("-j", "--json", help="display json output when using -r flag", default="table")
+@click.option("-n", "--name", required=True)
 @click.option(
   "--format",
-  help="defines how to format output when using the -r flag",
   default="table",
   type=click.Choice(["json", "table"], case_sensitive=False),
 )
 @click.option("--showindex/--no-showindex", default=False)
 @click.option(
   "--tablefmt",
-  help="defines how the table is formatted",
   type=click.Choice(TABLEFMT_CHOICES, case_sensitive=False),
   default="plain",
   show_default=True,
 )
 @click.option("--revision-name-only/--no-revision-name-only", "-r/-R", default=False)
-def get(*args, **kwargs):
-    console.echo(_get_api_proxy_deployment_details(*args, **kwargs))
-
-
-def _get_shared_flow_deployment_details(
-  username, password, mfa_secret, token, zonename, org, profile, name, format, showindex, tablefmt, revision_name_only, **kwargs
-):
-    return Deployments(generate_authentication(username, password, mfa_secret, token, zonename), org, name).get_shared_flow_deployment_details(
-      formatted=True,
-      format=format,
-      showindex=showindex,
-      tablefmt=tablefmt,
-      revision_name_only=revision_name_only,
+def get(username, password, mfa_secret, token, zonename, org, profile, name, format, showindex, tablefmt, revision_name_only, **_):
+    console.echo(
+      _client(username, password, mfa_secret, token, zonename, org, name).get_api_proxy_deployment_details(
+        formatted=True,
+        format=format,
+        showindex=showindex,
+        tablefmt=tablefmt,
+        revision_name_only=revision_name_only,
+      )
     )
 
 
-@deployments.command(help="Returns detail on all deployments of the shared flow for all environments.", )
+# --------------------
+# Shared flow
+# --------------------
+@deployments.command(help="Get shared flow deployment details.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-# @click.option("-j", "--json", help="display json output when using -r flag", default="table")
+@click.option("-n", "--name", required=True)
 @click.option(
   "--format",
-  help="defines how to format output when using the -r flag",
   default="table",
   type=click.Choice(["json", "table"], case_sensitive=False),
 )
 @click.option("--showindex/--no-showindex", default=False)
 @click.option(
   "--tablefmt",
-  help="defines how the table is formatted",
   type=click.Choice(TABLEFMT_CHOICES, case_sensitive=False),
   default="plain",
   show_default=True,
 )
 @click.option("--revision-name-only/--no-revision-name-only", "-r/-R", default=False)
-def get_shared_flow_deployment_details(*args, **kwargs):
-    console.echo(_get_api_proxy_deployment_details(*args, **kwargs))
+def get_shared_flow(
+  username,
+  password,
+  mfa_secret,
+  token,
+  zonename,
+  org,
+  profile,
+  name,
+  format,
+  showindex,
+  tablefmt,
+  revision_name_only,
+  **_,
+):
+    console.echo(
+      _client(username, password, mfa_secret, token, zonename, org, name).get_shared_flow_deployment_details(
+        formatted=True,
+        format=format,
+        showindex=showindex,
+        tablefmt=tablefmt,
+        revision_name_only=revision_name_only,
+      )
+    )
