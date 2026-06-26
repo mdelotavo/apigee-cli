@@ -5,6 +5,15 @@ apigee-cli
 |Python version| |Downloads| |License|
 
 
+**TL;DR**
+--------
+For a more stable experience, install version **0.53.11 or earlier**:
+
+::
+
+   pip install "apigee-cli<=0.53.11"
+
+
 Maintenance Status
 ------------------
 **This tool is no longer actively maintained.**
