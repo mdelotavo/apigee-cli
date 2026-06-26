@@ -3,15 +3,20 @@ import json
 
 class CachesSerializer:
 
-    def serialize_details(self, caches, format, prefix=None):
-        resp = caches
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return caches.text
-        caches = caches.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            caches = [cache for cache in caches if cache.startswith(prefix)]
+            data = [c for c in data if c.startswith(prefix)]
+
         if format == "dict":
-            return caches
-        elif format == "json":
-            return json.dumps(caches)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp
