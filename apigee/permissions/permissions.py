@@ -1,7 +1,8 @@
 import json
-import requests
 
-from apigee import APIGEE_ADMIN_API_URL, auth
+import apigee.request
+
+from apigee import APIGEE_ADMIN_API_URL
 from apigee.permissions.serializer import PermissionsSerializer
 
 PERMISSIONS_PATH = "/v1/organizations/{org}/userroles/{role}/resourcepermissions"
@@ -15,36 +16,19 @@ class Permissions:
         self.org = org
         self.role = role
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
-        )
-
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(
-          method,
-          url,
-          headers=self._headers(kwargs.pop("headers", None)),
-          **kwargs,
-        )
-        resp.raise_for_status()
-        return resp
-
     # --------------------
     # core
     # --------------------
 
     def create(self, body):
-        return self._request(
-          "post",
-          PERMISSIONS_PATH.format(org=self.org, role=self.role),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{PERMISSIONS_PATH.format(org=self.org, role=self.role)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def apply_template(self, file, placeholder_key=None, placeholder_value=""):
@@ -54,17 +38,20 @@ class Permissions:
             for rp in data.get("resourcePermission", []):
                 rp["path"] = rp["path"].replace(placeholder_key, placeholder_value)
 
-        return self._request(
-          "post",
-          PERMISSIONS_PATH.format(org=self.org, role=self.role),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{PERMISSIONS_PATH.format(org=self.org, role=self.role)}",
+          self.auth,
           json=data,
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def get(self, formatted=False, format="text", showindex=False, tablefmt="plain"):
-        resp = self._request(
-          "get",
-          GET_PERMISSIONS_PATH.format(org=self.org, role=self.role),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{GET_PERMISSIONS_PATH.format(org=self.org, role=self.role)}",
+          self.auth,
         )
 
         if not formatted:

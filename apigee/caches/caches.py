@@ -1,9 +1,9 @@
 import json
 
-import requests
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+import apigee.request
+from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.caches.serializer import CachesSerializer
 from apigee.utils import read_file_content
 
@@ -20,71 +20,68 @@ class Caches:
         self.org = org
         self.name = name
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
+    def clear(self, env):
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{CLEAR_ALL_PATH.format(org=self.org, env=env, name=self.name)}",
           self.auth,
-          custom_headers={
+          params={"action": "clear"},
+          headers={
             "Accept": "application/json",
-            **(extra or {})
+            "Content-Type": "application/octet-stream",
           },
         )
 
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
-        resp.raise_for_status()
-        return resp
-
-    def clear(self, env):
-        return self._request(
-          "post",
-          CLEAR_ALL_PATH.format(org=self.org, env=env, name=self.name),
-          params={"action": "clear"},
-          headers={"Content-Type": "application/octet-stream"},
-        )
-
     def clear_entry(self, env, entry):
-        return self._request(
-          "post",
-          CLEAR_ENTRY_PATH.format(org=self.org, env=env, name=self.name, entry=entry),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{CLEAR_ENTRY_PATH.format(org=self.org, env=env, name=self.name, entry=entry)}",
+          self.auth,
           params={"action": "clear"},
-          headers={"Content-Type": "application/octet-stream"},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/octet-stream",
+          },
         )
 
     def create(self, env, body):
-        return self._request(
-          "post",
-          CACHES_PATH.format(org=self.org, env=env),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{CACHES_PATH.format(org=self.org, env=env)}",
+          self.auth,
           params={"name": self.name},
-          headers={"Content-Type": "application/json"},
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def delete(self, env):
-        return self._request(
-          "delete",
-          CACHE_PATH.format(org=self.org, env=env, name=self.name),
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{CACHE_PATH.format(org=self.org, env=env, name=self.name)}",
+          self.auth,
         )
 
     def get(self, env):
-        return self._request(
-          "get",
-          CACHE_PATH.format(org=self.org, env=env, name=self.name),
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{CACHE_PATH.format(org=self.org, env=env, name=self.name)}",
+          self.auth,
         )
 
     def list(self, env, prefix=None, format="json"):
-        resp = self._request(
-          "get",
-          CACHES_PATH.format(org=self.org, env=env),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{CACHES_PATH.format(org=self.org, env=env)}",
+          self.auth,
         )
         return CachesSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update(self, env, body):
-        return self._request(
-          "put",
-          CACHE_PATH.format(org=self.org, env=env, name=self.name),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.put(
+          f"{APIGEE_ADMIN_API_URL}{CACHE_PATH.format(org=self.org, env=env, name=self.name)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def push(self, env, file):
@@ -93,10 +90,13 @@ class Caches:
 
         try:
             self.get(env)
+
             console.echo(f"Updating {self.name}")
             console.echo(self.update(env, json.dumps(data)).text)
+
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise
+
             console.echo(f"Creating {self.name}")
             console.echo(self.create(env, json.dumps(data)).text)

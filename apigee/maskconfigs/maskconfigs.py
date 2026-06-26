@@ -1,8 +1,9 @@
 import json
-import requests
+
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+import apigee.request
+from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.utils import read_file_content
 
 MASKCONFIGS_PATH = "/v1/organizations/{org}/apis/{api}/maskconfigs"
@@ -17,54 +18,43 @@ class Maskconfigs:
         self.org = org
         self.api = api
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
-        )
-
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(
-          method,
-          url,
-          headers=self._headers(kwargs.pop("headers", None)),
-          **kwargs,
-        )
-        resp.raise_for_status()
-        return resp
-
     def _base(self):
         return MASKCONFIGS_PATH.format(org=self.org, api=self.api)
 
     def create(self, body):
-        return self._request(
-          "post",
-          self._base(),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def delete(self, name):
-        return self._request(
-          "delete",
-          MASKCONFIG_PATH.format(org=self.org, api=self.api, name=name),
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{MASKCONFIG_PATH.format(org=self.org, api=self.api, name=name)}",
+          self.auth,
         )
 
     def get(self, name):
-        return self._request(
-          "get",
-          MASKCONFIG_PATH.format(org=self.org, api=self.api, name=name),
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{MASKCONFIG_PATH.format(org=self.org, api=self.api, name=name)}",
+          self.auth,
         )
 
     def list(self):
-        return self._request("get", self._base())
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}",
+          self.auth,
+        )
 
     def list_org(self):
-        return self._request("get", ORG_MASKCONFIGS_PATH.format(org=self.org))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{ORG_MASKCONFIGS_PATH.format(org=self.org)}",
+          self.auth,
+        )
 
     def push(self, file):
         data = read_file_content(file, type="json")

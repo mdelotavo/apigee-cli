@@ -1,6 +1,6 @@
-import requests
+import apigee.request
 
-from apigee import APIGEE_ADMIN_API_URL, auth
+from apigee import APIGEE_ADMIN_API_URL
 from apigee.deployments.serializer import DeploymentsSerializer
 
 API_PROXY_PATH = "/v1/organizations/{org}/apis/{name}/deployments"
@@ -13,18 +13,6 @@ class Deployments:
         self.auth = auth_config
         self.org = org
         self.name = name
-
-    def _headers(self):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={"Accept": "application/json"},
-        )
-
-    def _request(self, path):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.get(url, headers=self._headers())
-        resp.raise_for_status()
-        return resp
 
     def _format(self, resp, formatted, format, showindex, tablefmt, revision_only):
         if not formatted:
@@ -48,7 +36,11 @@ class Deployments:
       tablefmt="plain",
       revision_name_only=False,
     ):
-        resp = self._request(API_PROXY_PATH.format(org=self.org, name=self.name))
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{API_PROXY_PATH.format(org=self.org, name=self.name)}",
+          self.auth,
+        )
+
         return self._format(resp, formatted, format, showindex, tablefmt, revision_name_only)
 
     def get_shared_flow_deployment_details(
@@ -59,5 +51,9 @@ class Deployments:
       tablefmt="plain",
       revision_name_only=False,
     ):
-        resp = self._request(SHARED_FLOW_PATH.format(org=self.org, name=self.name))
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{SHARED_FLOW_PATH.format(org=self.org, name=self.name)}",
+          self.auth,
+        )
+
         return self._format(resp, formatted, format, showindex, tablefmt, revision_name_only)

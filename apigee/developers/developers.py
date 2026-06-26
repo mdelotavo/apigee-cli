@@ -1,7 +1,8 @@
 import json
-import requests
 
-from apigee import APIGEE_ADMIN_API_URL, auth
+import apigee.request
+
+from apigee import APIGEE_ADMIN_API_URL
 from apigee.developers.serializer import DevelopersSerializer
 
 DEVELOPERS_PATH = "/v1/organizations/{org}/developers"
@@ -17,26 +18,10 @@ class Developers:
         self.org = org
         self.dev = dev
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
-        )
-
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
-        resp.raise_for_status()
-        return resp
-
     def create(self, first_name, last_name, username, attributes='{"attributes": []}'):
-        return self._request(
-          "post",
-          DEVELOPERS_PATH.format(org=self.org),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPERS_PATH.format(org=self.org)}",
+          self.auth,
           json={
             "email": self.dev,
             "firstName": first_name,
@@ -44,72 +29,102 @@ class Developers:
             "userName": username,
             "attributes": json.loads(attributes)["attributes"],
           },
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def get(self):
-        return self._request("get", DEVELOPER_PATH.format(org=self.org, dev=self.dev))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_PATH.format(org=self.org, dev=self.dev)}",
+          self.auth,
+        )
 
     def delete(self):
-        return self._request("delete", DEVELOPER_PATH.format(org=self.org, dev=self.dev))
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_PATH.format(org=self.org, dev=self.dev)}",
+          self.auth,
+        )
 
     def list(self, prefix=None, expand=False, count=1000, startkey="", format="json"):
-        resp = self._request(
-          "get",
-          DEVELOPERS_PATH.format(org=self.org),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPERS_PATH.format(org=self.org)}",
+          self.auth,
           params={
             "expand": expand,
             "count": count,
-            "startKey": startkey
+            "startKey": startkey,
           },
         )
+
         return DevelopersSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_by_app(self, app_name):
-        return self._request(
-          "get",
-          DEVELOPERS_PATH.format(org=self.org),
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPERS_PATH.format(org=self.org)}",
+          self.auth,
           params={"app": app_name},
         )
 
     def update(self, body):
-        return self._request(
-          "put",
-          DEVELOPER_PATH.format(org=self.org, dev=self.dev),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.put(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_PATH.format(org=self.org, dev=self.dev)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def set_status(self, action):
-        return self._request(
-          "post",
-          DEVELOPER_PATH.format(org=self.org, dev=self.dev),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_PATH.format(org=self.org, dev=self.dev)}",
+          self.auth,
           params={"action": action},
-          headers={"Content-Type": "application/octet-stream"},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/octet-stream",
+          },
         )
 
     def get_attr(self, name):
-        return self._request("get", DEVELOPER_ATTR_PATH.format(org=self.org, dev=self.dev, attr=name))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_ATTR_PATH.format(org=self.org, dev=self.dev, attr=name)}",
+          self.auth,
+        )
 
     def get_attrs(self):
-        return self._request("get", DEVELOPER_ATTRS_PATH.format(org=self.org, dev=self.dev))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_ATTRS_PATH.format(org=self.org, dev=self.dev)}",
+          self.auth,
+        )
 
     def update_attr(self, name, value):
-        return self._request(
-          "post",
-          DEVELOPER_ATTR_PATH.format(org=self.org, dev=self.dev, attr=name),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_ATTR_PATH.format(org=self.org, dev=self.dev, attr=name)}",
+          self.auth,
           json={"value": value},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def update_attrs(self, body):
-        return self._request(
-          "post",
-          DEVELOPER_ATTRS_PATH.format(org=self.org, dev=self.dev),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_ATTRS_PATH.format(org=self.org, dev=self.dev)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def delete_attr(self, name):
-        return self._request(
-          "delete",
-          DEVELOPER_ATTR_PATH.format(org=self.org, dev=self.dev, attr=name),
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{DEVELOPER_ATTR_PATH.format(org=self.org, dev=self.dev, attr=name)}",
+          self.auth,
         )

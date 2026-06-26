@@ -1,7 +1,6 @@
-import json
-import requests
+import apigee.request
 
-from apigee import APIGEE_ADMIN_API_URL, auth
+from apigee import APIGEE_ADMIN_API_URL
 from apigee.references.serializer import ReferencesSerializer
 
 REFERENCES_PATH = "/v1/organizations/{org}/environments/{env}/references"
@@ -15,35 +14,16 @@ class References:
         self.org = org
         self.name = name
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
-        )
-
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(
-          method,
-          url,
-          headers=self._headers(kwargs.pop("headers", None)),
-          **kwargs,
-        )
-        resp.raise_for_status()
-        return resp
-
     def list(self, env, prefix=None, format="json"):
-        resp = self._request(
-          "get",
-          REFERENCES_PATH.format(org=self.org, env=env),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{REFERENCES_PATH.format(org=self.org, env=env)}",
+          self.auth,
         )
+
         return ReferencesSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get(self, env):
-        return self._request(
-          "get",
-          REFERENCE_PATH.format(org=self.org, env=env, name=self.name),
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{REFERENCE_PATH.format(org=self.org, env=env, name=self.name)}",
+          self.auth,
         )

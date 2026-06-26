@@ -1,7 +1,8 @@
 import json
-import requests
 
-from apigee import APIGEE_ADMIN_API_URL, auth
+import apigee.request
+
+from apigee import APIGEE_ADMIN_API_URL
 
 ROLES_PATH = "/v1/organizations/{org}/userroles"
 ROLE_PATH = "/v1/organizations/{org}/userroles/{role}"
@@ -17,26 +18,6 @@ class Userroles:
         self.org = org
         self.role = role
 
-    def _headers(self, content_type="application/json"):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            "Content-Type": content_type,
-          },
-        )
-
-    def _request(self, method, path, content_type="application/json", **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(
-          method,
-          url,
-          headers=self._headers(content_type),
-          **kwargs,
-        )
-        resp.raise_for_status()
-        return resp
-
     def _base(self):
         return ROLE_PATH.format(org=self.org, role=self.role)
 
@@ -45,91 +26,129 @@ class Userroles:
     # --------------------
 
     def create(self, roles):
-        return self._request(
-          "post",
-          ROLES_PATH.format(org=self.org),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{ROLES_PATH.format(org=self.org)}",
+          self.auth,
           json={"role": [{
             "name": r
           } for r in roles]},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def delete(self):
-        return self._request(
-          "delete",
-          self._base(),
-          content_type="application/x-www-form-urlencoded",
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}",
+          self.auth,
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         )
 
     def list(self):
-        return self._request("get", ROLES_PATH.format(org=self.org))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{ROLES_PATH.format(org=self.org)}",
+          self.auth,
+        )
 
     def get(self):
-        return self._request("get", self._base())
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}",
+          self.auth,
+        )
 
     # --------------------
     # users
     # --------------------
 
     def add_user(self, email):
-        return self._request(
-          "post",
-          USERS_PATH.format(base=self._base()),
-          content_type="application/x-www-form-urlencoded",
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{USERS_PATH.format(base=self._base())}",
+          self.auth,
           params={"id": email},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         )
 
     def remove_user(self, email):
-        return self._request("delete", f"{self._base()}/users/{email}")
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}/users/{email}",
+          self.auth,
+        )
 
     def list_users(self):
-        return self._request("get", USERS_PATH.format(base=self._base()))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{USERS_PATH.format(base=self._base())}",
+          self.auth,
+        )
 
     def verify_user(self, email):
-        return self._request("get", f"{self._base()}/users/{email}")
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}/users/{email}",
+          self.auth,
+        )
 
     # --------------------
     # permissions
     # --------------------
 
     def add_permissions(self, body):
-        return self._request(
-          "post",
-          RESOURCE_PERMISSIONS_PATH.format(base=self._base()),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{RESOURCE_PERMISSIONS_PATH.format(base=self._base())}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def get_permissions(self, path=None):
-        return self._request(
-          "get",
-          PERMISSIONS_PATH.format(base=self._base()),
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{PERMISSIONS_PATH.format(base=self._base())}",
+          self.auth,
           params={"path": path} if path else None,
         )
 
     def delete_permission(self, permission, path):
-        return self._request(
-          "delete",
-          f"{self._base()}/permissions/{permission}",
-          content_type="application/octet-stream",
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}/permissions/{permission}",
+          self.auth,
           params={"path": path},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/octet-stream",
+          },
         )
 
     def delete_resource_permissions(self, path):
-        return self._request(
-          "delete",
-          PERMISSIONS_PATH.format(base=self._base()),
-          content_type="application/octet-stream",
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{PERMISSIONS_PATH.format(base=self._base())}",
+          self.auth,
           params={
             "path": path,
-            "delete": "true"
+            "delete": "true",
+          },
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/octet-stream",
           },
         )
 
     def verify_permission(self, permission, path):
-        return self._request(
-          "get",
-          f"{self._base()}/permissions/{permission}",
-          content_type="application/octet-stream",
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{self._base()}/permissions/{permission}",
+          self.auth,
           params={"path": path},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/octet-stream",
+          },
         )
 
     # --------------------

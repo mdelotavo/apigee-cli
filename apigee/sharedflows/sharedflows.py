@@ -1,7 +1,7 @@
-import requests
+import apigee.request
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.deployments.deployments import Deployments
 from apigee.sharedflows.serializer import SharedflowsSerializer
 from apigee.utils import apply_function_on_iterable, merge_dict_values, write_content_to_zip
@@ -22,67 +22,61 @@ class Sharedflows:
         self.auth = auth_config
         self.org = org
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
-        )
-
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(
-          method,
-          url,
-          headers=self._headers(kwargs.pop("headers", None)),
-          **kwargs,
-        )
-        resp.raise_for_status()
-        return resp
-
-    # --------------------
     # basic
-    # --------------------
 
     def list(self, prefix=None):
-        resp = self._request("get", SHAREDFLOWS_PATH.format(org=self.org))
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{SHAREDFLOWS_PATH.format(org=self.org)}",
+          self.auth,
+        )
         return SharedflowsSerializer.serialize_details(resp, "json", prefix=prefix)
 
     def get(self, name):
-        return self._request("get", SHAREDFLOW_PATH.format(org=self.org, name=name))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{SHAREDFLOW_PATH.format(org=self.org, name=name)}",
+          self.auth,
+        )
 
     def revisions(self, name):
-        return self._request("get", REVISIONS_PATH.format(org=self.org, name=name))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{REVISIONS_PATH.format(org=self.org, name=name)}",
+          self.auth,
+        )
 
     def deployments(self, name):
-        return self._request("get", DEPLOYMENTS_PATH.format(org=self.org, name=name))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEPLOYMENTS_PATH.format(org=self.org, name=name)}",
+          self.auth,
+        )
 
     def delete_revision(self, name, rev):
-        return self._request("delete", REVISION_PATH.format(org=self.org, name=name, rev=rev))
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{REVISION_PATH.format(org=self.org, name=name, rev=rev)}",
+          self.auth,
+        )
 
-    # --------------------
     # import / export
-    # --------------------
 
     def import_flow(self, name, file):
         with open(file, "rb") as f:
-            return self._request(
-              "post",
-              SHAREDFLOWS_PATH.format(org=self.org),
-              headers={"Content-Type": "multipart/form-data"},
+            return apigee.request.post(
+              f"{APIGEE_ADMIN_API_URL}{SHAREDFLOWS_PATH.format(org=self.org)}",
+              self.auth,
               files={"file": ("sharedflow.zip", f)},
               params={
                 "action": "import",
-                "name": name
+                "name": name,
+              },
+              headers={
+                "Accept": "application/json",
+                "Content-Type": "multipart/form-data",
               },
             )
 
     def export(self, name, rev, output=None, write=True):
-        resp = self._request(
-          "get",
-          EXPORT_PATH.format(org=self.org, name=name, rev=rev),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{EXPORT_PATH.format(org=self.org, name=name, rev=rev)}",
+          self.auth,
           params={"format": "bundle"},
         )
 
@@ -91,9 +85,7 @@ class Sharedflows:
 
         return resp
 
-    # --------------------
     # deployment
-    # --------------------
 
     def deploy(self, env, name, rev, override=False, delay=0, file=None):
         existing = False
@@ -110,9 +102,9 @@ class Sharedflows:
 
         console.echo(f"Deploying revision {rev}... ", line_ending="", should_flush=True)
 
-        resp = self._request(
-          "post",
-          DEPLOY_PATH.format(org=self.org, env=env, name=name, rev=rev),
+        resp = apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEPLOY_PATH.format(org=self.org, env=env, name=name, rev=rev)}",
+          self.auth,
           params=merge_dict_values({
             "override": "true" if override else "false",
             "delay": str(delay),
@@ -127,7 +119,10 @@ class Sharedflows:
         return resp
 
     def undeploy(self, env, name, rev):
-        return self._request("delete", DEPLOY_PATH.format(org=self.org, env=env, name=name, rev=rev))
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{DEPLOY_PATH.format(org=self.org, env=env, name=name, rev=rev)}",
+          self.auth,
+        )
 
     def undeploy_others(self, env, name, keep=set()):
         resp = self.deployments(name)
@@ -144,9 +139,7 @@ class Sharedflows:
 
         return resp
 
-    # --------------------
     # cleanup
-    # --------------------
 
     def delete_undeployed(self, name, save_last=0, dry_run=False):
         deployed = SharedflowsSerializer.filter_deployment_details(Deployments(self.auth, self.org, name).get_shared_flow_deployment_details().json())
@@ -168,9 +161,10 @@ class Sharedflows:
 
         return apply_function_on_iterable(undeployed, _delete)
 
-    # --------------------
     # misc
-    # --------------------
 
     def flowhook(self, env, hook):
-        return self._request("get", FLOWHOOK_PATH.format(org=self.org, env=env, hook=hook))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{FLOWHOOK_PATH.format(org=self.org, env=env, hook=hook)}",
+          self.auth,
+        )

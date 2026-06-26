@@ -1,8 +1,8 @@
 import json
-import requests
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+import apigee.request
+from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.targetservers.serializer import TargetserversSerializer
 from apigee.utils import read_file_content
 
@@ -17,56 +17,48 @@ class Targetservers:
         self.org = org
         self.name = name
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
-          self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
-        )
-
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(
-          method,
-          url,
-          headers=self._headers(kwargs.pop("headers", None)),
-          **kwargs,
-        )
-        resp.raise_for_status()
-        return resp
-
     def _base(self, env):
         return TARGETSERVER_PATH.format(org=self.org, env=env, name=self.name)
 
     def create(self, env, body):
-        return self._request(
-          "post",
-          TARGETSERVERS_PATH.format(org=self.org, env=env),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{TARGETSERVERS_PATH.format(org=self.org, env=env)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def delete(self, env):
-        return self._request("delete", self._base(env))
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{self._base(env)}",
+          self.auth,
+        )
 
     def get(self, env):
-        return self._request("get", self._base(env))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{self._base(env)}",
+          self.auth,
+        )
 
     def list(self, env, prefix=None, format="json"):
-        resp = self._request(
-          "get",
-          TARGETSERVERS_PATH.format(org=self.org, env=env),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{TARGETSERVERS_PATH.format(org=self.org, env=env)}",
+          self.auth,
         )
         return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update(self, env, body):
-        return self._request(
-          "put",
-          self._base(env),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.put(
+          f"{APIGEE_ADMIN_API_URL}{self._base(env)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def push(self, env, file):

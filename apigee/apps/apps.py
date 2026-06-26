@@ -2,9 +2,9 @@ import json
 import random
 import string
 
-import requests
+import apigee.request
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.apps.serializer import AppsSerializer
 
 GET_ORG_APP_PATH = "/v1/organizations/{org}/apps/{name}"
@@ -28,36 +28,33 @@ class Apps:
         self.org = org
         self.name = name
 
-    def _headers(self, extra=None):
-        return auth.set_authentication_headers(
+    def get(self, dev):
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APP_PATH.format(org=self.org, dev=dev, name=self.name)}",
           self.auth,
-          custom_headers={
-            "Accept": "application/json",
-            **(extra or {})
-          },
         )
 
-    def _request(self, method, path, **kwargs):
-        url = f"{APIGEE_ADMIN_API_URL}{path}"
-        resp = requests.request(method, url, headers=self._headers(kwargs.pop("headers", None)), **kwargs)
-        resp.raise_for_status()
-        return resp
-
-    def get(self, dev):
-        return self._request("get", DEV_APP_PATH.format(org=self.org, dev=dev, name=self.name))
-
     def get_org(self):
-        return self._request("get", GET_ORG_APP_PATH.format(org=self.org, name=self.name))
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{GET_ORG_APP_PATH.format(org=self.org, name=self.name)}",
+          self.auth,
+        )
 
     def delete(self, dev):
-        return self._request("delete", DEV_APP_PATH.format(org=self.org, dev=dev, name=self.name))
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APP_PATH.format(org=self.org, dev=dev, name=self.name)}",
+          self.auth,
+        )
 
     def create(self, dev, body):
-        return self._request(
-          "post",
-          DEV_APPS_PATH.format(org=self.org, dev=dev),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APPS_PATH.format(org=self.org, dev=dev)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def create_empty(self, dev, display_name="", callback_url=""):
@@ -68,11 +65,14 @@ class Apps:
         if callback_url:
             body["callbackUrl"] = callback_url
 
-        resp = self._request(
-          "post",
-          DEV_APPS_PATH.format(org=self.org, dev=dev),
-          headers={"Content-Type": "application/json"},
+        resp = apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APPS_PATH.format(org=self.org, dev=dev)}",
+          self.auth,
           json=body,
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
         self.delete_key(dev, resp.json()["credentials"][0]["consumerKey"])
@@ -81,9 +81,9 @@ class Apps:
     def list(self, dev, prefix=None, expand=False, count=1000, startkey="", format="json"):
         params = {"expand": expand} if expand else {"count": count, "startKey": startkey}
 
-        resp = self._request(
-          "get",
-          DEV_APPS_PATH.format(org=self.org, dev=dev),
+        resp = apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APPS_PATH.format(org=self.org, dev=dev)}",
+          self.auth,
           params=params,
         )
 
@@ -106,7 +106,11 @@ class Apps:
         if status:
             params["status"] = status
 
-        return self._request("get", LIST_ORG_APPS_PATH.format(org=self.org), params=params)
+        return apigee.request.get(
+          f"{APIGEE_ADMIN_API_URL}{LIST_ORG_APPS_PATH.format(org=self.org)}",
+          self.auth,
+          params=params,
+        )
 
     def create_key(self, dev, key=None, secret=None, products=None, key_len=32, sec_len=32, suffix=None):
         key = key or _rand(key_len)
@@ -115,13 +119,16 @@ class Apps:
         if suffix:
             key = f"{key}-{suffix}"
 
-        resp = self._request(
-          "post",
-          CREATE_KEY_PATH.format(org=self.org, dev=dev, name=self.name),
-          headers={"Content-Type": "application/json"},
+        resp = apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{CREATE_KEY_PATH.format(org=self.org, dev=dev, name=self.name)}",
+          self.auth,
           json={
             "consumerKey": key,
-            "consumerSecret": secret
+            "consumerSecret": secret,
+          },
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
           },
         )
 
@@ -135,29 +142,38 @@ class Apps:
               data["consumerKey"],
               json.dumps({
                 "apiProducts": products,
-                "attributes": data.get("attributes")
+                "attributes": data.get("attributes"),
               }),
             )
 
         return resp
 
     def add_product(self, dev, key, body):
-        return self._request(
-          "post",
-          DEV_APP_KEY_PATH.format(org=self.org, dev=dev, name=self.name, key=key),
-          headers={"Content-Type": "application/json"},
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APP_KEY_PATH.format(org=self.org, dev=dev, name=self.name, key=key)}",
+          self.auth,
           json=json.loads(body),
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
         )
 
     def delete_key(self, dev, key):
-        return self._request("delete", DEV_APP_KEY_PATH.format(org=self.org, dev=dev, name=self.name, key=key))
+        return apigee.request.delete(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APP_KEY_PATH.format(org=self.org, dev=dev, name=self.name, key=key)}",
+          self.auth,
+        )
 
     def update_key(self, dev, key, action):
-        return self._request(
-          "post",
-          DEV_APP_KEY_PATH.format(org=self.org, dev=dev, name=self.name, key=key),
+        return apigee.request.post(
+          f"{APIGEE_ADMIN_API_URL}{DEV_APP_KEY_PATH.format(org=self.org, dev=dev, name=self.name, key=key)}",
+          self.auth,
           params={"action": action},
-          headers={"Content-Type": "application/octet-stream"},
+          headers={
+            "Accept": "application/json",
+            "Content-Type": "application/octet-stream",
+          },
         )
 
     def restore(self, file):
