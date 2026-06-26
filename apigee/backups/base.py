@@ -32,10 +32,6 @@ class BaseBackup(ABC):
     async def download(self):
         pass
 
-    # --------------------
-    # Shared helpers
-    # --------------------
-
     def full_path(self, subpath: str) -> Path:
         return Path(self.config.working_org_directory) / subpath
 
