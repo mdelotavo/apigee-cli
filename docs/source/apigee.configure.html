@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>apigee.configure package &mdash; apigee-cli 0.x.x documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=371f806f" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=30f05f40" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5be48651"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=369d1ff3"></script>
+        <script src="../_static/doctools.js?v=b682be12"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="apigee.deployments package" href="apigee.deployments.html" />
+    <link rel="prev" title="apigee.caches package" href="apigee.caches.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            apigee-cli
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">apigee</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="apigee.html">apigee package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="apigee.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="apigee.apiproducts.html">apigee.apiproducts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html">apigee.apis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html">apigee.apps package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html">apigee.backups package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html">apigee.caches package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">apigee.configure package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.deployments.html">apigee.deployments package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html">apigee.developers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html">apigee.keystores package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html">apigee.keyvaluemaps package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html">apigee.maskconfigs package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html">apigee.permissions package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html">apigee.plugins package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.references.html">apigee.references package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html">apigee.sharedflows package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html">apigee.targetservers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html">apigee.userroles package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.virtualhosts.html">apigee.virtualhosts package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.auth">apigee.auth module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.cls">apigee.cls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.console">apigee.console module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.crypto">apigee.crypto module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.encryption_utils">apigee.encryption_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.exceptions">apigee.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.prefix">apigee.prefix module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.silent">apigee.silent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.types">apigee.types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.utils">apigee.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.utils_init">apigee.utils_init module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.verbose">apigee.verbose module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../disclaimer.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Need Help</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">apigee-cli</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">apigee</a></li>
+          <li class="breadcrumb-item"><a href="apigee.html">apigee package</a></li>
+      <li class="breadcrumb-item active">apigee.configure package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/apigee.configure.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="apigee-configure-package">
+<h1>apigee.configure package<a class="headerlink" href="#apigee-configure-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-apigee.configure.commands">
+<span id="apigee-configure-commands-module"></span><h2>apigee.configure.commands module<a class="headerlink" href="#module-apigee.configure.commands" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apigee.configure.commands.HiddenSecret">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.configure.commands.</span></span><span class="sig-name descname"><span class="pre">HiddenSecret</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.configure.commands.HiddenSecret" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-apigee.configure">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apigee.configure" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="apigee.caches.html" class="btn btn-neutral float-left" title="apigee.caches package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="apigee.deployments.html" class="btn btn-neutral float-right" title="apigee.deployments package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Matthew Delotavo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
