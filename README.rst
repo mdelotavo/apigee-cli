@@ -78,11 +78,6 @@ This CLI is best suited for:
 - Legacy automation
 - Transitional environments
 - Existing scripts that depend on it
------------------------------------------
-Why use this instead of the official tool
------------------------------------------
-
-While the `official Apigee CLI`_ is powerful, this tool was created to better support Darumatic clients’ CI/CD and self-service workflows that were difficult to manage with the official tool, using simple and easily editable code to demonstrate how to leverage the Apigee Admin APIs.
 
 ------------
 Installation
