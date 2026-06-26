@@ -5,7 +5,7 @@ import click
 
 from apigee import (
   APIGEE_CLI_EXCEPTIONS_LOG_FILE,
-  APIGEE_CLI_PLUGINS_DIRECTORY,
+  PLUGINS_DIR,
   CMD,
 )
 from apigee import __version__ as version
@@ -75,7 +75,7 @@ DEFAULT_COMMANDS = [
 
 def _load_plugins(commands):
     execute_function_on_directory_files(
-      APIGEE_CLI_PLUGINS_DIRECTORY,
+      PLUGINS_DIR,
       import_plugins_from_directory,
       args=(commands, ),
       glob="[!.][!__]*/__init__.py",
