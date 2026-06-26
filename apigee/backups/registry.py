@@ -10,7 +10,6 @@ from .resources.keyvaluemaps import KeyValueMapsBackup
 from .resources.targetservers import TargetServersBackup
 from .resources.userroles import UserRolesBackup
 
-
 RESOURCE_REGISTRY: Dict[str, Type[BaseBackup]] = {
   "apis": APIsBackup,
   "developers": DevelopersBackup,

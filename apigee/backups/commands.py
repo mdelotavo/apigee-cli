@@ -1,8 +1,8 @@
+import asyncio
 import click
 
 from apigee.auth import common_auth_options, generate_authentication
-from apigee.backups.backups import BackupConfig, Backups
-# from apigee.backups import BackupConfig, BackupRunner
+from apigee.backups import BackupConfig, BackupRunner
 from apigee.exceptions import InvalidApisError
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -15,24 +15,44 @@ def backups():
     pass
 
 
-def _take_snapshot(username, password, mfa_secret, token, zonename, org, profile, target_directory, prefix, environments, apis, **kwargs):
-    for choice in apis:
-        if choice not in APIGEE_API_CHOICES:
-            raise InvalidApisError(f"The choice '{choice}' is not a valid APIGEE API choice.")
-    if not isinstance(apis, set):
-        apis = set(apis)
+def validate_resources(apis):
+    invalid = [choice for choice in apis if choice not in APIGEE_API_CHOICES]
+
+    if invalid:
+        raise InvalidApisError(f"Invalid API choices: {', '.join(invalid)}")
+
+    return set(apis)
+
+
+def _take_snapshot(
+  username,
+  password,
+  mfa_secret,
+  token,
+  zonename,
+  org,
+  profile,
+  target_directory,
+  prefix,
+  environments,
+  apis,
+  **kwargs,
+):
+    api_choices = validate_resources(apis)
+
     config = BackupConfig(
       authentication=generate_authentication(username, password, mfa_secret, token, zonename),
       org_name=org,
       working_directory=target_directory,
       prefix=prefix,
-      api_choices=apis,
-      environments=list(environments)
+      api_choices=api_choices,
+      environments=list(environments),
     )
-    Backups(config).generate_snapshot_files_and_download_data()
+
+    asyncio.run(BackupRunner(config).run())
 
 
-@backups.command(help="Downloads and generates local snapshots of specified Apigee resources e.g. API proxies, KVMs, target servers, etc.")
+@backups.command(help="Downloads and generates local snapshots of specified Apigee resources.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
@@ -49,17 +69,12 @@ def _take_snapshot(username, password, mfa_secret, token, zonename, org, profile
   default=APIGEE_API_CHOICES,
   show_default=True,
 )
-# @click.option('--apis', metavar='LIST', cls=OptionEatAll, default=APIS_CHOICES, show_default=True, help='')
-# @click.option(
-#     '-e', '--environments', metavar='LIST', cls=OptionEatAll, default=['test', 'prod'], help=''
-# )
 @click.option(
   "-e",
   "--environments",
   multiple=True,
-  show_default=True,
   default=["test", "prod"],
-  help="",
+  show_default=True,
 )
 def take_snapshot(*args, **kwargs):
     _take_snapshot(*args, **kwargs)
