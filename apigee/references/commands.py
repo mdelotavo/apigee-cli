@@ -8,70 +8,40 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(help="References in an organization and environment.")
+@click.group(help="Manage references.")
 def references():
     pass
 
 
-def _list_all_references(username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs):
-    return References(generate_authentication(username, password, mfa_secret, token, zonename), org, None).list_all_references(environment, prefix=prefix)
+def _client(username, password, mfa_secret, token, zonename, org, name=None):
+    return References(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
 
 
-@references.command(help="List all references in an organization and environment.")
+# --------------------
+# list
+# --------------------
+
+
+@references.command(help="List references.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
-def list(*args, **kwargs):
-    console.echo(_list_all_references(*args, **kwargs))
+@click.option("-e", "--environment", required=True)
+def list(username, password, mfa_secret, token, zonename, org, profile, environment, prefix, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org).list(environment, prefix=prefix))
 
 
-def _get_reference(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
-    return (References(generate_authentication(username, password, mfa_secret, token, zonename), org, name).get_reference(environment).text)
+# --------------------
+# get
+# --------------------
 
 
-@references.command(help="Get reference in an organization and environment.")
+@references.command(help="Get a reference.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="reference name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def get(*args, **kwargs):
-    console.echo(_get_reference(*args, **kwargs))
-
-
-def _delete_reference(*args, **kwargs):
-    pass
-
-
-@references.command(help="")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-def delete(*args, **kwargs):
-    _delete_reference(*args, **kwargs)
-
-
-def _create_reference(*args, **kwargs):
-    pass
-
-
-@references.command(help="")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-def create(*args, **kwargs):
-    _create_reference(*args, **kwargs)
-
-
-def _update_reference(*args, **kwargs):
-    pass
-
-
-@references.command(help="")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-def update(*args, **kwargs):
-    _update_reference(*args, **kwargs)
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def get(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).get(environment).text)
