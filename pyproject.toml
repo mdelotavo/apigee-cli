@@ -40,7 +40,8 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/darumatic/apigee-cli"
-Documentation = "https://darumatic.github.io/apigee-cli/index.html"
+Repository = "https://github.com/mdelotavo/apigee-cli"
+Documentation = "https://mdelotavo.github.io/apigee-cli/"
 
 [project.scripts]
 apigee = "apigee.__main__:main"
