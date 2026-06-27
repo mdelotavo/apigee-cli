@@ -7,7 +7,7 @@ from apigee import utils_init
 APP = "apigeecli"
 CMD = "apigee"
 
-__version__ = "0.54.1"
+__version__ = "0.54.2"
 
 # description = "(DEPRECATED) User-friendly wrapper for the Apigee Edge admin APIs."
 description = "User-friendly wrapper for the Apigee Edge admin APIs."
