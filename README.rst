@@ -27,7 +27,7 @@ It remains usable, but no new features or fixes are planned.
 
 Authentication Support Notice
 ------------------------------
-We primarily use and test with **SSO**.
+We exclusively use **SSO**.
 
 **Basic** and **MFA** authentication may still work, but they are **no longer tested or guaranteed**.
 
@@ -41,8 +41,8 @@ The Apigee Edge command-line interface is an **unofficial Python CLI** built to 
 - Supports common API management workflows via CLI
 
 
-Recently Tested (Post-Refactor / Pre-Deprecation)
-------------------------------------------------
+Recently Tested
+---------------
 The following commands and features were validated during final updates and refactoring:
 
 
@@ -55,18 +55,19 @@ Authentication
 
 Core Functionality
 
-- Organization and environment targeting
-- API proxy deployments
-- API proxy undeployments
-- Revision listing and management
-- Product and app queries (read operations)
+- GET commands
+.. - API proxy deployments
+.. - API proxy undeployments
+.. - KVM commands
+.. - Revision listing and management
+.. - Product and app queries (read operations)
 
 
-CLI Behavior
+.. CLI Behavior
 
-- Argument parsing and command structure
-- Error handling for common API failures
-- Config/environment switching
+.. - Argument parsing and command structure
+.. - Error handling for common API failures
+.. - Config/environment switching
 
 
 Deprecation
