@@ -212,16 +212,17 @@ You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more d
 
 .. You can use the following helper alias to format the codebase using ``yapf``:
 
-.. ::
+.. .. code-block:: bash
 
 ..    alias fmt='python -m yapf -ir --style="{based_on_style: pep8, column_limit: 160, continuation_indent_width: 2, split_before_first_argument: false, split_arguments_when_comma_terminated: false, split_before_logical_operator: false, allow_split_before_dict_value: false, coalesce_brackets: true, dedent_closing_brackets: true, blank_lines_around_top_level_definition: 2}"'
 
 .. Then run:
 
-.. ::
+.. .. code-block:: bash
 
 ..    fmt apigee/
 
+-------------------------------------
 Plugins (Remote Installation Example)
 -------------------------------------
 
