@@ -15,7 +15,7 @@ For a more stable experience, install version **0.53.11 or earlier**:
 
 
 Versions **0.54 and above** are **maintenance-only releases** (refactoring and ad-hoc fixes).  
-See the `Mirror`_ repository for the current maintained source code.
+See the `Forked`_ repository for the current maintained source code.
 
 
 Maintenance Status
@@ -305,7 +305,7 @@ More Links
 ----------
 
 * `GitHub`_
-* `Mirror`_
+* `Forked`_
 * `Python Package Index (PyPI)`_
 
 For further questions, feel free to contact us at hello@darumatic.com.
@@ -356,5 +356,5 @@ This tool is not affiliated with Apigee or Google and is highly experimental.
 .. _`Tabulating deployments`: https://github.com/mdelotavo/apigee-cli-docs
 .. _`Tabulating resource permissions`: https://github.com/mdelotavo/apigee-cli-docs
 .. _`Troubleshooting`: https://github.com/mdelotavo/apigee-cli-docs
-.. _`Mirror`: https://github.com/mdelotavo/apigee-cli
+.. _`Forked`: https://github.com/mdelotavo/apigee-cli
 .. _`Apigee CI/CD Docker releases`: https://hub.docker.com/r/darumatic/apigee-cicd
