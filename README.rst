@@ -187,23 +187,38 @@ This file can help diagnose installation problems, missing dependencies, or erro
 
 You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more detailed request information.
 
--------------
-Running Tests
--------------
+.. -------------
+.. Running Tests
+.. -------------
 
-This project uses `unittest` for testing its codebase. In order to run the tests, you will need to install the `coverage.py` tool. You can install it using pip:
+.. This project uses `unittest` for testing its codebase. In order to run the tests, you will need to install the `coverage.py` tool. You can install it using pip:
 
-.. code-block:: bash
+.. .. code-block:: bash
 
-   pip3 install coverage
+..    pip3 install coverage
 
-Once `coverage.py` is installed, you can run the tests using the `runtests` script:
+.. Once `coverage.py` is installed, you can run the tests using the `runtests` script:
 
-.. code-block:: bash
+.. .. code-block:: bash
 
-   ./runtests
+..    ./runtests
 
-This script will run all the tests in the `tests` directory and generate a coverage report.
+.. This script will run all the tests in the `tests` directory and generate a coverage report.
+
+Code Formatting
+---------------
+
+You can use the following helper alias to format the codebase using ``yapf``:
+
+::
+
+   alias fmt='python -m yapf -ir --style="{based_on_style: pep8, column_limit: 160, continuation_indent_width: 2, split_before_first_argument: false, split_arguments_when_comma_terminated: false, split_before_logical_operator: false, allow_split_before_dict_value: false, coalesce_brackets: true, dedent_closing_brackets: true, blank_lines_around_top_level_definition: 2}"'
+
+Then run:
+
+::
+
+   fmt apigee/
 
 ------------
 Getting Help
