@@ -78,10 +78,10 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.auth">apigee.auth module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.cls">apigee.cls module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.console">apigee.console module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.crypto">apigee.crypto module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.encryption_utils">apigee.encryption_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.exceptions">apigee.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.prefix">apigee.prefix module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.request">apigee.request module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.silent">apigee.silent module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.types">apigee.types module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.utils">apigee.utils module</a></li>
@@ -139,21 +139,16 @@
 <span id="apigee-references-references-module"></span><h2>apigee.references.references module<a class="headerlink" href="#module-apigee.references.references" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="apigee.references.references.References">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.references.references.</span></span><span class="sig-name descname"><span class="pre">References</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.references.references.</span></span><span class="sig-name descname"><span class="pre">References</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.references.references.References.fetch_reference_data">
-<span class="sig-name descname"><span class="pre">fetch_reference_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References.fetch_reference_data" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.references.references.References.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References.get" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.references.references.References.get_reference">
-<span class="sig-name descname"><span class="pre">get_reference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References.get_reference" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.references.references.References.list_all_references">
-<span class="sig-name descname"><span class="pre">list_all_references</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References.list_all_references" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.references.references.References.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.references.References.list" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -167,7 +162,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.references.serializer.ReferencesSerializer.serialize_details">
-<span class="sig-name descname"><span class="pre">serialize_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.serializer.ReferencesSerializer.serialize_details" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.references.serializer.ReferencesSerializer.serialize_details" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

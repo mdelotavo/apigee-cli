@@ -53,14 +53,6 @@ apigee.console module
    :undoc-members:
    :show-inheritance:
 
-apigee.crypto module
---------------------
-
-.. automodule:: apigee.crypto
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 apigee.encryption\_utils module
 -------------------------------
 
@@ -81,6 +73,14 @@ apigee.prefix module
 --------------------
 
 .. automodule:: apigee.prefix
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.request module
+---------------------
+
+.. automodule:: apigee.request
    :members:
    :undoc-members:
    :show-inheritance:

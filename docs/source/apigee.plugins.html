@@ -78,10 +78,10 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.auth">apigee.auth module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.cls">apigee.cls module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.console">apigee.console module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.crypto">apigee.crypto module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.encryption_utils">apigee.encryption_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.exceptions">apigee.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.prefix">apigee.prefix module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.request">apigee.request module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.silent">apigee.silent module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.types">apigee.types module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.utils">apigee.utils module</a></li>
@@ -134,92 +134,45 @@
 </section>
 <section id="module-apigee.plugins.commands">
 <span id="apigee-plugins-commands-module"></span><h2>apigee.plugins.commands module<a class="headerlink" href="#module-apigee.plugins.commands" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="apigee.plugins.commands.FileUtils">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">FileUtils</span></span><a class="headerlink" href="#apigee.plugins.commands.FileUtils" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Internal helper class for file/directory operations.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.FileUtils.chmod_directory">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chmod_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.FileUtils.chmod_directory" title="Link to this definition"></a></dt>
-<dd><p>Recursively change permissions of a directory and its contents.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="apigee.plugins.commands.GitUtils">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">GitUtils</span></span><a class="headerlink" href="#apigee.plugins.commands.GitUtils" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Internal helper class for Git operations.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.GitUtils.exit_if_not_installed">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exit_if_not_installed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.GitUtils.exit_if_not_installed" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.clone">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.clone" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">PluginManager</span></span><a class="headerlink" href="#apigee.plugins.commands.PluginManager" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Internal helper class for Apigee CLI plugin management.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.clone_repositories">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clone_repositories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.clone_repositories" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.config">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.config" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.get_plugin_info">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_plugin_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.get_plugin_info" title="Link to this definition"></a></dt>
-<dd><p>Return the parsed plugin info JSON or None if file missing.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.initialize_plugins">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initialize_plugins</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.initialize_plugins" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.init">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.init" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.list_sources">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_sources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.list_sources" title="Link to this definition"></a></dt>
-<dd><p>Return a dictionary of plugin sources from config.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.load_config">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/home/mdelotavo/.apigee/plugins/config'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.load_config" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.plugin_info">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">plugin_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.plugin_info" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.print_dependencies">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugins_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.print_dependencies" title="Link to this definition"></a></dt>
-<dd><p>Print the ‘Requires’ field from plugin info, if any.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.print_full_info">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_full_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugins_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.print_full_info" title="Link to this definition"></a></dt>
-<dd><p>Print all key/value pairs from plugin info.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.print_latest_commit">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">print_latest_commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.print_latest_commit" title="Link to this definition"></a></dt>
-<dd><p>Print the latest Git commit of a plugin repository.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.prune_unused_directories">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prune_unused_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.prune_unused_directories" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.print_commit">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">print_commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.print_commit" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.plugins.commands.PluginManager.update_repositories">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_repositories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.PluginManager.update_repositories" title="Link to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.prune">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.prune" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.require_git">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">require_git</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.require_git" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.update_repos">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">update_repos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.update_repos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-apigee.plugins">
