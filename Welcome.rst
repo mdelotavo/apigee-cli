@@ -6,17 +6,15 @@ apigee-cli
 
    This tool is no longer actively maintained.
 
-.. warning::
+For a more stable experience, install version **0.53.11 or earlier**:
 
-   We primarily use and test with SSO; basic and MFA authentication may still work, but we no longer use or test them.
+::
 
-The Apigee Edge command-line interface is an unofficial Python command-line tool built to simplify and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication.
+   pip install apigeecli==0.53.11
 
------------------------------------------
-Why use this instead of the official tool
------------------------------------------
 
-While the `official Apigee CLI`_ is powerful, this tool was created to better support Darumatic clients’ CI/CD and self-service workflows that were difficult to manage with the official tool, using simple and easily editable code to demonstrate how to leverage the Apigee Admin APIs.
+Versions **0.54 and above** are **maintenance-only releases** (refactoring and ad-hoc fixes).  
+See the `Forked`_ repository for the current maintained source code.
 
 ----------
 Disclaimer
@@ -55,5 +53,5 @@ This tool is not affiliated with Apigee or Google and is highly experimental.
 .. _`Tabulating deployments`: https://github.com/mdelotavo/apigee-cli-docs
 .. _`Tabulating resource permissions`: https://github.com/mdelotavo/apigee-cli-docs
 .. _`Troubleshooting`: https://github.com/mdelotavo/apigee-cli-docs
-.. _`Mirror`: https://github.com/mdelotavo/apigee-cli
+.. _`Forked`: https://github.com/mdelotavo/apigee-cli
 .. _`Apigee CI/CD Docker releases`: https://hub.docker.com/r/darumatic/apigee-cicd

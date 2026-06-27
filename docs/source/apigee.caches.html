@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="apigee.configure package" href="apigee.configure.html" />
-    <link rel="prev" title="apigee.backups package" href="apigee.backups.html" /> 
+    <link rel="prev" title="apigee.backups.resources package" href="apigee.backups.resources.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -81,6 +81,7 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.encryption_utils">apigee.encryption_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.exceptions">apigee.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.prefix">apigee.prefix module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.request">apigee.request module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.silent">apigee.silent module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.types">apigee.types module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.utils">apigee.utils module</a></li>
@@ -135,46 +136,46 @@
 <span id="apigee-caches-caches-module"></span><h2>apigee.caches.caches module<a class="headerlink" href="#module-apigee.caches.caches" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="apigee.caches.caches.Caches">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.caches.caches.</span></span><span class="sig-name descname"><span class="pre">Caches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.caches.caches.</span></span><span class="sig-name descname"><span class="pre">Caches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.clear_a_cache_entry">
-<span class="sig-name descname"><span class="pre">clear_a_cache_entry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.clear_a_cache_entry" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.clear" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.clear_all_cache_entries">
-<span class="sig-name descname"><span class="pre">clear_all_cache_entries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.clear_all_cache_entries" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.clear_entry">
+<span class="sig-name descname"><span class="pre">clear_entry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.clear_entry" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.create_a_cache_in_an_environment">
-<span class="sig-name descname"><span class="pre">create_a_cache_in_an_environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.create_a_cache_in_an_environment" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.create" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.delete_a_cache">
-<span class="sig-name descname"><span class="pre">delete_a_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.delete_a_cache" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.delete" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.get_information_about_a_cache">
-<span class="sig-name descname"><span class="pre">get_information_about_a_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.get_information_about_a_cache" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.get" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.list_caches_in_an_environment">
-<span class="sig-name descname"><span class="pre">list_caches_in_an_environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.list_caches_in_an_environment" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.list" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.push_cache">
-<span class="sig-name descname"><span class="pre">push_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.push_cache" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.push">
+<span class="sig-name descname"><span class="pre">push</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.push" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.caches.caches.Caches.update_a_cache_in_an_environment">
-<span class="sig-name descname"><span class="pre">update_a_cache_in_an_environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.update_a_cache_in_an_environment" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.caches.caches.Caches.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.caches.Caches.update" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -191,7 +192,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.caches.serializer.CachesSerializer.serialize_details">
-<span class="sig-name descname"><span class="pre">serialize_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">caches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.serializer.CachesSerializer.serialize_details" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.caches.serializer.CachesSerializer.serialize_details" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -206,7 +207,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="apigee.backups.html" class="btn btn-neutral float-left" title="apigee.backups package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="apigee.backups.resources.html" class="btn btn-neutral float-left" title="apigee.backups.resources package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="apigee.configure.html" class="btn btn-neutral float-right" title="apigee.configure package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

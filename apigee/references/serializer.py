@@ -3,18 +3,20 @@ import json
 
 class ReferencesSerializer:
 
-    def serialize_details(self, references, format, prefix=None):
-        resp = references
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return references.text
-        references = references.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            references = [
-                reference for reference in references
-                if reference.startswith(prefix)
-            ]
+            data = [r for r in data if r.startswith(prefix)]
+
         if format == "dict":
-            return references
-        elif format == "json":
-            return json.dumps(references)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp

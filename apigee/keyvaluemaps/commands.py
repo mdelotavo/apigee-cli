@@ -1,9 +1,9 @@
 import sys
-
 import click
 
 from apigee import APIGEE_CLI_SYMMETRIC_KEY, console
 from apigee.auth import common_auth_options, generate_authentication
+from apigee.encryption_utils import has_encrypted_header
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -11,370 +11,226 @@ from apigee.utils import read_file_content, write_content_to_file
 from apigee.verbose import common_verbose_options
 
 
-@click.group(
-    help=
-    "Key/value maps at the environment scope can be accessed by any API proxy in the environment (such as test or prod). In the management UI (APIs > Environment Configuration), key/value maps are at the environment scope."
-)
+@click.group(help="Manage environment-scoped KeyValueMaps.")
 def keyvaluemaps():
     pass
 
 
-def _create_keyvaluemap_in_an_environment(username, password, mfa_secret,
-                                          token, zonename, org, profile, name,
-                                          environment, body, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).create_keyvaluemap_in_an_environment(environment, body).text)
-
-
-@keyvaluemaps.command(help="Creates a key value map in an environment.")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("-b", "--body", help="request body", required=True)
-def create(*args, **kwargs):
-    console.echo(_create_keyvaluemap_in_an_environment(*args, **kwargs))
-
-
-def _delete_keyvaluemap_from_an_environment(username, password, mfa_secret,
-                                            token, zonename, org, profile,
-                                            name, environment, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).delete_keyvaluemap_from_an_environment(environment).text)
-
-
-@keyvaluemaps.command(
-    help=
-    "Deletes a key/value map and all associated entries from an environment.")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def delete(*args, **kwargs):
-    console.echo(_delete_keyvaluemap_from_an_environment(*args, **kwargs))
-
-
-def _delete_keyvaluemap_entry_in_an_environment(username, password, mfa_secret,
-                                                token, zonename, org, profile,
-                                                name, environment, entry_name,
-                                                **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).delete_keyvaluemap_entry_in_an_environment(
-            environment, entry_name).text)
-
-
-@keyvaluemaps.command(
-    help=
-    "Deletes a specific key/value map entry in an environment by name, along with associated entries."
-)
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("--entry-name", help="entry name", required=True)
-def delete_entry(*args, **kwargs):
-    console.echo(_delete_keyvaluemap_entry_in_an_environment(*args, **kwargs))
-
-
-def _get_keyvaluemap_in_an_environment(username, password, mfa_secret, token,
-                                       zonename, org, profile, name,
-                                       environment, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).get_keyvaluemap_in_an_environment(environment).text)
-
-
-@keyvaluemaps.command(
-    help=
-    "Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values."
-)
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def get(*args, **kwargs):
-    console.echo(_get_keyvaluemap_in_an_environment(*args, **kwargs))
-
-
-def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
-        username, password, mfa_secret, token, zonename, org, profile, name,
-        environment, entry_name, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).get_a_keys_value_in_an_environment_scoped_keyvaluemap(
-            environment, entry_name).text)
-
-
-@keyvaluemaps.command(
-    help="Gets the value of a key in an environment-scoped KeyValueMap (KVM).")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("--entry-name", help="entry name", required=True)
-def get_value(*args, **kwargs):
-    console.echo(
-        _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
-            *args, **kwargs))
-
-
-def _list_keyvaluemaps_in_an_environment(username,
-                                         password,
-                                         mfa_secret,
-                                         token,
-                                         zonename,
-                                         org,
-                                         profile,
-                                         environment,
-                                         prefix=None,
-                                         **kwargs):
+def _client(**kwargs):
     return Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).list_keyvaluemaps_in_an_environment(environment, prefix=prefix)
+      generate_authentication(
+        kwargs["username"],
+        kwargs["password"],
+        kwargs["mfa_secret"],
+        kwargs["token"],
+        kwargs["zonename"],
+      ),
+      kwargs["org"],
+      kwargs.get("name"),
+    )
 
 
-@keyvaluemaps.command(
-    help=
-    "Lists the name of all key/value maps in an environment and optionally returns an expanded view of all key/value maps for the environment."
-)
+# --------------------
+# kvm
+# --------------------
+
+
+@keyvaluemaps.command(help="Create a key value map.")
+@common_auth_options
+@common_silent_options
+@common_verbose_options
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("-b", "--body", required=True)
+def create(**kwargs):
+    console.echo(_client(**kwargs).create_keyvaluemap(kwargs["environment"], kwargs["body"]).text)
+
+
+@keyvaluemaps.command(help="Delete a key value map.")
+@common_auth_options
+@common_silent_options
+@common_verbose_options
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def delete(**kwargs):
+    console.echo(_client(**kwargs).delete_keyvaluemap(kwargs["environment"]).text)
+
+
+@keyvaluemaps.command(help="Get a key value map.")
+@common_auth_options
+@common_silent_options
+@common_verbose_options
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def get(**kwargs):
+    console.echo(_client(**kwargs).get_keyvaluemap(kwargs["environment"]).text)
+
+
+@keyvaluemaps.command(help="List key value maps.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
-def list(*args, **kwargs):
-    console.echo(_list_keyvaluemaps_in_an_environment(*args, **kwargs))
+@click.option("-e", "--environment", required=True)
+def list(**kwargs):
+    console.echo(_client(**kwargs).list_keyvaluemaps(
+      kwargs["environment"],
+      prefix=kwargs.get("prefix"),
+    ))
 
 
-def _update_keyvaluemap_in_an_environment(username, password, mfa_secret,
-                                          token, zonename, org, profile, name,
-                                          environment, body, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).update_keyvaluemap_in_an_environment(environment, body).text)
-
-
-@keyvaluemaps.command(
-    help=
-    "Note: This API is supported for Apigee Edge for Private Cloud only. For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KVM. Updates an existing KeyValueMap in an environment. Does not override the existing map. Instead, this method updates the entries if they exist or adds them if not. It can take several minutes before the new value is visible to runtime traffic."
-)
+@keyvaluemaps.command(help="Update a key value map.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("-b", "--body", help="request body", required=True)
-def update(*args, **kwargs):
-    console.echo(_update_keyvaluemap_in_an_environment(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("-b", "--body", required=True)
+def update(**kwargs):
+    console.echo(_client(**kwargs).create_keyvaluemap(kwargs["environment"], kwargs["body"]).text)
 
 
-def _create_an_entry_in_an_environment_scoped_kvm(username, password,
-                                                  mfa_secret, token, zonename,
-                                                  org, profile, name,
-                                                  environment, entry_name,
-                                                  entry_value, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).create_an_entry_in_an_environment_scoped_kvm(
-            environment, entry_name, entry_value).text)
+# --------------------
+# entries
+# --------------------
 
 
-@keyvaluemaps.command(
-    help=
-    "Note: This API is supported for Apigee Edge for the Public Cloud only. Creates an entry in an existing KeyValueMap scoped to an environment. A key (name) cannot be larger than 2 KB. KVM names are case sensitive."
-)
+@keyvaluemaps.command(help="Create a KVM entry.")
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("--entry-name", required=True)
+@click.option("--entry-value", required=True)
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("--entry-name", help="entry name", required=True)
-@click.option("--entry-value", help="entry value", required=True)
-def create_entry(*args, **kwargs):
-    console.echo(_create_an_entry_in_an_environment_scoped_kvm(
-        *args, **kwargs))
+def create_entry(**kwargs):
+    console.echo(_client(**kwargs).create_entry(
+      kwargs["environment"],
+      kwargs["entry_name"],
+      kwargs["entry_value"],
+    ).text)
 
 
-def _update_an_entry_in_an_environment_scoped_kvm(username, password,
-                                                  mfa_secret, token, zonename,
-                                                  org, profile, name,
-                                                  environment, entry_name,
-                                                  updated_value, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).update_an_entry_in_an_environment_scoped_kvm(
-            environment, entry_name, updated_value).text)
-
-
-@keyvaluemaps.command(
-    help=
-    "Note: This API is supported for Apigee Edge for the Public Cloud only. Updates an entry in a KeyValueMap scoped to an environment. A key cannot be larger than 2 KB. KVM names are case sensitive. Does not override the existing map. It can take several minutes before the new value is visible to runtime traffic."
-)
+@keyvaluemaps.command(help="Update a KVM entry.")
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("--entry-name", required=True)
+@click.option("--updated-value", required=True)
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("--entry-name", help="entry name", required=True)
-@click.option("--updated-value", help="updated value", required=True)
-def update_entry(*args, **kwargs):
-    console.echo(_update_an_entry_in_an_environment_scoped_kvm(
-        *args, **kwargs))
+def update_entry(**kwargs):
+    console.echo(_client(**kwargs).update_entry(
+      kwargs["environment"],
+      kwargs["entry_name"],
+      kwargs["updated_value"],
+    ).text)
 
 
-def _list_keys_in_an_environment_scoped_keyvaluemap(username, password,
-                                                    mfa_secret, token,
-                                                    zonename, org, profile,
-                                                    name, environment,
-                                                    startkey, count, **kwargs):
-    return (Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).list_keys_in_an_environment_scoped_keyvaluemap(
-            environment, startkey, count).text)
-
-
-@keyvaluemaps.command(
-    help=
-    "Note: This API is supported for Apigee Edge for the Public Cloud only. Lists keys in a KeyValueMap scoped to an environment. KVM names are case sensitive."
-)
-@common_auth_options
-# @common_prefix_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option(
-    "--startkey",
-    default="",
-    show_default=True,
-    help=
-    "To filter the keys that are returned, enter the name of a key that the list will start with.",
-)
-@click.option(
-    "--count",
-    type=click.INT,
-    default=100,
-    show_default=True,
-    help=
-    "Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.",
-)
-# @click.option("--prefix", help="team/resource prefix filter")
-def list_keys(*args, **kwargs):
-    console.echo(
-        _list_keys_in_an_environment_scoped_keyvaluemap(*args, **kwargs))
-
-
-def _push_keyvaluemap(username, password, mfa_secret, token, zonename, org,
-                      profile, environment, file, symmetric_key, **kwargs):
-    return Keyvaluemaps(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).push_keyvaluemap(environment, file, secret=symmetric_key)
-
-
-@keyvaluemaps.command(
-    help=
-    "Push KeyValueMap to Apigee. This will create KeyValueMap/entries if they do not exist, update existing KeyValueMap/entries, and delete entries on Apigee that are not present in the request body."
-)
+@keyvaluemaps.command(help="Delete a KVM entry.")
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("--entry-name", required=True)
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option(
-    "-f",
-    "--file",
-    type=click.Path(exists=True,
-                    dir_okay=False,
-                    file_okay=True,
-                    resolve_path=False),
-    required=True,
-)
-@click.option(
-    "--symmetric-key",
-    default=APIGEE_CLI_SYMMETRIC_KEY,
-    help="symmetric secret key for decrypting",
-)
-def push(*args, **kwargs):
-    _push_keyvaluemap(*args, **kwargs)
+def delete_entry(**kwargs):
+    console.echo(_client(**kwargs).delete_entry(
+      kwargs["environment"],
+      kwargs["entry_name"],
+    ).text)
 
 
-@keyvaluemaps.command(
-    name="encrypt",
-    help="Use symmetric GPG (AES256) to encrypt KVM file in a custom format.",
-)
+@keyvaluemaps.command(help="Get a key value.")
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("--entry-name", required=True)
+@common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option(
-    "-f",
-    "--file",
-    type=click.Path(exists=True,
-                    dir_okay=False,
-                    file_okay=True,
-                    resolve_path=False),
-    required=True,
-)
-@click.option("--symmetric-key",
-              required=True,
-              help="symmetric secret key for encrypting")
-def encrypt_file(symmetric_key, file, verbose, silent):
-    contents = read_file_content(file, type="json")
-    encrypted_count = 0
+def get_value(**kwargs):
+    console.echo(_client(**kwargs).get_key(
+      kwargs["environment"],
+      kwargs["entry_name"],
+    ).text)
+
+
+@keyvaluemaps.command(help="List keys in a KVM.")
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("--startkey", default="", show_default=True)
+@click.option("--count", type=int, default=100, show_default=True)
+@common_auth_options
+@common_silent_options
+@common_verbose_options
+def list_keys(**kwargs):
+    console.echo(_client(**kwargs).list_keys(
+      kwargs["environment"],
+      kwargs["startkey"],
+      kwargs["count"],
+    ).text)
+
+
+# --------------------
+# sync
+# --------------------
+
+
+@keyvaluemaps.command(help="Push KVM (sync entries).")
+@common_auth_options
+@common_silent_options
+@common_verbose_options
+@click.option("-e", "--environment", required=True)
+@click.option("-f", "--file", type=click.Path(exists=True), required=True)
+@click.option("--symmetric-key", default=APIGEE_CLI_SYMMETRIC_KEY)
+def push(**kwargs):
+    _client(**kwargs).push(
+      kwargs["environment"],
+      kwargs["file"],
+      secret=kwargs.get("symmetric_key"),
+    )
+
+
+# --------------------
+# file ops
+# --------------------
+
+
+@keyvaluemaps.command(name="encrypt", help="Encrypt KVM file.")
+@common_silent_options
+@common_verbose_options
+@click.option("-f", "--file", type=click.Path(exists=True), required=True)
+@click.option("--symmetric-key", required=True)
+def encrypt_file(**kwargs):
+    data = read_file_content(kwargs["file"], type="json")
+
     console.echo("Encrypting... ", line_ending="", should_flush=True)
-    contents, encrypted_count = Keyvaluemaps.encrypt_keyvaluemap(
-        contents, symmetric_key)
-    if encrypted_count:
-        write_content_to_file(contents, file, indentation=2)
+    data, count = Keyvaluemaps.encrypt(data, kwargs["symmetric_key"])
+
+    if count:
+        write_content_to_file(data, kwargs["file"], indentation=2)
         console.echo("Done.")
-        return contents
+        return data
+
     console.echo("Nothing to encrypt.")
     return ""
 
 
-@keyvaluemaps.command(
-    name="decrypt",
-    help="Use symmetric GPG (AES256) to decrypt KVM file in a custom format.",
-)
+@keyvaluemaps.command(name="decrypt", help="Decrypt KVM file.")
 @common_silent_options
 @common_verbose_options
-@click.option(
-    "-f",
-    "--file",
-    type=click.Path(exists=True,
-                    dir_okay=False,
-                    file_okay=True,
-                    resolve_path=False),
-    required=True,
-)
-@click.option("--symmetric-key",
-              required=True,
-              help="symmetric secret key for decrypting")
-def decrypt_file(symmetric_key, file, verbose, silent):
-    contents = read_file_content(file, type="json")
-    decrypted_count = 0
+@click.option("-f", "--file", type=click.Path(exists=True), required=True)
+@click.option("--symmetric-key", required=True)
+def decrypt_file(**kwargs):
+    data = read_file_content(kwargs["file"], type="json")
+
     console.echo("Decrypting... ", line_ending="", should_flush=True)
-    contents, decrypted_count = Keyvaluemaps.decrypt_keyvaluemap(
-        contents, symmetric_key)
-    if decrypted_count:
-        write_content_to_file(contents, file, indentation=2)
+    data, count = Keyvaluemaps.decrypt(data, kwargs["symmetric_key"])
+
+    if count:
+        write_content_to_file(data, kwargs["file"], indentation=2)
         console.echo("Done.")
-        return contents
+        return data
+
     console.echo("Nothing to decrypt.")
     return ""

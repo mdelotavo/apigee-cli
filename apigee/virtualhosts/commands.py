@@ -8,91 +8,30 @@ from apigee.verbose import common_verbose_options
 from apigee.virtualhosts.virtualhosts import Virtualhosts
 
 
-@click.group(
-    help=
-    "A named network configuration (including URL) for an environment (for example 'test' or 'prod') on API Services."
-)
+@click.group(help="Manage virtual hosts.")
 def virtualhosts():
     pass
 
 
-def _create_a_virtual_host_for_an_environment(*args, **kwargs):
-    pass
+def _client(username, password, mfa_secret, token, zonename, org, name=None):
+    return Virtualhosts(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
 
 
-@virtualhosts.command(help="")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-def create(*args, **kwargs):
-    _create_a_virtual_host_for_an_environment(*args, **kwargs)
-
-
-def _delete_a_virtual_host_from_an_environment(*args, **kwargs):
-    pass
-
-
-@virtualhosts.command(help="")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-def delete(*args, **kwargs):
-    _delete_a_virtual_host_from_an_environment(*args, **kwargs)
-
-
-def _get_a_virtual_host_for_an_environment(username, password, mfa_secret,
-                                           token, zonename, org, profile, name,
-                                           environment, **kwargs):
-    return (Virtualhosts(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).get_a_virtual_host_for_an_environment(environment).text)
-
-
-@virtualhosts.command(help="Gets details for a named virtual host.")
-@common_auth_options
-@common_silent_options
-@common_verbose_options
-@click.option("-n", "--name", help="reference name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def get(*args, **kwargs):
-    console.echo(_get_a_virtual_host_for_an_environment(*args, **kwargs))
-
-
-def _list_virtual_hosts_for_an_environment(username,
-                                           password,
-                                           mfa_secret,
-                                           token,
-                                           zonename,
-                                           org,
-                                           profile,
-                                           environment,
-                                           prefix=None,
-                                           **kwargs):
-    return Virtualhosts(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).list_virtual_hosts_for_an_environment(environment, prefix=prefix)
-
-
-@virtualhosts.command(
-    help="Get a list of named virtual hosts for an environment.")
+@virtualhosts.command(help="List virtual hosts.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
-def list(*args, **kwargs):
-    console.echo(_list_virtual_hosts_for_an_environment(*args, **kwargs))
+@click.option("-e", "--environment", required=True)
+def list(username, password, mfa_secret, token, zonename, org, profile, environment, prefix, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org).list(environment, prefix=prefix))
 
 
-def _update_virtual_host_for_an_environment(*args, **kwargs):
-    pass
-
-
-@virtualhosts.command(help="")
+@virtualhosts.command(help="Get a virtual host.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-def update(*args, **kwargs):
-    _update_virtual_host_for_an_environment(*args, **kwargs)
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def get(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).get(environment).text)

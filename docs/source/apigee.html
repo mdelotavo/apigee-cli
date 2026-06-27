@@ -107,8 +107,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apigee.encryption_utils">apigee.encryption_utils module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.decrypt_message_with_gpg"><code class="docutils literal notranslate"><span class="pre">decrypt_message_with_gpg()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.encrypt_message_with_gpg"><code class="docutils literal notranslate"><span class="pre">encrypt_message_with_gpg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.decrypt_with_gpg"><code class="docutils literal notranslate"><span class="pre">decrypt_with_gpg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.encrypt_with_gpg"><code class="docutils literal notranslate"><span class="pre">encrypt_with_gpg()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.encryption_utils.has_encrypted_header"><code class="docutils literal notranslate"><span class="pre">has_encrypted_header()</span></code></a></li>
 </ul>
 </li>
@@ -123,9 +123,19 @@
 <li class="toctree-l4"><a class="reference internal" href="#apigee.prefix.common_prefix_options"><code class="docutils literal notranslate"><span class="pre">common_prefix_options()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-apigee.request">apigee.request module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.delete"><code class="docutils literal notranslate"><span class="pre">delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.get"><code class="docutils literal notranslate"><span class="pre">get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.head"><code class="docutils literal notranslate"><span class="pre">head()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.options"><code class="docutils literal notranslate"><span class="pre">options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.patch"><code class="docutils literal notranslate"><span class="pre">patch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.post"><code class="docutils literal notranslate"><span class="pre">post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.put"><code class="docutils literal notranslate"><span class="pre">put()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.request.request"><code class="docutils literal notranslate"><span class="pre">request()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apigee.silent">apigee.silent module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.silent.common_silent_options"><code class="docutils literal notranslate"><span class="pre">common_silent_options()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#apigee.silent.silent_callback"><code class="docutils literal notranslate"><span class="pre">silent_callback()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apigee.types">apigee.types module</a><ul>
@@ -143,8 +153,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.execute_function_on_directory_files"><code class="docutils literal notranslate"><span class="pre">execute_function_on_directory_files()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.extract_zip_file"><code class="docutils literal notranslate"><span class="pre">extract_zip_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.filter_out_empty_values"><code class="docutils literal notranslate"><span class="pre">filter_out_empty_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.get_progress_kwargs"><code class="docutils literal notranslate"><span class="pre">get_progress_kwargs()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.get_resolved_directory_path"><code class="docutils literal notranslate"><span class="pre">get_resolved_directory_path()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#apigee.utils.get_tqdm_kwargs"><code class="docutils literal notranslate"><span class="pre">get_tqdm_kwargs()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.import_plugins_from_directory"><code class="docutils literal notranslate"><span class="pre">import_plugins_from_directory()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.is_directory"><code class="docutils literal notranslate"><span class="pre">is_directory()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.utils.is_regular_file"><code class="docutils literal notranslate"><span class="pre">is_regular_file()</span></code></a></li>
@@ -165,7 +175,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apigee.verbose">apigee.verbose module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.verbose.common_verbose_options"><code class="docutils literal notranslate"><span class="pre">common_verbose_options()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#apigee.verbose.verbose_callback"><code class="docutils literal notranslate"><span class="pre">verbose_callback()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apigee">Module contents</a></li>
@@ -240,30 +249,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="apigee.apis.html">apigee.apis package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#module-apigee.apis.api_puller_with_dependency_extraction">apigee.apis.api_puller_with_dependency_extraction module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction"><code class="docutils literal notranslate"><span class="pre">ApiPullerWithDependencyExtraction</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_and_extract_api_proxy"><code class="docutils literal notranslate"><span class="pre">ApiPullerWithDependencyExtraction.export_and_extract_api_proxy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_resource_dependencies"><code class="docutils literal notranslate"><span class="pre">ApiPullerWithDependencyExtraction.export_resource_dependencies()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_apiproxy_files"><code class="docutils literal notranslate"><span class="pre">ApiPullerWithDependencyExtraction.get_apiproxy_files()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.CachesExporter"><code class="docutils literal notranslate"><span class="pre">CachesExporter</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.CachesExporter.export"><code class="docutils literal notranslate"><span class="pre">CachesExporter.export()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.CachesExporter.get_dependencies"><code class="docutils literal notranslate"><span class="pre">CachesExporter.get_dependencies()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.KeyValueMapsExporter"><code class="docutils literal notranslate"><span class="pre">KeyValueMapsExporter</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.KeyValueMapsExporter.export"><code class="docutils literal notranslate"><span class="pre">KeyValueMapsExporter.export()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.KeyValueMapsExporter.get_dependencies"><code class="docutils literal notranslate"><span class="pre">KeyValueMapsExporter.get_dependencies()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.TargetServersExporter"><code class="docutils literal notranslate"><span class="pre">TargetServersExporter</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.TargetServersExporter.export"><code class="docutils literal notranslate"><span class="pre">TargetServersExporter.export()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.api_puller_with_dependency_extraction.TargetServersExporter.get_dependencies"><code class="docutils literal notranslate"><span class="pre">TargetServersExporter.get_dependencies()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#module-apigee.apis.apis">apigee.apis.apis module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.apis.Apis"><code class="docutils literal notranslate"><span class="pre">Apis</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.apis.Apis.delete_api_proxy"><code class="docutils literal notranslate"><span class="pre">Apis.delete_api_proxy()</span></code></a></li>
@@ -293,6 +278,13 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.deploy.printDeployments"><code class="docutils literal notranslate"><span class="pre">printDeployments()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#module-apigee.apis.exporter">apigee.apis.exporter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.exporter.ApiBundleExporter"><code class="docutils literal notranslate"><span class="pre">ApiBundleExporter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.exporter.ApiBundleExporter.export"><code class="docutils literal notranslate"><span class="pre">ApiBundleExporter.export()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.apis.html#module-apigee.apis.serializer">apigee.apis.serializer module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.apis.html#apigee.apis.serializer.ApisSerializer"><code class="docutils literal notranslate"><span class="pre">ApisSerializer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="apigee.apis.html#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions"><code class="docutils literal notranslate"><span class="pre">ApisSerializer.filter_deployed_revisions()</span></code></a></li>
@@ -310,19 +302,19 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.apps.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.apps.html#module-apigee.apps.apps">apigee.apps.apps module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps"><code class="docutils literal notranslate"><span class="pre">Apps</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.add_api_product_to_key"><code class="docutils literal notranslate"><span class="pre">Apps.add_api_product_to_key()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.create_a_consumer_key_and_secret"><code class="docutils literal notranslate"><span class="pre">Apps.create_a_consumer_key_and_secret()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.create_developer_app"><code class="docutils literal notranslate"><span class="pre">Apps.create_developer_app()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.create_empty_developer_app"><code class="docutils literal notranslate"><span class="pre">Apps.create_empty_developer_app()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.delete_developer_app"><code class="docutils literal notranslate"><span class="pre">Apps.delete_developer_app()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.delete_key_for_a_developer_app"><code class="docutils literal notranslate"><span class="pre">Apps.delete_key_for_a_developer_app()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.get_developer_app_details"><code class="docutils literal notranslate"><span class="pre">Apps.get_developer_app_details()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.get_org_app"><code class="docutils literal notranslate"><span class="pre">Apps.get_org_app()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.list_apps_for_all_developers"><code class="docutils literal notranslate"><span class="pre">Apps.list_apps_for_all_developers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.list_developer_apps"><code class="docutils literal notranslate"><span class="pre">Apps.list_developer_apps()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.list_org_apps"><code class="docutils literal notranslate"><span class="pre">Apps.list_org_apps()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.restore_and_update_app_details"><code class="docutils literal notranslate"><span class="pre">Apps.restore_and_update_app_details()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.update_key_for_a_developer_app"><code class="docutils literal notranslate"><span class="pre">Apps.update_key_for_a_developer_app()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.add_product"><code class="docutils literal notranslate"><span class="pre">Apps.add_product()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.create"><code class="docutils literal notranslate"><span class="pre">Apps.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.create_empty"><code class="docutils literal notranslate"><span class="pre">Apps.create_empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.create_key"><code class="docutils literal notranslate"><span class="pre">Apps.create_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.delete"><code class="docutils literal notranslate"><span class="pre">Apps.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.delete_key"><code class="docutils literal notranslate"><span class="pre">Apps.delete_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.get"><code class="docutils literal notranslate"><span class="pre">Apps.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.get_org"><code class="docutils literal notranslate"><span class="pre">Apps.get_org()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.list"><code class="docutils literal notranslate"><span class="pre">Apps.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.list_all"><code class="docutils literal notranslate"><span class="pre">Apps.list_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.list_org"><code class="docutils literal notranslate"><span class="pre">Apps.list_org()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.restore"><code class="docutils literal notranslate"><span class="pre">Apps.restore()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.apps.html#apigee.apps.apps.Apps.update_key"><code class="docutils literal notranslate"><span class="pre">Apps.update_key()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -339,109 +331,165 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="apigee.backups.html">apigee.backups package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.resources.html">apigee.backups.resources package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.apiproducts">apigee.backups.resources.apiproducts module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.apis">apigee.backups.resources.apis module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.apps">apigee.backups.resources.apps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.caches">apigee.backups.resources.caches module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.developers">apigee.backups.resources.developers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.keyvaluemaps">apigee.backups.resources.keyvaluemaps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.targetservers">apigee.backups.resources.targetservers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources.userroles">apigee.backups.resources.userroles module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.resources.html#module-apigee.backups.resources">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.backups">apigee.backups.backups module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiHandler"><code class="docutils literal notranslate"><span class="pre">ApiHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiHandler.download"><code class="docutils literal notranslate"><span class="pre">ApiHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">ApiHandler.snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiProductsBackup"><code class="docutils literal notranslate"><span class="pre">ApiProductsBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiProductsBackup.collect"><code class="docutils literal notranslate"><span class="pre">ApiProductsBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiProductsBackup.download"><code class="docutils literal notranslate"><span class="pre">ApiProductsBackup.download()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiProductHandler"><code class="docutils literal notranslate"><span class="pre">ApiProductHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiProductHandler.download"><code class="docutils literal notranslate"><span class="pre">ApiProductHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApiProductHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">ApiProductHandler.snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApisBackup"><code class="docutils literal notranslate"><span class="pre">ApisBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApisBackup.collect"><code class="docutils literal notranslate"><span class="pre">ApisBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ApisBackup.download"><code class="docutils literal notranslate"><span class="pre">ApisBackup.download()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.AppHandler"><code class="docutils literal notranslate"><span class="pre">AppHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.AppHandler.download"><code class="docutils literal notranslate"><span class="pre">AppHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.AppHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">AppHandler.snapshot()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig"><code class="docutils literal notranslate"><span class="pre">BackupConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.api_choices"><code class="docutils literal notranslate"><span class="pre">BackupConfig.api_choices</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.authentication"><code class="docutils literal notranslate"><span class="pre">BackupConfig.authentication</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.environments"><code class="docutils literal notranslate"><span class="pre">BackupConfig.environments</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.org_name"><code class="docutils literal notranslate"><span class="pre">BackupConfig.org_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.prefix"><code class="docutils literal notranslate"><span class="pre">BackupConfig.prefix</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.progress_bar"><code class="docutils literal notranslate"><span class="pre">BackupConfig.progress_bar</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.snapshot_data"><code class="docutils literal notranslate"><span class="pre">BackupConfig.snapshot_data</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.snapshot_size"><code class="docutils literal notranslate"><span class="pre">BackupConfig.snapshot_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.working_directory"><code class="docutils literal notranslate"><span class="pre">BackupConfig.working_directory</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupConfig.working_org_directory"><code class="docutils literal notranslate"><span class="pre">BackupConfig.working_org_directory</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupCoordinator"><code class="docutils literal notranslate"><span class="pre">BackupCoordinator</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupCoordinator.close_progress_bar"><code class="docutils literal notranslate"><span class="pre">BackupCoordinator.close_progress_bar()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupCoordinator.fetch_and_generate_snapshots"><code class="docutils literal notranslate"><span class="pre">BackupCoordinator.fetch_and_generate_snapshots()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupCoordinator.generate_snapshot_files"><code class="docutils literal notranslate"><span class="pre">BackupCoordinator.generate_snapshot_files()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BackupCoordinator.generate_snapshot_files_and_download_data"><code class="docutils literal notranslate"><span class="pre">BackupCoordinator.generate_snapshot_files_and_download_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.AppsBackup"><code class="docutils literal notranslate"><span class="pre">AppsBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.AppsBackup.collect"><code class="docutils literal notranslate"><span class="pre">AppsBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.AppsBackup.download"><code class="docutils literal notranslate"><span class="pre">AppsBackup.download()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups"><code class="docutils literal notranslate"><span class="pre">Backups</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups.backupConfig"><code class="docutils literal notranslate"><span class="pre">Backups.backupConfig</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups.close_progress_bar"><code class="docutils literal notranslate"><span class="pre">Backups.close_progress_bar()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups.fetch_and_generate_snapshots"><code class="docutils literal notranslate"><span class="pre">Backups.fetch_and_generate_snapshots()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups.generate_snapshot_files"><code class="docutils literal notranslate"><span class="pre">Backups.generate_snapshot_files()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups.generate_snapshot_files_and_download_data"><code class="docutils literal notranslate"><span class="pre">Backups.generate_snapshot_files_and_download_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.Backups.run"><code class="docutils literal notranslate"><span class="pre">Backups.run()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.CacheHandler"><code class="docutils literal notranslate"><span class="pre">CacheHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.CacheHandler.download"><code class="docutils literal notranslate"><span class="pre">CacheHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.CacheHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">CacheHandler.snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BaseBackup"><code class="docutils literal notranslate"><span class="pre">BaseBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BaseBackup.error"><code class="docutils literal notranslate"><span class="pre">BaseBackup.error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BaseBackup.http_error"><code class="docutils literal notranslate"><span class="pre">BaseBackup.http_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BaseBackup.progress"><code class="docutils literal notranslate"><span class="pre">BaseBackup.progress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.BaseBackup.save"><code class="docutils literal notranslate"><span class="pre">BaseBackup.save()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.DeveloperHandler"><code class="docutils literal notranslate"><span class="pre">DeveloperHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.DeveloperHandler.download"><code class="docutils literal notranslate"><span class="pre">DeveloperHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.DeveloperHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">DeveloperHandler.snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.CachesBackup"><code class="docutils literal notranslate"><span class="pre">CachesBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.CachesBackup.collect"><code class="docutils literal notranslate"><span class="pre">CachesBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.CachesBackup.download"><code class="docutils literal notranslate"><span class="pre">CachesBackup.download()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ErrorHandler"><code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ErrorHandler.generic"><code class="docutils literal notranslate"><span class="pre">ErrorHandler.generic()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ErrorHandler.http"><code class="docutils literal notranslate"><span class="pre">ErrorHandler.http()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.DevelopersBackup"><code class="docutils literal notranslate"><span class="pre">DevelopersBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.DevelopersBackup.collect"><code class="docutils literal notranslate"><span class="pre">DevelopersBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.DevelopersBackup.download"><code class="docutils literal notranslate"><span class="pre">DevelopersBackup.download()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.FileManager"><code class="docutils literal notranslate"><span class="pre">FileManager</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.FileManager.resolve"><code class="docutils literal notranslate"><span class="pre">FileManager.resolve()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.FileManager.write"><code class="docutils literal notranslate"><span class="pre">FileManager.write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.KeyValueMapsBackup"><code class="docutils literal notranslate"><span class="pre">KeyValueMapsBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.KeyValueMapsBackup.collect"><code class="docutils literal notranslate"><span class="pre">KeyValueMapsBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.KeyValueMapsBackup.download"><code class="docutils literal notranslate"><span class="pre">KeyValueMapsBackup.download()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.KeyValueMapHandler"><code class="docutils literal notranslate"><span class="pre">KeyValueMapHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.KeyValueMapHandler.download"><code class="docutils literal notranslate"><span class="pre">KeyValueMapHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.KeyValueMapHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">KeyValueMapHandler.snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.TargetServersBackup"><code class="docutils literal notranslate"><span class="pre">TargetServersBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.TargetServersBackup.collect"><code class="docutils literal notranslate"><span class="pre">TargetServersBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.TargetServersBackup.download"><code class="docutils literal notranslate"><span class="pre">TargetServersBackup.download()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ProgressTracker"><code class="docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ProgressTracker.close"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.close()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.ProgressTracker.update"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.update()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.TargetServerHandler"><code class="docutils literal notranslate"><span class="pre">TargetServerHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.TargetServerHandler.download"><code class="docutils literal notranslate"><span class="pre">TargetServerHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.TargetServerHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">TargetServerHandler.snapshot()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.UserRoleHandler"><code class="docutils literal notranslate"><span class="pre">UserRoleHandler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.UserRoleHandler.download"><code class="docutils literal notranslate"><span class="pre">UserRoleHandler.download()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.UserRoleHandler.snapshot"><code class="docutils literal notranslate"><span class="pre">UserRoleHandler.snapshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.UserRolesBackup"><code class="docutils literal notranslate"><span class="pre">UserRolesBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.UserRolesBackup.collect"><code class="docutils literal notranslate"><span class="pre">UserRolesBackup.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.backups.UserRolesBackup.download"><code class="docutils literal notranslate"><span class="pre">UserRolesBackup.download()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.commands">apigee.backups.commands module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.base">apigee.backups.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup"><code class="docutils literal notranslate"><span class="pre">BaseBackup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.download"><code class="docutils literal notranslate"><span class="pre">BaseBackup.download()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.full_path"><code class="docutils literal notranslate"><span class="pre">BaseBackup.full_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.handle_error"><code class="docutils literal notranslate"><span class="pre">BaseBackup.handle_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.handle_http_error"><code class="docutils literal notranslate"><span class="pre">BaseBackup.handle_http_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.progress"><code class="docutils literal notranslate"><span class="pre">BaseBackup.progress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.run"><code class="docutils literal notranslate"><span class="pre">BaseBackup.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.save_snapshot"><code class="docutils literal notranslate"><span class="pre">BaseBackup.save_snapshot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.base.BaseBackup.snapshot"><code class="docutils literal notranslate"><span class="pre">BaseBackup.snapshot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.commands">apigee.backups.commands module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.commands.validate_resources"><code class="docutils literal notranslate"><span class="pre">validate_resources()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.config">apigee.backups.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig"><code class="docutils literal notranslate"><span class="pre">BackupConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.api_choices"><code class="docutils literal notranslate"><span class="pre">BackupConfig.api_choices</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.authentication"><code class="docutils literal notranslate"><span class="pre">BackupConfig.authentication</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.environments"><code class="docutils literal notranslate"><span class="pre">BackupConfig.environments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.max_concurrency"><code class="docutils literal notranslate"><span class="pre">BackupConfig.max_concurrency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.org_name"><code class="docutils literal notranslate"><span class="pre">BackupConfig.org_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.prefix"><code class="docutils literal notranslate"><span class="pre">BackupConfig.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.progress_bar"><code class="docutils literal notranslate"><span class="pre">BackupConfig.progress_bar</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.semaphore"><code class="docutils literal notranslate"><span class="pre">BackupConfig.semaphore</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.snapshot_data"><code class="docutils literal notranslate"><span class="pre">BackupConfig.snapshot_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.working_directory"><code class="docutils literal notranslate"><span class="pre">BackupConfig.working_directory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.BackupConfig.working_org_directory"><code class="docutils literal notranslate"><span class="pre">BackupConfig.working_org_directory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.get_global_semaphore"><code class="docutils literal notranslate"><span class="pre">get_global_semaphore()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.config.set_global_semaphore"><code class="docutils literal notranslate"><span class="pre">set_global_semaphore()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.registry">apigee.backups.registry module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.runner">apigee.backups.runner module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.runner.BackupRunner"><code class="docutils literal notranslate"><span class="pre">BackupRunner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.runner.BackupRunner.run"><code class="docutils literal notranslate"><span class="pre">BackupRunner.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.utils">apigee.backups.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.utils.run_blocking"><code class="docutils literal notranslate"><span class="pre">run_blocking()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig"><code class="docutils literal notranslate"><span class="pre">BackupConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.api_choices"><code class="docutils literal notranslate"><span class="pre">BackupConfig.api_choices</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.authentication"><code class="docutils literal notranslate"><span class="pre">BackupConfig.authentication</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.environments"><code class="docutils literal notranslate"><span class="pre">BackupConfig.environments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.max_concurrency"><code class="docutils literal notranslate"><span class="pre">BackupConfig.max_concurrency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.org_name"><code class="docutils literal notranslate"><span class="pre">BackupConfig.org_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.prefix"><code class="docutils literal notranslate"><span class="pre">BackupConfig.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.progress_bar"><code class="docutils literal notranslate"><span class="pre">BackupConfig.progress_bar</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.semaphore"><code class="docutils literal notranslate"><span class="pre">BackupConfig.semaphore</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.snapshot_data"><code class="docutils literal notranslate"><span class="pre">BackupConfig.snapshot_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.working_directory"><code class="docutils literal notranslate"><span class="pre">BackupConfig.working_directory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupConfig.working_org_directory"><code class="docutils literal notranslate"><span class="pre">BackupConfig.working_org_directory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupRunner"><code class="docutils literal notranslate"><span class="pre">BackupRunner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.BackupRunner.run"><code class="docutils literal notranslate"><span class="pre">BackupRunner.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.backups.html#apigee.backups.Backups"><code class="docutils literal notranslate"><span class="pre">Backups</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apigee.backups.html#apigee.backups.Backups.run"><code class="docutils literal notranslate"><span class="pre">Backups.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="apigee.caches.html">apigee.caches package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apigee.caches.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.caches.html#module-apigee.caches.caches">apigee.caches.caches module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches"><code class="docutils literal notranslate"><span class="pre">Caches</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.clear_a_cache_entry"><code class="docutils literal notranslate"><span class="pre">Caches.clear_a_cache_entry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.clear_all_cache_entries"><code class="docutils literal notranslate"><span class="pre">Caches.clear_all_cache_entries()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.create_a_cache_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Caches.create_a_cache_in_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.delete_a_cache"><code class="docutils literal notranslate"><span class="pre">Caches.delete_a_cache()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.get_information_about_a_cache"><code class="docutils literal notranslate"><span class="pre">Caches.get_information_about_a_cache()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.list_caches_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Caches.list_caches_in_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.push_cache"><code class="docutils literal notranslate"><span class="pre">Caches.push_cache()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.update_a_cache_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Caches.update_a_cache_in_an_environment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.clear"><code class="docutils literal notranslate"><span class="pre">Caches.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.clear_entry"><code class="docutils literal notranslate"><span class="pre">Caches.clear_entry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.create"><code class="docutils literal notranslate"><span class="pre">Caches.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.delete"><code class="docutils literal notranslate"><span class="pre">Caches.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.get"><code class="docutils literal notranslate"><span class="pre">Caches.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.list"><code class="docutils literal notranslate"><span class="pre">Caches.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.push"><code class="docutils literal notranslate"><span class="pre">Caches.push()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.caches.html#apigee.caches.caches.Caches.update"><code class="docutils literal notranslate"><span class="pre">Caches.update()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -492,18 +540,18 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.developers.html#module-apigee.developers.commands">apigee.developers.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.developers.html#module-apigee.developers.developers">apigee.developers.developers module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers"><code class="docutils literal notranslate"><span class="pre">Developers</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.create_developer"><code class="docutils literal notranslate"><span class="pre">Developers.create_developer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.delete_developer"><code class="docutils literal notranslate"><span class="pre">Developers.delete_developer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.delete_developer_attribute"><code class="docutils literal notranslate"><span class="pre">Developers.delete_developer_attribute()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_all_developer_attributes"><code class="docutils literal notranslate"><span class="pre">Developers.get_all_developer_attributes()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_developer"><code class="docutils literal notranslate"><span class="pre">Developers.get_developer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_developer_attribute"><code class="docutils literal notranslate"><span class="pre">Developers.get_developer_attribute()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_developer_by_app"><code class="docutils literal notranslate"><span class="pre">Developers.get_developer_by_app()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.list_developers"><code class="docutils literal notranslate"><span class="pre">Developers.list_developers()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.set_developer_status"><code class="docutils literal notranslate"><span class="pre">Developers.set_developer_status()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.update_a_developer_attribute"><code class="docutils literal notranslate"><span class="pre">Developers.update_a_developer_attribute()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.update_all_developer_attributes"><code class="docutils literal notranslate"><span class="pre">Developers.update_all_developer_attributes()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.update_developer"><code class="docutils literal notranslate"><span class="pre">Developers.update_developer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.create"><code class="docutils literal notranslate"><span class="pre">Developers.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.delete"><code class="docutils literal notranslate"><span class="pre">Developers.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.delete_attr"><code class="docutils literal notranslate"><span class="pre">Developers.delete_attr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get"><code class="docutils literal notranslate"><span class="pre">Developers.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_attr"><code class="docutils literal notranslate"><span class="pre">Developers.get_attr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_attrs"><code class="docutils literal notranslate"><span class="pre">Developers.get_attrs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.get_by_app"><code class="docutils literal notranslate"><span class="pre">Developers.get_by_app()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.list"><code class="docutils literal notranslate"><span class="pre">Developers.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.set_status"><code class="docutils literal notranslate"><span class="pre">Developers.set_status()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.update"><code class="docutils literal notranslate"><span class="pre">Developers.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.update_attr"><code class="docutils literal notranslate"><span class="pre">Developers.update_attr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.developers.html#apigee.developers.developers.Developers.update_attrs"><code class="docutils literal notranslate"><span class="pre">Developers.update_attrs()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -523,14 +571,14 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.keystores.html#module-apigee.keystores.commands">apigee.keystores.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.keystores.html#module-apigee.keystores.keystores">apigee.keystores.keystores module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores"><code class="docutils literal notranslate"><span class="pre">Keystores</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.export_a_cert"><code class="docutils literal notranslate"><span class="pre">Keystores.export_a_cert()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.export_a_certificate_for_an_alias"><code class="docutils literal notranslate"><span class="pre">Keystores.export_a_certificate_for_an_alias()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.get_a_keystore_or_truststore"><code class="docutils literal notranslate"><span class="pre">Keystores.get_a_keystore_or_truststore()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.export_alias_cert"><code class="docutils literal notranslate"><span class="pre">Keystores.export_alias_cert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.export_cert"><code class="docutils literal notranslate"><span class="pre">Keystores.export_cert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.get"><code class="docutils literal notranslate"><span class="pre">Keystores.get()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.get_alias"><code class="docutils literal notranslate"><span class="pre">Keystores.get_alias()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.get_all_certs_from_a_keystore_or_truststore"><code class="docutils literal notranslate"><span class="pre">Keystores.get_all_certs_from_a_keystore_or_truststore()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.get_cert_details_from_a_keystore_or_truststore"><code class="docutils literal notranslate"><span class="pre">Keystores.get_cert_details_from_a_keystore_or_truststore()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.get_cert"><code class="docutils literal notranslate"><span class="pre">Keystores.get_cert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.list"><code class="docutils literal notranslate"><span class="pre">Keystores.list()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.list_aliases"><code class="docutils literal notranslate"><span class="pre">Keystores.list_aliases()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.list_all_keystores_and_truststores"><code class="docutils literal notranslate"><span class="pre">Keystores.list_all_keystores_and_truststores()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keystores.html#apigee.keystores.keystores.Keystores.list_certs"><code class="docutils literal notranslate"><span class="pre">Keystores.list_certs()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -550,24 +598,22 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.keyvaluemaps.html#module-apigee.keyvaluemaps.commands">apigee.keyvaluemaps.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.keyvaluemaps.html#module-apigee.keyvaluemaps.keyvaluemaps">apigee.keyvaluemaps.keyvaluemaps module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_keyvaluemap_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.create_keyvaluemap_in_an_environment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_entry"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.create_entry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.create_keyvaluemap()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.create_or_update_entry"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.create_or_update_entry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.decrypt_keyvaluemap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.decrypt"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.decrypt()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.delete_entries"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.delete_entries()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_from_an_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.delete_keyvaluemap_from_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.encrypt_keyvaluemap()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.fetch_keys_in_environment_scoped_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.fetch_keys_in_environment_scoped_keyvaluemap()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.get_keyvaluemap_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.get_keyvaluemap_in_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.list_keyvaluemaps_in_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.push_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.push_keyvaluemap()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.send_delete_request"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.send_delete_request()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.synchronize_keyvaluemap_with_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.synchronize_keyvaluemap_with_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.update_keyvaluemap_in_an_environment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.delete_entry"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.delete_entry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.delete_keyvaluemap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.diff"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.diff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.encrypt"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.encrypt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.get_key"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.get_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.get_keyvaluemap"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.get_keyvaluemap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.list_keys"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.list_keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.list_keyvaluemaps()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.push"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.push()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.sync"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.update_entry"><code class="docutils literal notranslate"><span class="pre">Keyvaluemaps.update_entry()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -587,13 +633,12 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.maskconfigs.html#module-apigee.maskconfigs.commands">apigee.maskconfigs.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.maskconfigs.html#module-apigee.maskconfigs.maskconfigs">apigee.maskconfigs.maskconfigs module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs"><code class="docutils literal notranslate"><span class="pre">Maskconfigs</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.create_data_masks_for_an_api_proxy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.delete_data_masks_for_an_api_proxy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.fetch_data_masks_for_organization"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.fetch_data_masks_for_organization()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.get_data_mask_details_for_an_api_proxy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.list_data_masks_for_an_api_proxy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_organization"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.list_data_masks_for_an_organization()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.push_data_masks_for_an_api_proxy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.create"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.delete"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.get"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.list"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.list_org"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.list_org()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.maskconfigs.html#apigee.maskconfigs.maskconfigs.Maskconfigs.push"><code class="docutils literal notranslate"><span class="pre">Maskconfigs.push()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -613,10 +658,9 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.permissions.html#module-apigee.permissions.commands">apigee.permissions.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.permissions.html#module-apigee.permissions.permissions">apigee.permissions.permissions module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions"><code class="docutils literal notranslate"><span class="pre">Permissions</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.apply_team_permissions_template"><code class="docutils literal notranslate"><span class="pre">Permissions.apply_team_permissions_template()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.create_role_permissions"><code class="docutils literal notranslate"><span class="pre">Permissions.create_role_permissions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.get_permissions"><code class="docutils literal notranslate"><span class="pre">Permissions.get_permissions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.send_create_role_permissions_request"><code class="docutils literal notranslate"><span class="pre">Permissions.send_create_role_permissions_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.apply_template"><code class="docutils literal notranslate"><span class="pre">Permissions.apply_template()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.create"><code class="docutils literal notranslate"><span class="pre">Permissions.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.permissions.html#apigee.permissions.permissions.Permissions.get"><code class="docutils literal notranslate"><span class="pre">Permissions.get()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -634,27 +678,14 @@
 <li class="toctree-l1"><a class="reference internal" href="apigee.plugins.html">apigee.plugins package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apigee.plugins.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.plugins.html#module-apigee.plugins.commands">apigee.plugins.commands module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.FileUtils"><code class="docutils literal notranslate"><span class="pre">FileUtils</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.FileUtils.chmod_directory"><code class="docutils literal notranslate"><span class="pre">FileUtils.chmod_directory()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.GitUtils"><code class="docutils literal notranslate"><span class="pre">GitUtils</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.GitUtils.exit_if_not_installed"><code class="docutils literal notranslate"><span class="pre">GitUtils.exit_if_not_installed()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager"><code class="docutils literal notranslate"><span class="pre">PluginManager</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.clone_repositories"><code class="docutils literal notranslate"><span class="pre">PluginManager.clone_repositories()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.get_plugin_info"><code class="docutils literal notranslate"><span class="pre">PluginManager.get_plugin_info()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.initialize_plugins"><code class="docutils literal notranslate"><span class="pre">PluginManager.initialize_plugins()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.list_sources"><code class="docutils literal notranslate"><span class="pre">PluginManager.list_sources()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.load_config"><code class="docutils literal notranslate"><span class="pre">PluginManager.load_config()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.print_dependencies"><code class="docutils literal notranslate"><span class="pre">PluginManager.print_dependencies()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.print_full_info"><code class="docutils literal notranslate"><span class="pre">PluginManager.print_full_info()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.print_latest_commit"><code class="docutils literal notranslate"><span class="pre">PluginManager.print_latest_commit()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.prune_unused_directories"><code class="docutils literal notranslate"><span class="pre">PluginManager.prune_unused_directories()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.PluginManager.update_repositories"><code class="docutils literal notranslate"><span class="pre">PluginManager.update_repositories()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.clone"><code class="docutils literal notranslate"><span class="pre">clone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.config"><code class="docutils literal notranslate"><span class="pre">config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.plugin_info"><code class="docutils literal notranslate"><span class="pre">plugin_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.print_commit"><code class="docutils literal notranslate"><span class="pre">print_commit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.prune"><code class="docutils literal notranslate"><span class="pre">prune()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.require_git"><code class="docutils literal notranslate"><span class="pre">require_git()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.update_repos"><code class="docutils literal notranslate"><span class="pre">update_repos()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.plugins.html#module-apigee.plugins">Module contents</a></li>
@@ -665,9 +696,8 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.references.html#module-apigee.references.commands">apigee.references.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.references.html#module-apigee.references.references">apigee.references.references module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.references.html#apigee.references.references.References"><code class="docutils literal notranslate"><span class="pre">References</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.references.html#apigee.references.references.References.fetch_reference_data"><code class="docutils literal notranslate"><span class="pre">References.fetch_reference_data()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.references.html#apigee.references.references.References.get_reference"><code class="docutils literal notranslate"><span class="pre">References.get_reference()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.references.html#apigee.references.references.References.list_all_references"><code class="docutils literal notranslate"><span class="pre">References.list_all_references()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.references.html#apigee.references.references.References.get"><code class="docutils literal notranslate"><span class="pre">References.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.references.html#apigee.references.references.References.list"><code class="docutils literal notranslate"><span class="pre">References.list()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -697,22 +727,18 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.sharedflows.html#module-apigee.sharedflows.sharedflows">apigee.sharedflows.sharedflows module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows"><code class="docutils literal notranslate"><span class="pre">Sharedflows</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow_revision"><code class="docutils literal notranslate"><span class="pre">Sharedflows.delete_a_shared_flow_revision()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.delete_or_undeploy_a_shared_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.delete_or_undeploy_a_shared_flow()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.delete_undeployed_revisions"><code class="docutils literal notranslate"><span class="pre">Sharedflows.delete_undeployed_revisions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.deploy_a_shared_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.deploy_a_shared_flow()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.export_shared_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.export_shared_flow()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.fetch_shared_flow_revisions"><code class="docutils literal notranslate"><span class="pre">Sharedflows.fetch_shared_flow_revisions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get_a_list_of_shared_flows"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get_a_list_of_shared_flows()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get_a_shared_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get_a_shared_flow()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get_deployment_environments_for_shared_flows"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get_deployment_environments_for_shared_flows()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get_shared_flow_deployments"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get_shared_flow_deployments()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get_shared_flow_revisions"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get_shared_flow_revisions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get_the_shared_flow_attached_to_a_flow_hook"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get_the_shared_flow_attached_to_a_flow_hook()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.import_a_shared_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.import_a_shared_flow()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.retrieve_shared_flow_revisions"><code class="docutils literal notranslate"><span class="pre">Sharedflows.retrieve_shared_flow_revisions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.undeploy_a_shared_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.undeploy_a_shared_flow()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.undeploy_shared_flow_revisions_in_environment"><code class="docutils literal notranslate"><span class="pre">Sharedflows.undeploy_shared_flow_revisions_in_environment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.delete_revision"><code class="docutils literal notranslate"><span class="pre">Sharedflows.delete_revision()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.delete_undeployed"><code class="docutils literal notranslate"><span class="pre">Sharedflows.delete_undeployed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.deploy"><code class="docutils literal notranslate"><span class="pre">Sharedflows.deploy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.deployments"><code class="docutils literal notranslate"><span class="pre">Sharedflows.deployments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.export"><code class="docutils literal notranslate"><span class="pre">Sharedflows.export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.flowhook"><code class="docutils literal notranslate"><span class="pre">Sharedflows.flowhook()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.get"><code class="docutils literal notranslate"><span class="pre">Sharedflows.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.import_flow"><code class="docutils literal notranslate"><span class="pre">Sharedflows.import_flow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.list"><code class="docutils literal notranslate"><span class="pre">Sharedflows.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.revisions"><code class="docutils literal notranslate"><span class="pre">Sharedflows.revisions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.undeploy"><code class="docutils literal notranslate"><span class="pre">Sharedflows.undeploy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.undeploy_others"><code class="docutils literal notranslate"><span class="pre">Sharedflows.undeploy_others()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -732,13 +758,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.targetservers.html#module-apigee.targetservers.targetservers">apigee.targetservers.targetservers module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers"><code class="docutils literal notranslate"><span class="pre">Targetservers</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.create_a_targetserver"><code class="docutils literal notranslate"><span class="pre">Targetservers.create_a_targetserver()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.delete_a_targetserver"><code class="docutils literal notranslate"><span class="pre">Targetservers.delete_a_targetserver()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.fetch_target_server_data"><code class="docutils literal notranslate"><span class="pre">Targetservers.fetch_target_server_data()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.get_targetserver"><code class="docutils literal notranslate"><span class="pre">Targetservers.get_targetserver()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.list_targetservers_in_an_environment"><code class="docutils literal notranslate"><span class="pre">Targetservers.list_targetservers_in_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.push_targetserver"><code class="docutils literal notranslate"><span class="pre">Targetservers.push_targetserver()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.update_a_targetserver"><code class="docutils literal notranslate"><span class="pre">Targetservers.update_a_targetserver()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.create"><code class="docutils literal notranslate"><span class="pre">Targetservers.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.delete"><code class="docutils literal notranslate"><span class="pre">Targetservers.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.get"><code class="docutils literal notranslate"><span class="pre">Targetservers.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.list"><code class="docutils literal notranslate"><span class="pre">Targetservers.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.push"><code class="docutils literal notranslate"><span class="pre">Targetservers.push()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.targetservers.html#apigee.targetservers.targetservers.Targetservers.update"><code class="docutils literal notranslate"><span class="pre">Targetservers.update()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -751,26 +776,20 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.userroles.html#module-apigee.userroles.commands">apigee.userroles.commands module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.userroles.html#module-apigee.userroles.userroles">apigee.userroles.userroles module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles"><code class="docutils literal notranslate"><span class="pre">Userroles</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.add_a_user_to_a_role"><code class="docutils literal notranslate"><span class="pre">Userroles.add_a_user_to_a_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.add_permissions_for_a_resource_to_a_user_role"><code class="docutils literal notranslate"><span class="pre">Userroles.add_permissions_for_a_resource_to_a_user_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role"><code class="docutils literal notranslate"><span class="pre">Userroles.add_permissions_for_multiple_resources_to_a_user_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.add_permissions_for_multiple_resources_to_user_role"><code class="docutils literal notranslate"><span class="pre">Userroles.add_permissions_for_multiple_resources_to_user_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.create_a_user_role_in_an_organization"><code class="docutils literal notranslate"><span class="pre">Userroles.create_a_user_role_in_an_organization()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.create_user_role_in_organization"><code class="docutils literal notranslate"><span class="pre">Userroles.create_user_role_in_organization()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.delete_a_permission_for_a_resource"><code class="docutils literal notranslate"><span class="pre">Userroles.delete_a_permission_for_a_resource()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.delete_a_user_role"><code class="docutils literal notranslate"><span class="pre">Userroles.delete_a_user_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.delete_resource_from_permissions"><code class="docutils literal notranslate"><span class="pre">Userroles.delete_resource_from_permissions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.get_a_role"><code class="docutils literal notranslate"><span class="pre">Userroles.get_a_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.get_resource_permissions_for_a_specific_role"><code class="docutils literal notranslate"><span class="pre">Userroles.get_resource_permissions_for_a_specific_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.get_users_for_a_role"><code class="docutils literal notranslate"><span class="pre">Userroles.get_users_for_a_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.list_permissions_for_a_resource"><code class="docutils literal notranslate"><span class="pre">Userroles.list_permissions_for_a_resource()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.list_user_roles"><code class="docutils literal notranslate"><span class="pre">Userroles.list_user_roles()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.remove_user_membership_from_role"><code class="docutils literal notranslate"><span class="pre">Userroles.remove_user_membership_from_role()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.remove_user_membership_in_role"><code class="docutils literal notranslate"><span class="pre">Userroles.remove_user_membership_in_role()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.add_permissions"><code class="docutils literal notranslate"><span class="pre">Userroles.add_permissions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.add_user"><code class="docutils literal notranslate"><span class="pre">Userroles.add_user()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.create"><code class="docutils literal notranslate"><span class="pre">Userroles.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.delete"><code class="docutils literal notranslate"><span class="pre">Userroles.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.delete_permission"><code class="docutils literal notranslate"><span class="pre">Userroles.delete_permission()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.delete_resource_permissions"><code class="docutils literal notranslate"><span class="pre">Userroles.delete_resource_permissions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.get"><code class="docutils literal notranslate"><span class="pre">Userroles.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.get_permissions"><code class="docutils literal notranslate"><span class="pre">Userroles.get_permissions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.list"><code class="docutils literal notranslate"><span class="pre">Userroles.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.list_users"><code class="docutils literal notranslate"><span class="pre">Userroles.list_users()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.remove_user"><code class="docutils literal notranslate"><span class="pre">Userroles.remove_user()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.sort_resource_permissions"><code class="docutils literal notranslate"><span class="pre">Userroles.sort_resource_permissions()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource"><code class="docutils literal notranslate"><span class="pre">Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.verify_and_fetch_user_role_membership"><code class="docutils literal notranslate"><span class="pre">Userroles.verify_and_fetch_user_role_membership()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.verify_user_role_membership"><code class="docutils literal notranslate"><span class="pre">Userroles.verify_user_role_membership()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.verify_permission"><code class="docutils literal notranslate"><span class="pre">Userroles.verify_permission()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.userroles.html#apigee.userroles.userroles.Userroles.verify_user"><code class="docutils literal notranslate"><span class="pre">Userroles.verify_user()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -790,8 +809,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.virtualhosts.html#module-apigee.virtualhosts.virtualhosts">apigee.virtualhosts.virtualhosts module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="apigee.virtualhosts.html#apigee.virtualhosts.virtualhosts.Virtualhosts"><code class="docutils literal notranslate"><span class="pre">Virtualhosts</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="apigee.virtualhosts.html#apigee.virtualhosts.virtualhosts.Virtualhosts.get_a_virtual_host_for_an_environment"><code class="docutils literal notranslate"><span class="pre">Virtualhosts.get_a_virtual_host_for_an_environment()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="apigee.virtualhosts.html#apigee.virtualhosts.virtualhosts.Virtualhosts.list_virtual_hosts_for_an_environment"><code class="docutils literal notranslate"><span class="pre">Virtualhosts.list_virtual_hosts_for_an_environment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.virtualhosts.html#apigee.virtualhosts.virtualhosts.Virtualhosts.get"><code class="docutils literal notranslate"><span class="pre">Virtualhosts.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apigee.virtualhosts.html#apigee.virtualhosts.virtualhosts.Virtualhosts.list"><code class="docutils literal notranslate"><span class="pre">Virtualhosts.list()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -849,37 +868,37 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.generate_authentication_error_message">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">generate_authentication_error_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">authentication_error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.generate_authentication_error_message" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">generate_authentication_error_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.generate_authentication_error_message" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.get_access_token">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oauth_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.get_access_token_for_mfa">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token_for_mfa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oauth_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_mfa" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token_for_mfa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_mfa" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.get_access_token_for_sso">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token_for_sso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oauth_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_sso" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token_for_sso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passcode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_sso" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.get_access_token_for_token">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token_for_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oauth_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_token" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_access_token_for_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_token" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.get_config_value">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_config_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_config_value" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_config_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_config_value" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.auth.get_sso_temporary_authentication_code">
-<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_sso_temporary_authentication_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passcode_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_sso_temporary_authentication_code" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.auth.</span></span><span class="sig-name descname"><span class="pre">get_sso_temporary_authentication_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_sso_temporary_authentication_code" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -935,18 +954,18 @@
 <section id="module-apigee.encryption_utils">
 <span id="apigee-encryption-utils-module"></span><h2>apigee.encryption_utils module<a class="headerlink" href="#module-apigee.encryption_utils" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="apigee.encryption_utils.decrypt_message_with_gpg">
-<span class="sig-prename descclassname"><span class="pre">apigee.encryption_utils.</span></span><span class="sig-name descname"><span class="pre">decrypt_message_with_gpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoded</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#apigee.encryption_utils.decrypt_message_with_gpg" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.encryption_utils.decrypt_with_gpg">
+<span class="sig-prename descclassname"><span class="pre">apigee.encryption_utils.</span></span><span class="sig-name descname"><span class="pre">decrypt_with_gpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.encryption_utils.decrypt_with_gpg" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="apigee.encryption_utils.encrypt_message_with_gpg">
-<span class="sig-prename descclassname"><span class="pre">apigee.encryption_utils.</span></span><span class="sig-name descname"><span class="pre">encrypt_message_with_gpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoded</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#apigee.encryption_utils.encrypt_message_with_gpg" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.encryption_utils.encrypt_with_gpg">
+<span class="sig-prename descclassname"><span class="pre">apigee.encryption_utils.</span></span><span class="sig-name descname"><span class="pre">encrypt_with_gpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.encryption_utils.encrypt_with_gpg" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.encryption_utils.has_encrypted_header">
-<span class="sig-prename descclassname"><span class="pre">apigee.encryption_utils.</span></span><span class="sig-name descname"><span class="pre">has_encrypted_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#apigee.encryption_utils.has_encrypted_header" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.encryption_utils.</span></span><span class="sig-name descname"><span class="pre">has_encrypted_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.encryption_utils.has_encrypted_header" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -982,16 +1001,54 @@
 <dd></dd></dl>
 
 </section>
+<section id="module-apigee.request">
+<span id="apigee-request-module"></span><h2>apigee.request module<a class="headerlink" href="#module-apigee.request" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.delete">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.delete" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.get">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.get" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.head">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.head" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.options">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.options" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.patch">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.patch" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.post">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.put">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.put" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.request.request">
+<span class="sig-prename descclassname"><span class="pre">apigee.request.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.request.request" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
 <section id="module-apigee.silent">
 <span id="apigee-silent-module"></span><h2>apigee.silent module<a class="headerlink" href="#module-apigee.silent" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.silent.common_silent_options">
 <span class="sig-prename descclassname"><span class="pre">apigee.silent.</span></span><span class="sig-name descname"><span class="pre">common_silent_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.silent.common_silent_options" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="apigee.silent.silent_callback">
-<span class="sig-prename descclassname"><span class="pre">apigee.silent.</span></span><span class="sig-name descname"><span class="pre">silent_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.silent.silent_callback" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -1043,7 +1100,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.execute_function_on_directory_files">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">execute_function_on_directory_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'**/*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.execute_function_on_directory_files" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">execute_function_on_directory_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'**/*'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.execute_function_on_directory_files" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -1053,37 +1110,37 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.filter_out_empty_values">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">filter_out_empty_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.filter_out_empty_values" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">filter_out_empty_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.filter_out_empty_values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.utils.get_progress_kwargs">
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">get_progress_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">desc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.get_progress_kwargs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.get_resolved_directory_path">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">get_resolved_directory_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.get_resolved_directory_path" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="apigee.utils.get_tqdm_kwargs">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">get_tqdm_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">desc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.get_tqdm_kwargs" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">get_resolved_directory_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.get_resolved_directory_path" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.import_plugins_from_directory">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">import_plugins_from_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugins_init_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_commands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.import_plugins_from_directory" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">import_plugins_from_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commands</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.import_plugins_from_directory" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.is_directory">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">is_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.is_directory" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">is_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.is_directory" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.is_regular_file">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">is_regular_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.is_regular_file" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">is_regular_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.is_regular_file" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.merge_dict_values">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">merge_dict_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.merge_dict_values" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">merge_dict_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.merge_dict_values" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -1098,7 +1155,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.remove_last_elements">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">remove_last_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.remove_last_elements" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">remove_last_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.remove_last_elements" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -1108,12 +1165,12 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.split_path_by_delimiter">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">split_path_by_delimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[/\\\\]'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.split_path_by_delimiter" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">split_path_by_delimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'[/\\\\\\\\]'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.split_path_by_delimiter" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.utils.write_content_to_file">
-<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">write_content_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_to_filesystem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indentation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_eof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.write_content_to_file" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.utils.</span></span><span class="sig-name descname"><span class="pre">write_content_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indentation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_eof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.write_content_to_file" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -1140,11 +1197,6 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.verbose.common_verbose_options">
 <span class="sig-prename descclassname"><span class="pre">apigee.verbose.</span></span><span class="sig-name descname"><span class="pre">common_verbose_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.verbose.common_verbose_options" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="apigee.verbose.verbose_callback">
-<span class="sig-prename descclassname"><span class="pre">apigee.verbose.</span></span><span class="sig-name descname"><span class="pre">verbose_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.verbose.verbose_callback" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

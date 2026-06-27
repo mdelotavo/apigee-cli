@@ -8,143 +8,77 @@ from apigee.targetservers.targetservers import Targetservers
 from apigee.verbose import common_verbose_options
 
 
-@click.group(
-    help=
-    "TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services."
-)
+@click.group(help="Manage TargetServers.")
 def targetservers():
     pass
 
 
-def _create_a_targetserver(username, password, mfa_secret, token, zonename,
-                           org, profile, name, environment, body, **kwargs):
-    return (Targetservers(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).create_a_targetserver(environment, body).text)
+def _client(username, password, mfa_secret, token, zonename, org, name=None):
+    return Targetservers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
 
 
-@targetservers.command(
-    help=
-    "Create a TargetServer in the specified environment. TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services."
-)
+@targetservers.command(help="Create a TargetServer.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("-b", "--body", help="request body", required=True)
-def create(*args, **kwargs):
-    console.echo(_create_a_targetserver(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("-b", "--body", required=True)
+def create(username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).create(environment, body).text)
 
 
-def _delete_a_targetserver(username, password, mfa_secret, token, zonename,
-                           org, profile, name, environment, **kwargs):
-    return (Targetservers(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).delete_a_targetserver(environment).text)
-
-
-@targetservers.command(
-    help=
-    "Delete a TargetServer configuration from an environment. Returns information about the deleted TargetServer."
-)
+@targetservers.command(help="Delete a TargetServer.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def delete(*args, **kwargs):
-    console.echo(_delete_a_targetserver(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def delete(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).delete(environment).text)
 
 
-def _list_targetservers_in_an_environment(username,
-                                          password,
-                                          mfa_secret,
-                                          token,
-                                          zonename,
-                                          org,
-                                          profile,
-                                          environment,
-                                          prefix=None,
-                                          **kwargs):
-    return Targetservers(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).list_targetservers_in_an_environment(environment, prefix=prefix)
-
-
-@targetservers.command(help="List all TargetServers in an environment.")
+@targetservers.command(help="List TargetServers.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
-def list(*args, **kwargs):
-    console.echo(_list_targetservers_in_an_environment(*args, **kwargs))
+@click.option("-e", "--environment", required=True)
+def list(username, password, mfa_secret, token, zonename, org, profile, environment, prefix, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org).list(environment, prefix=prefix))
 
 
-def _get_targetserver(username, password, mfa_secret, token, zonename, org,
-                      profile, name, environment, **kwargs):
-    return (Targetservers(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).get_targetserver(environment).text)
-
-
-@targetservers.command(help="Returns a TargetServer definition.")
+@targetservers.command(help="Get a TargetServer.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def get(*args, **kwargs):
-    console.echo(_get_targetserver(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def get(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).get(environment).text)
 
 
-def _update_a_targetserver(username, password, mfa_secret, token, zonename,
-                           org, profile, name, environment, body, **kwargs):
-    return (Targetservers(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).update_a_targetserver(environment, body).text)
-
-
-@targetservers.command(help="Modifies an existing TargetServer.")
+@targetservers.command(help="Update a TargetServer.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("-b", "--body", help="request body", required=True)
-def update(*args, **kwargs):
-    console.echo(_update_a_targetserver(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("-b", "--body", required=True)
+def update(username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).update(environment, body).text)
 
 
-def _push_targetserver(username, password, mfa_secret, token, zonename, org,
-                       profile, environment, file, **kwargs):
-    return Targetservers(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).push_targetserver(environment, file)
-
-
-@targetservers.command(
-    help="Push TargetServer to Apigee. This will create/update a TargetServer."
-)
+@targetservers.command(help="Push TargetServer (create/update).")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
+@click.option("-e", "--environment", required=True)
 @click.option(
-    "-f",
-    "--file",
-    type=click.Path(exists=True,
-                    dir_okay=False,
-                    file_okay=True,
-                    resolve_path=False),
-    required=True,
+  "-f",
+  "--file",
+  type=click.Path(exists=True, dir_okay=False, file_okay=True),
+  required=True,
 )
-def push(*args, **kwargs):
-    _push_targetserver(*args, **kwargs)
+def push(username, password, mfa_secret, token, zonename, org, profile, environment, file, **_):
+    _client(username, password, mfa_secret, token, zonename, org).push(environment, file)

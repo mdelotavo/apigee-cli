@@ -3,15 +3,20 @@ import json
 
 class AppsSerializer:
 
-    def serialize_details(self, apps, format, prefix=None):
-        resp = apps
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return apps.text
-        apps = apps.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            apps = [app for app in apps if app.startswith(prefix)]
+            data = [a for a in data if a.startswith(prefix)]
+
         if format == "dict":
-            return apps
-        elif format == "json":
-            return json.dumps(apps)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp

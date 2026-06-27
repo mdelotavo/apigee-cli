@@ -1,12 +1,12 @@
 APIGEE_API_CHOICES = {
-    "apis",
-    "keyvaluemaps",
-    "targetservers",
-    "caches",
-    "developers",
-    "apiproducts",
-    "apps",
-    "userroles",
+  "apis",
+  "keyvaluemaps",
+  "targetservers",
+  "caches",
+  "developers",
+  "apiproducts",
+  "apps",
+  "userroles",
 }
 
 
@@ -18,12 +18,12 @@ class Struct:
 
 def empty_snapshot():
     return Struct(
-        apis={},
-        keyvaluemaps={},
-        targetservers={},
-        caches={},
-        developers=[],
-        apps={},
-        apiproducts=[],
-        userroles=[],
+      apis={},
+      keyvaluemaps={},
+      targetservers={},
+      caches={},
+      developers=[],
+      apps={},
+      apiproducts=[],
+      userroles=[],
     )

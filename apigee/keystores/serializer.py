@@ -3,18 +3,20 @@ import json
 
 class KeystoresSerializer:
 
-    def serialize_details(self, keystores, format, prefix=None):
-        resp = keystores
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return keystores.text
-        keystores = keystores.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            keystores = [
-                keystore for keystore in keystores
-                if keystore.startswith(prefix)
-            ]
+            data = [k for k in data if k.startswith(prefix)]
+
         if format == "dict":
-            return keystores
-        elif format == "json":
-            return json.dumps(keystores)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp

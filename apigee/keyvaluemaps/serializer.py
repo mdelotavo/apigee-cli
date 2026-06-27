@@ -3,15 +3,20 @@ import json
 
 class KeyvaluemapsSerializer:
 
-    def serialize_details(self, maps, format, prefix=None):
-        resp = maps
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return maps.text
-        maps = maps.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            maps = [map for map in maps if map.startswith(prefix)]
+            data = [m for m in data if m.startswith(prefix)]
+
         if format == "dict":
-            return maps
-        elif format == "json":
-            return json.dumps(maps)
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
         return resp

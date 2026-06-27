@@ -118,10 +118,10 @@ def getDeployments():
     # Print info on deployments
     hdrs = {"Accept": "application/xml"}
     resp = httpCall(
-        "GET",
-        "/v1/organizations/%s/apis/%s/deployments" % (Organization, Name),
-        hdrs,
-        None,
+      "GET",
+      "/v1/organizations/%s/apis/%s/deployments" % (Organization, Name),
+      hdrs,
+      None,
     )
 
     if resp.status != 200:
@@ -147,10 +147,10 @@ def getDeployments():
 
             # svrs = rev.getElementsByTagName('Server')
             status = {
-                "environment": envName,
-                "revision": revNum,
-                "basePath": basePath,
-                "state": state,
+              "environment": envName,
+              "revision": revNum,
+              "basePath": basePath,
+              "state": state,
             }
 
             if error != None:
@@ -169,17 +169,13 @@ def printDeployments(dep, check_revision=None):
         console.echo("Proxy version %i found" % check_revision)
     for d in dep:
         console.echo("Environment: %s" % d["environment"])
-        console.echo("  Revision: %i BasePath = %s" %
-                     (d["revision"], d["basePath"]))
+        console.echo("  Revision: %i BasePath = %s" % (d["revision"], d["basePath"]))
         console.echo("  State: %s" % d["state"])
         if d["state"] == "missing":
             console.echo("Missing deployment. Attempting deletion...")
             try:
-                Apis(Auth, Organization).undeploy_api_proxy_revision(
-                    Name, d["environment"], d["revision"])
-                console.echo(
-                    Apis(Auth, Organization).delete_api_proxy_revision(
-                        Name, d["revision"]).text)
+                Apis(Auth, Organization).undeploy_api_proxy_revision(Name, d["environment"], d["revision"])
+                console.echo(Apis(Auth, Organization).delete_api_proxy_revision(Name, d["revision"]).text)
             except HTTPError as e:
                 if e.response.status_code != 400:
                     raise e
@@ -211,11 +207,11 @@ def deploy(args):
     # GracePeriod = 15
     # AccessToken = mfa_with_pyotp.get_access_token(args)
     Auth = Struct(
-        username=args.username,
-        password=args.password,
-        mfa_secret=args.mfa_secret,
-        token=args.token,
-        zonename=args.zonename,
+      username=args.username,
+      password=args.password,
+      mfa_secret=args.mfa_secret,
+      token=args.token,
+      zonename=args.zonename,
     )
 
     # if UserPW == None or \
@@ -249,8 +245,7 @@ def deploy(args):
                 for fileEntry in dirEntry[2]:
                     if not fileEntry.endswith("~"):
                         fn = os.path.join(dirEntry[0], fileEntry)
-                        en = os.path.join(
-                            os.path.relpath(dirEntry[0], Directory), fileEntry)
+                        en = os.path.join(os.path.relpath(dirEntry[0], Directory), fileEntry)
                         console.echo("Writing %s to %s" % (fn, en))
                         zipout.write(fn, en)
 
@@ -262,17 +257,12 @@ def deploy(args):
         f.close()
 
     # Upload the bundle to the API
-    hdrs = {
-        "Content-Type": "application/octet-stream",
-        "Accept": "application/json"
-    }
-    uri = "/v1/organizations/%s/apis?action=import&name=%s" % (Organization,
-                                                               Name)
+    hdrs = {"Content-Type": "application/octet-stream", "Accept": "application/json"}
+    uri = "/v1/organizations/%s/apis?action=import&name=%s" % (Organization, Name)
     resp = httpCall("POST", uri, hdrs, body)
 
     if resp.status != 200 and resp.status != 201:
-        console.echo("Import failed to %s with status %i:\n%s" %
-                     (uri, resp.status, resp.read().decode()))
+        console.echo("Import failed to %s with status %i:\n%s" % (uri, resp.status, resp.read().decode()))
         sys.exit(2)
 
     deployment = json.loads(resp.read().decode())
@@ -284,38 +274,31 @@ def deploy(args):
         # Undeploy duplicates
         deps = getDeployments()
         for d in deps:
-            if (d["environment"] == Environment and d["basePath"] == BasePath
-                    and d["revision"] != revision):
-                console.echo(
-                    "Undeploying revision %i in same environment and path:" %
-                    d["revision"])
+            if (d["environment"] == Environment and d["basePath"] == BasePath and d["revision"] != revision):
+                console.echo("Undeploying revision %i in same environment and path:" % d["revision"])
                 conn = http.client.HTTPSConnection(httpHost)
                 resp = httpCall(
-                    "POST",
-                    ("/v1/organizations/%s/apis/%s/deployments" +
-                     "?action=undeploy" + "&env=%s" + "&revision=%i") %
-                    (Organization, Name, Environment, d["revision"]),
-                    None,
-                    None,
+                  "POST",
+                  ("/v1/organizations/%s/apis/%s/deployments" + "?action=undeploy" + "&env=%s" + "&revision=%i") %
+                  (Organization, Name, Environment, d["revision"]),
+                  None,
+                  None,
                 )
                 if resp.status != 200 and resp.status != 204:
-                    console.echo("Error %i on undeployment:\n%s" %
-                                 (resp.status, resp.read().decode()))
+                    console.echo("Error %i on undeployment:\n%s" % (resp.status, resp.read().decode()))
 
         # Deploy the bundle
         hdrs = {"Accept": "application/json"}
         resp = httpCall(
-            "POST",
-            ("/v1/organizations/%s/apis/%s/deployments" + "?action=deploy" +
-             "&env=%s" + "&revision=%i" + "&basepath=%s") %
-            (Organization, Name, Environment, revision, BasePath),
-            hdrs,
-            None,
+          "POST",
+          ("/v1/organizations/%s/apis/%s/deployments" + "?action=deploy" + "&env=%s" + "&revision=%i" + "&basepath=%s") %
+          (Organization, Name, Environment, revision, BasePath),
+          hdrs,
+          None,
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo("Deploy failed with status %i:\n%s" %
-                         (resp.status, resp.read().decode()))
+            console.echo("Deploy failed with status %i:\n%s" % (resp.status, resp.read().decode()))
             sys.exit(2)
 
     if ShouldOverride:
@@ -323,17 +306,15 @@ def deploy(args):
         console.echo("Seamless deploy %s" % Name)
         hdrs = {"Content-Type": "application/x-www-form-urlencoded"}
         resp = httpCall(
-            "POST",
-            ("/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments"
-             + "?override=true" + "&delay=%s") %
-            (Organization, Environment, Name, revision, GracePeriod),
-            hdrs,
-            None,
+          "POST",
+          ("/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments" + "?override=true" + "&delay=%s") %
+          (Organization, Environment, Name, revision, GracePeriod),
+          hdrs,
+          None,
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo("Deploy failed with status %i:\n%s" %
-                         (resp.status, resp.read().decode()))
+            console.echo("Deploy failed with status %i:\n%s" % (resp.status, resp.read().decode()))
             sys.exit(2)
 
     deps = getDeployments()

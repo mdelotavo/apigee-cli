@@ -77,6 +77,14 @@ apigee.prefix module
    :undoc-members:
    :show-inheritance:
 
+apigee.request module
+---------------------
+
+.. automodule:: apigee.request
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.silent module
 --------------------
 

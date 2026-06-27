@@ -3,14 +3,20 @@ import json
 
 class MaskconfigsSerializer:
 
-    def serialize_details(self, maskconfigs, format, prefix=None):
-        resp = maskconfigs
+    @staticmethod
+    def serialize_details(resp, format, prefix=None):
         if format == "text":
-            return maskconfigs.text
-        maskconfigs = maskconfigs.json()
+            return resp.text
+
+        data = resp.json()
+
         if prefix:
-            maskconfigs = [
-                maskconfig for maskconfig in maskconfigs
-                if maskconfig.startswith(prefix)
-            ]
-        return json.dumps(maskconfigs) if format == "json" else resp
+            data = [m for m in data if m.startswith(prefix)]
+
+        if format == "dict":
+            return data
+
+        if format == "json":
+            return json.dumps(data)
+
+        return resp

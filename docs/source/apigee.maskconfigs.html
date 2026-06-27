@@ -81,6 +81,7 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.encryption_utils">apigee.encryption_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.exceptions">apigee.exceptions module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.prefix">apigee.prefix module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.request">apigee.request module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.silent">apigee.silent module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.types">apigee.types module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.html#module-apigee.utils">apigee.utils module</a></li>
@@ -138,41 +139,36 @@
 <span id="apigee-maskconfigs-maskconfigs-module"></span><h2>apigee.maskconfigs.maskconfigs module<a class="headerlink" href="#module-apigee.maskconfigs.maskconfigs" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.maskconfigs.maskconfigs.</span></span><span class="sig-name descname"><span class="pre">Maskconfigs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.maskconfigs.maskconfigs.</span></span><span class="sig-name descname"><span class="pre">Maskconfigs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy">
-<span class="sig-name descname"><span class="pre">create_data_masks_for_an_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.create" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy">
-<span class="sig-name descname"><span class="pre">delete_data_masks_for_an_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maskconfig_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.delete" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.fetch_data_masks_for_organization">
-<span class="sig-name descname"><span class="pre">fetch_data_masks_for_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.fetch_data_masks_for_organization" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.get" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy">
-<span class="sig-name descname"><span class="pre">get_data_mask_details_for_an_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maskconfig_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.list" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy">
-<span class="sig-name descname"><span class="pre">list_data_masks_for_an_api_proxy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.list_org">
+<span class="sig-name descname"><span class="pre">list_org</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.list_org" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_organization">
-<span class="sig-name descname"><span class="pre">list_data_masks_for_an_organization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.list_data_masks_for_an_organization" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy">
-<span class="sig-name descname"><span class="pre">push_data_masks_for_an_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.maskconfigs.maskconfigs.Maskconfigs.push">
+<span class="sig-name descname"><span class="pre">push</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.maskconfigs.Maskconfigs.push" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -186,7 +182,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.maskconfigs.serializer.MaskconfigsSerializer.serialize_details">
-<span class="sig-name descname"><span class="pre">serialize_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maskconfigs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.serializer.MaskconfigsSerializer.serialize_details" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.maskconfigs.serializer.MaskconfigsSerializer.serialize_details" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

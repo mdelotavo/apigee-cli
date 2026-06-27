@@ -5,30 +5,24 @@ from tabulate import tabulate
 
 class DeploymentsSerializer:
 
-    def serialize_details(self,
-                          deployment_details,
-                          format,
-                          showindex=False,
-                          tablefmt="plain"):
+    @staticmethod
+    def serialize_details(resp, format, showindex=False, tablefmt="plain"):
         if format == "text":
-            return deployment_details.text
-        revisions = [{
-            "name": i["name"],
-            "revision": [j["name"] for j in i["revision"]],
-            "state": [j["state"] for j in i["revision"]],
-        } for i in deployment_details.json()["environment"]]
+            return resp.text
+
+        data = resp.json().get("environment", [])
+
+        rows = [[
+          env["name"],
+          [r["name"] for r in env.get("revision", [])],
+          [r["state"] for r in env.get("revision", [])],
+        ] for env in data]
+
         if format == "json":
-            return json.dumps(revisions)
-        elif format == "table":
-            table = [[rev["name"], rev["revision"], rev["state"]]
-                     for rev in revisions]
-            headers = []
-            if showindex == "always" or showindex is True:
-                headers = ["id", "name", "revision", "state"]
-            elif showindex == "never" or showindex is False:
-                headers = ["name", "revision", "state"]
-            return tabulate(table,
-                            headers,
-                            showindex=showindex,
-                            tablefmt=tablefmt)
+            return json.dumps([{"name": r[0], "revision": r[1], "state": r[2]} for r in rows])
+
+        if format == "table":
+            headers = ["id", "name", "revision", "state"] if showindex else ["name", "revision", "state"]
+            return tabulate(rows, headers=headers, showindex=showindex, tablefmt=tablefmt)
+
         raise ValueError(format)

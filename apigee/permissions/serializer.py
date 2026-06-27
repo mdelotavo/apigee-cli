@@ -1,30 +1,24 @@
 import json
-
 from tabulate import tabulate
 
 
 class PermissionsSerializer:
 
-    def serialize_details(self,
-                          permission_details,
-                          format,
-                          showindex=False,
-                          tablefmt="plain"):
+    @staticmethod
+    def serialize_details(resp, format, showindex=False, tablefmt="plain"):
         if format == "text":
-            return permission_details.text
-        elif format == "json":
-            return permission_details.json()
-        elif format == "table":
-            table = [[res["organization"], res["path"], res["permissions"]]
-                     for res in permission_details.json()["resourcePermission"]
-                     ]
-            headers = []
-            if showindex == "always" or showindex is True:
-                headers = ["id", "organization", "path", "permissions"]
-            elif showindex == "never" or showindex is False:
-                headers = ["organization", "path", "permissions"]
-            return tabulate(table,
-                            headers,
-                            showindex=showindex,
-                            tablefmt=tablefmt)
-        return permission_details
+            return resp.text
+
+        data = resp.json().get("resourcePermission", [])
+
+        if format == "json":
+            return data
+
+        if format == "table":
+            rows = [[r["organization"], r["path"], r["permissions"]] for r in data]
+
+            headers = (["id", "organization", "path", "permissions"] if showindex else ["organization", "path", "permissions"])
+
+            return tabulate(rows, headers=headers, showindex=showindex, tablefmt=tablefmt)
+
+        return resp

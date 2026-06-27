@@ -1,30 +1,34 @@
 import configparser
-import contextlib
+import sys
 
 import click
 
 from apigee import APIGEE_CLI_CREDENTIALS_FILE
 
 
-def common_prefix_options(func):
+def _current_profile():
+    for i, arg in enumerate(sys.argv):
+        if arg in ("-P", "--profile") and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return "default"
+
+
+def _prefix_from_config(profile):
     config = configparser.ConfigParser()
     config.read(APIGEE_CLI_CREDENTIALS_FILE)
-    profile = "default"
-    import sys
 
-    for i, arg in enumerate(sys.argv):
-        if arg in ["-P", "--profile"]:
-            with contextlib.suppress(IndexError):
-                profile = sys.argv[i + 1]
-    profile_dict = {}
-    with contextlib.suppress(KeyError):
-        profile_dict = dict(config._sections[profile])
-    prefix = ""
-    with contextlib.suppress(KeyError):
-        prefix = profile_dict["prefix"]
+    if profile in config:
+        return config[profile].get("prefix", "")
+
+    return ""
+
+
+def common_prefix_options(func):
+    prefix = _prefix_from_config(_current_profile())
+
     return click.option(
-        "--prefix",
-        help="team/resource prefix filter",
-        default=prefix,
-        show_default=True,
+      "--prefix",
+      default=prefix,
+      show_default=True,
+      help="team/resource prefix filter",
     )(func)

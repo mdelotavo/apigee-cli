@@ -8,187 +8,98 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(
-    help=
-    "A lightweight persistence store that can be used by policies or code executing on the Apigee Edge. To support data segregation, cache resources are scoped to environments."
-)
+@click.group(help="Manage environment-scoped caches.")
 def caches():
     pass
 
 
-def _clear_all_cache_entries(username, password, mfa_secret, token, zonename,
-                             org, profile, name, environment, **kwargs):
-    return (Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).clear_all_cache_entries(environment).text)
+def _client(username, password, mfa_secret, token, zonename, org, name=None):
+    return Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
 
 
-@caches.command(help="Clears all cache entries.")
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
+@caches.command(help="Clear all cache entries.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-def clear(*args, **kwargs):
-    console.echo(_clear_all_cache_entries(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def clear(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).clear(environment).text)
 
 
-def _clear_a_cache_entry(username, password, mfa_secret, token, zonename, org,
-                         profile, name, environment, entry, **kwargs):
-    return (Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).clear_a_cache_entry(environment, entry).text)
-
-
-@caches.command(
-    help=
-    "Clears a cache entry, which is identified by the full CacheKey prefix and value."
-)
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("--entry", help="cache entry to clear", required=True)
+@caches.command(help="Clear a cache entry.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-def clear_entry(*args, **kwargs):
-    console.echo(_clear_a_cache_entry(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("--entry", required=True)
+def clear_entry(username, password, mfa_secret, token, zonename, org, profile, name, environment, entry, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).clear_entry(environment, entry).text)
 
 
-def _create_a_cache_in_an_environment(username, password, mfa_secret, token,
-                                      zonename, org, profile, name,
-                                      environment, body, **kwargs):
-    return (Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).create_a_cache_in_an_environment(environment, body).text)
-
-
-@caches.command(
-    help=
-    "Creates a cache in an environment. Caches are created per environment. For data segregation, a cache created in 'test', for example, cannot be accessed by API proxies deployed in 'prod'. The JSON object in the request body can be empty to create a cache with the default settings."
-)
+@caches.command(help="Create a cache.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("-b", "--body", help="request body", required=True)
-def create(*args, **kwargs):
-    console.echo(_create_a_cache_in_an_environment(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("-b", "--body", required=True)
+def create(username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).create(environment, body).text)
 
 
-def _get_information_about_a_cache(username, password, mfa_secret, token,
-                                   zonename, org, profile, name, environment,
-                                   **kwargs):
-    return (Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).get_information_about_a_cache(environment).text)
-
-
-@caches.command(
-    help=
-    "Gets information about a cache. The response might contain a property named persistent. That property is no longer used by Edge."
-)
+@caches.command(help="Get cache details.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def get(*args, **kwargs):
-    console.echo(_get_information_about_a_cache(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def get(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).get(environment).text)
 
 
-def _list_caches_in_an_environment(username,
-                                   password,
-                                   mfa_secret,
-                                   token,
-                                   zonename,
-                                   org,
-                                   profile,
-                                   environment,
-                                   prefix=None,
-                                   **kwargs):
-    return Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).list_caches_in_an_environment(environment, prefix=prefix)
-
-
-@caches.command(help="List caches in an environment.")
+@caches.command(help="List caches.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
-def list(*args, **kwargs):
-    console.echo(_list_caches_in_an_environment(*args, **kwargs))
+@click.option("-e", "--environment", required=True)
+def list(username, password, mfa_secret, token, zonename, org, profile, environment, prefix, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org).list(environment, prefix=prefix))
 
 
-def _update_a_cache_in_an_environment(username, password, mfa_secret, token,
-                                      zonename, org, profile, name,
-                                      environment, body, **kwargs):
-    return (Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).update_a_cache_in_an_environment(environment, body).text)
-
-
-@caches.command(
-    help=
-    "Updates a cache in an environment. You must specify the complete definition of the cache, including the properties that you want to change and the ones that retain their current value. Any properties omitted from the request body are reset to their default value. Use Get information about a cache to obtain an object containing the current value of all properties, then change only those that you want to update."
-)
+@caches.command(help="Update a cache.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-@click.option("-b", "--body", help="request body", required=True)
-def update(*args, **kwargs):
-    console.echo(_update_a_cache_in_an_environment(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+@click.option("-b", "--body", required=True)
+def update(username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).update(environment, body).text)
 
 
-def _delete_a_cache(username, password, mfa_secret, token, zonename, org,
-                    profile, name, environment, **kwargs):
-    return (Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        name).delete_a_cache(environment).text)
-
-
-@caches.command(help="Deletes a cache.")
+@caches.command(help="Delete a cache.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-n", "--name", help="name", required=True)
-@click.option("-e", "--environment", help="environment", required=True)
-def delete(*args, **kwargs):
-    console.echo(_delete_a_cache(*args, **kwargs))
+@click.option("-n", "--name", required=True)
+@click.option("-e", "--environment", required=True)
+def delete(username, password, mfa_secret, token, zonename, org, profile, name, environment, **_):
+    console.echo(_client(username, password, mfa_secret, token, zonename, org, name).delete(environment).text)
 
 
-def _push_cache(username, password, mfa_secret, token, zonename, org, profile,
-                environment, file, **kwargs):
-    return Caches(
-        generate_authentication(username, password, mfa_secret, token,
-                                zonename), org,
-        None).push_cache(environment, file)
-
-
-@caches.command(help="Push Cache to Apigee. This will create/update a Cache.")
+@caches.command(help="Push cache (create/update).")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option("-e", "--environment", help="environment", required=True)
+@click.option("-e", "--environment", required=True)
 @click.option(
-    "-f",
-    "--file",
-    type=click.Path(exists=True,
-                    dir_okay=False,
-                    file_okay=True,
-                    resolve_path=False),
-    required=True,
+  "-f",
+  "--file",
+  type=click.Path(exists=True, dir_okay=False, file_okay=True),
+  required=True,
 )
-def push(*args, **kwargs):
-    _push_cache(*args, **kwargs)
+def push(username, password, mfa_secret, token, zonename, org, profile, environment, file, **_):
+    _client(username, password, mfa_secret, token, zonename, org).push(environment, file)
