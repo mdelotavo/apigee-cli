@@ -50,7 +50,7 @@ class TestAuth(unittest.TestCase):
         args, kwargs = self.session.post.call_args
 
         self.assertEqual(args[0], expected_oauth_url)
-        self.assertEqual(kwargs["data"], "passcode=test_passcode&amp;grant_type=password&amp;response_type=token")
+        self.assertEqual(kwargs["data"], "passcode=test_passcode&;grant_type=password&;response_type=token")
 
         self.assertEqual(result, response_data)
 
@@ -86,7 +86,7 @@ class TestAuth(unittest.TestCase):
         args, kwargs = self.session.post.call_args
 
         self.assertEqual(args[0], expected_oauth_url)
-        self.assertEqual(kwargs["data"], "grant_type=refresh_token&amp;refresh_token=test_refresh_token")
+        self.assertEqual(kwargs["data"], "grant_type=refresh_token&;refresh_token=test_refresh_token")
 
         self.assertEqual(result, response_data)
 
