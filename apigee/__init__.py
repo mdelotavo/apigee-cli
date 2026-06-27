@@ -9,7 +9,8 @@ CMD = "apigee"
 
 __version__ = "0.54.0"
 
-description = "(DEPRECATED) User-friendly wrapper for the Apigee Edge admin APIs."
+# description = "(DEPRECATED) User-friendly wrapper for the Apigee Edge admin APIs."
+description = "User-friendly wrapper for the Apigee Edge admin APIs."
 long_description = (
   "apigeecli is an unofficial Python command-line tool built to simplify "
   "and automate Apigee Edge API usage, with support for SSO, MFA, and basic authentication."
