@@ -48,3 +48,4 @@ if __name__ == "__main__":
     main()
 
 # python bump_version.py minor apigee/__init__.py pyproject.toml
+# python ./tools/bump_version.py minor apigee/__init__.py pyproject.toml
