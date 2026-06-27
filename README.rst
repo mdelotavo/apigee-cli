@@ -5,6 +5,7 @@ apigee-cli
 |Python version| |Downloads| |License|
 
 
+--------
 **TL;DR**
 --------
 For a more stable experience, install version **0.53.11 or earlier**:
@@ -18,6 +19,7 @@ Versions **0.54 and above** are **maintenance-only releases** (refactoring and a
 See the `Forked`_ repository for the current maintained source code.
 
 
+------------------
 Maintenance Status
 ------------------
 **This tool is no longer actively maintained.**
@@ -25,6 +27,7 @@ Maintenance Status
 It remains usable, but no new features or fixes are planned.
 
 
+------------------------------
 Authentication Support Notice
 ------------------------------
 We exclusively use **SSO**.
@@ -32,6 +35,7 @@ We exclusively use **SSO**.
 **Basic** and **MFA** authentication may still work, but they are **no longer tested or guaranteed**.
 
 
+--------
 Overview
 --------
 The Apigee Edge command-line interface is an **unofficial Python CLI** built to simplify and automate Apigee API usage.
@@ -41,6 +45,7 @@ The Apigee Edge command-line interface is an **unofficial Python CLI** built to 
 - Supports common API management workflows
 
 
+---------------
 Recently Tested
 ---------------
 The following commands and features were validated during final updates and refactoring:
@@ -70,6 +75,7 @@ Core Functionality
 .. - Config/environment switching
 
 
+-----------
 Deprecation
 -----------
 This tool was designed for **Apigee Edge**, which is being phased out in favor of **Apigee X (ApigeeX)**.
@@ -79,6 +85,7 @@ This tool was designed for **Apigee Edge**, which is being phased out in favor o
 - Long-term usage is **not recommended for new projects**
 
 
+--------------
 Recommendation
 --------------
 For new implementations, consider:
@@ -187,6 +194,25 @@ If you encounter issues with commands, check the log file for detailed debug inf
 This file can help diagnose installation problems, missing dependencies, or errors related to Apigee Edge.
 
 You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more detailed request information.
+
+~~~~~~~~~~~~~~~~
+SSL / TLS Issues
+~~~~~~~~~~~~~~~~
+
+If you encounter SSL errors such as:
+
+::
+
+    requests.adapters.SSLError
+
+This may be caused by corporate security proxies.
+
+As a workaround, you can disable SSL verification by setting the following environment variable.
+
+::
+
+    export APIGEE_CLI_ENABLE_SSL_VERIFY=false
+
 
 .. -------------
 .. Running Tests
