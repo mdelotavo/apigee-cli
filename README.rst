@@ -196,7 +196,7 @@ You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more d
 
 .. .. code-block:: bash
 
-..    pip3 install coverage
+..    pip install coverage
 
 .. Once `coverage.py` is installed, you can run the tests using the `runtests` script:
 
@@ -292,7 +292,7 @@ Install required dependencies:
 
 ::
 
-   pip3 install $(apigee plugins show -n public --show-dependencies-only)
+   pip install $(apigee plugins show -n public --show-dependencies-only)
 
 ------------
 Getting Help
