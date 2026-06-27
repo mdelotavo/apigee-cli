@@ -70,8 +70,8 @@ CLI Behavior
 - Config/environment switching
 
 
-Deprecation & Platform Shift
-----------------------------
+Deprecation
+-----------
 This tool was designed for **Apigee Edge**, which is being phased out in favor of **Apigee X (ApigeeX)**.
 
 - No major enhancements for ApigeeX compatibility are planned
