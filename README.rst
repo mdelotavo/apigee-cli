@@ -79,6 +79,8 @@ Core Functionality
   - caches
   - targetservers
 
+- ``backups`` command (appears to work, but only limited testing has been performed)
+
 - More commands and features will be tested and added here over time.
 
 
