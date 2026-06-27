@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 find . -name "*.pyc" -exec rm {} \;
 coverage run -p --source=tests,apigee -m pytest -s
