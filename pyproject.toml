@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "apigeecli"
-version = "0.54.1"
+version = "0.54.2"
 description = "User-friendly wrapper for the Apigee Edge admin APIs."
 readme = { file = "README.rst", content-type = "text/x-rst" }
 requires-python = ">=3.7"
