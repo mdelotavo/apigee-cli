@@ -19,6 +19,9 @@ Versions **0.54 and above** are **maintenance-only releases** (refactoring and a
 See the `Forked`_ repository for the current maintained source code.
 
 
+If you encounter any broken versions, please report them via the `Forked`_ repository, thanks.
+
+
 ------------------
 Maintenance Status
 ------------------
@@ -58,21 +61,23 @@ Authentication
 - MFA auth (not actively tested)
 
 
+
 Core Functionality
 
-- GET commands
-.. - API proxy deployments
-.. - API proxy undeployments
-.. - KVM commands
-.. - Revision listing and management
-.. - Product and app queries (read operations)
+- ``list`` and ``get`` subcommands for:
+  
+  - apis
+  - keyvaluemaps
+  - caches
+  - targetservers
+  - sharedflows
+  - apps
 
+- ``deploy``, ``push`` and ``delete`` commands for:
 
-.. CLI Behavior
-
-.. - Argument parsing and command structure
-.. - Error handling for common API failures
-.. - Config/environment switching
+  - keyvaluemaps
+  - caches
+  - targetservers
 
 
 -----------
