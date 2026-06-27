@@ -205,20 +205,87 @@ You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more d
 
 .. This script will run all the tests in the `tests` directory and generate a coverage report.
 
-Code Formatting
----------------
+.. Code Formatting
+.. ---------------
 
-You can use the following helper alias to format the codebase using ``yapf``:
+.. You can use the following helper alias to format the codebase using ``yapf``:
+
+.. ::
+
+..    alias fmt='python -m yapf -ir --style="{based_on_style: pep8, column_limit: 160, continuation_indent_width: 2, split_before_first_argument: false, split_arguments_when_comma_terminated: false, split_before_logical_operator: false, allow_split_before_dict_value: false, coalesce_brackets: true, dedent_closing_brackets: true, blank_lines_around_top_level_definition: 2}"'
+
+.. Then run:
+
+.. ::
+
+..    fmt apigee/
+
+Plugins (Remote Installation Example)
+-------------------------------------
+
+The following demonstrates how to install plugins from a remote repository (example plugins repo).
+
+You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
+
+
+Option 1: One-liner (quick setup)
+--------------------------------
 
 ::
 
-   alias fmt='python -m yapf -ir --style="{based_on_style: pep8, column_limit: 160, continuation_indent_width: 2, split_before_first_argument: false, split_arguments_when_comma_terminated: false, split_before_logical_operator: false, allow_split_before_dict_value: false, coalesce_brackets: true, dedent_closing_brackets: true, blank_lines_around_top_level_definition: 2}"'
+   echo -e '[sources]\npublic = https://github.com/mdelotavo/apigee-cli-plugins' >> ~/.apigee/plugins/config
 
-Then run:
+
+Option 2: Manual configuration
+-----------------------------
+
+Edit the file ``~/.apigee/plugins/config`` and add:
 
 ::
 
-   fmt apigee/
+   [sources]
+   public = https://github.com/mdelotavo/apigee-cli-plugins
+
+
+Option 3: Interactive CLI configuration
+--------------------------------------
+
+::
+
+   apigee plugins configure -a
+
+This will open your default text editor, allowing you to define remote plugin sources.
+
+If you do **not** want changes to be automatically applied after saving, run:
+
+::
+
+   apigee plugins configure
+
+In this case, you will need to run the update command manually.
+
+
+Install and manage plugins
+--------------------------
+
+Update and install plugins:
+
+::
+
+   apigee plugins update
+
+Inspect available plugins:
+
+::
+
+   apigee plugins show
+   apigee plugins show -n public
+
+Install required dependencies:
+
+::
+
+   pip3 install $(apigee plugins show -n public --show-dependencies-only)
 
 ------------
 Getting Help
