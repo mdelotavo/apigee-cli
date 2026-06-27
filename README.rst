@@ -205,6 +205,7 @@ You can also use the verbose flags ``-v`` or ``-vv`` with commands to see more d
 
 .. This script will run all the tests in the `tests` directory and generate a coverage report.
 
+.. ---------------
 .. Code Formatting
 .. ---------------
 
@@ -228,27 +229,18 @@ The following demonstrates how to install plugins from a remote repository (exam
 You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
 
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Option 1: One-liner (quick setup)
---------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
    echo -e '[sources]\npublic = https://github.com/mdelotavo/apigee-cli-plugins' >> ~/.apigee/plugins/config
 
 
-Option 2: Manual configuration
------------------------------
-
-Edit the file ``~/.apigee/plugins/config`` and add:
-
-::
-
-   [sources]
-   public = https://github.com/mdelotavo/apigee-cli-plugins
-
-
-Option 3: Interactive CLI configuration
---------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Option 2: Interactive CLI configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -265,8 +257,21 @@ If you do **not** want changes to be automatically applied after saving, run:
 In this case, you will need to run the update command manually.
 
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Option 3: Manual configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Edit the file ``~/.apigee/plugins/config`` and add:
+
+::
+
+   [sources]
+   public = https://github.com/mdelotavo/apigee-cli-plugins
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 Install and manage plugins
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Update and install plugins:
 
