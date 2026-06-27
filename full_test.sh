@@ -10,7 +10,7 @@ usage() {
 Usage:
   Export required environment variables, then run:
 
-    bash scripts/apigeecli_contract_test.sh
+    bash ./full_test.sh
 
 Required variables:
   APIGEE_ORG                Apigee organisation
@@ -39,7 +39,7 @@ Backup options:
 Examples:
   export APIGEE_ORG=my-org
   export APIGEE_ENV=uat
-  bash scripts/apigeecli_contract_test.sh
+  bash ./full_test.sh
 
 EOF
 }
