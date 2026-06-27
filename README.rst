@@ -5,9 +5,9 @@ apigee-cli
 |Python version| |Downloads| |License|
 
 
---------
-**TL;DR**
---------
+-----
+TL;DR
+-----
 For a more stable experience, install version **0.53.11 or earlier**:
 
 ::
