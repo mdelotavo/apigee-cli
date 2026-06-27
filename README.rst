@@ -79,6 +79,8 @@ Core Functionality
   - caches
   - targetservers
 
+- More commands and features will be tested and added here over time.
+
 
 -----------
 Deprecation
