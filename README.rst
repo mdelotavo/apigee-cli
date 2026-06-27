@@ -37,8 +37,8 @@ Overview
 The Apigee Edge command-line interface is an **unofficial Python CLI** built to simplify and automate Apigee API usage.
 
 - Originally built for **Darumatic clients**
-- Designed for **Apigee Edge**, now being used during transition toward **Apigee X (ApigeeX)**
-- Supports common API management workflows via CLI
+- Designed for **Apigee Edge**
+- Supports common API management workflows
 
 
 Recently Tested
