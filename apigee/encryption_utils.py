@@ -10,7 +10,7 @@ def _gpg():
 
 
 def encrypt_with_gpg(secret, message, encoded=True):
-    encrypted = _gpg().encrypt(message, symmetric="AES256", passphrase=secret)
+    encrypted = _gpg().encrypt(message, symmetric="AES256", passphrase=secret, recipients=None)
 
     result = str(encrypted)
     if not encoded:
