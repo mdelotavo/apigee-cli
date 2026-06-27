@@ -73,7 +73,11 @@ Core Functionality
   - sharedflows
   - apps
 
-- ``deploy``, ``push`` and ``delete`` commands for:
+- ``deploy`` command for:
+
+  - apis
+
+- ``push`` and ``delete`` commands for:
 
   - keyvaluemaps
   - caches
