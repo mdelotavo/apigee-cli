@@ -3,9 +3,7 @@ import re
 import argparse
 from pathlib import Path
 
-VERSION_REGEX = re.compile(
-    r'^(?P<indent>\s*)(?P<var>__version__|version)\s*=\s*["\'](?P<version>\d+\.\d+\.\d+)["\']',
-    re.MULTILINE)
+VERSION_REGEX = re.compile(r'^(?P<indent>\s*)(?P<var>__version__|version)\s*=\s*["\'](?P<version>\d+\.\d+\.\d+)["\']', re.MULTILINE)
 
 
 def bump_version(match, part):
@@ -31,12 +29,8 @@ def process_file(path, part):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Bump semantic versions in version or __version__ variables"
-    )
-    parser.add_argument("part",
-                        choices=["major", "minor", "patch"],
-                        help="Which version part to bump")
+    parser = argparse.ArgumentParser(description="Bump semantic versions in version or __version__ variables")
+    parser.add_argument("part", choices=["major", "minor", "patch"], help="Which version part to bump")
     parser.add_argument("files", nargs="+", help="Files to update")
     args = parser.parse_args()
 

@@ -156,7 +156,14 @@ class Userroles:
     # --------------------
 
     @staticmethod
-    def sort_resource_permissions(data):
-        for entry in data.get("resourcePermission", []):
-            entry["permissions"].sort()
-        return data
+    def sort_resource_permissions(resource_permissions):
+        if isinstance(resource_permissions, list):
+            permissions_list = resource_permissions
+        else:
+            permissions_list = resource_permissions.get("resourcePermission", [])
+
+        for entry in permissions_list:
+            if isinstance(entry, dict) and "permissions" in entry:
+                entry["permissions"].sort()
+
+        return resource_permissions

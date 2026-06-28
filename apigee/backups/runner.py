@@ -14,6 +14,8 @@ class BackupRunner:
             console.echo("No resources selected.")
             return
 
+        console.echo("Starting async backup...\n")
+
         tasks = []
 
         for name in self.config.api_choices:
@@ -23,13 +25,15 @@ class BackupRunner:
                 console.echo(f"[WARN] No handler for {name}")
                 continue
 
-            console.echo(f"Processing {name}...")
+            console.echo(f"▶ {name}")
             handler = handler_cls(self.config)
-            tasks.append(handler.run())
+            tasks.append(asyncio.create_task(handler.run()))
 
         await asyncio.gather(*tasks)
 
-        if self.config.progress_bar:
-            self.config.progress_bar.close()
+        completed = getattr(self.config, "completed", 0)
+        total = getattr(self.config, "total_items", "unknown")
 
-        console.echo("Backup complete.")
+        console.echo("\nBackup complete.")
+        console.echo(f"Completed: {completed} items")
+        console.echo(f"Expected: {total}")

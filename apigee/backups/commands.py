@@ -1,7 +1,7 @@
 import click
 
 from apigee.auth import common_auth_options, generate_authentication
-from apigee.backups import BackupConfig, Backups
+from apigee.backups import BackupConfig, BackupRunner, Backups
 from apigee.exceptions import InvalidApisError
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -51,7 +51,11 @@ def _take_snapshot(**kwargs):
       environments=list(kwargs["environments"]),
     )
 
-    Backups(config).run()
+    if kwargs.get("async_mode"):
+        import asyncio
+        asyncio.run(BackupRunner(config).run())
+    else:
+        Backups(config).run()
 
 
 # --------------------
@@ -82,6 +86,13 @@ def _take_snapshot(**kwargs):
   multiple=True,
   default=["test", "prod"],
   show_default=True,
+)
+@click.option(
+  "--async",
+  "async_mode",
+  is_flag=True,
+  default=False,
+  help="Run backup using BackupRunner (async mode)",
 )
 def take_snapshot(**kwargs):
     _take_snapshot(**kwargs)

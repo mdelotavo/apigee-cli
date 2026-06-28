@@ -15,7 +15,7 @@ For a more stable experience, install version **0.53.11 or earlier**:
    pip install apigeecli==0.53.11
 
 
-Versions **0.54 and above** are **maintenance-only releases** (refactoring and ad hoc fixes).  
+Versions **0.54.0 and above** are **maintenance-only releases** (refactoring and ad hoc fixes).  
 See the `Forked`_ repository for the current maintained source code.
 
 
@@ -83,7 +83,11 @@ Core Functionality
   - caches
   - targetservers
 
-- ``backups`` command (appears to work, but only limited testing has been performed)
+- ``backups`` command:
+  
+  - Core functionality appears to work, but testing has been limited
+  - New ``--async`` feature has been introduced and appears to function correctly
+  - Fixed issue where user roles were not being downloaded correctly during backups
 
 - More commands and features will be tested and added here over time.
 
