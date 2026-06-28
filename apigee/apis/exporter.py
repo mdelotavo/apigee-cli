@@ -72,7 +72,7 @@ class ApiBundleExporter:
         if not force:
             check_file_exists(os.path.relpath(path))
 
-        resp = Caches(self.auth, self.org_name, name).get(self.environment).text  # ✅ fixed
+        resp = Caches(self.auth, self.org_name, name).get(self.environment).text
         console.echo(resp, expected_verbosity=1)
         path.write_text(resp)
 
@@ -94,7 +94,7 @@ class ApiBundleExporter:
         if not force:
             check_file_exists(os.path.relpath(path))
 
-        resp = Targetservers(self.auth, self.org_name, name).get(self.environment).text  # ✅ fixed
+        resp = Targetservers(self.auth, self.org_name, name).get(self.environment).text
         console.echo(resp, expected_verbosity=1)
         path.write_text(resp)
 
