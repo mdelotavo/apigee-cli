@@ -43,7 +43,12 @@ class ApiBundleExporter:
 
         create_directory(str(self.root))
 
-        exported = Apis(self.auth, self.org_name).export_api_proxy(api_name, self.revision, write_to_filesystem=True, output_file=zip_file)
+        exported = Apis(self.auth, self.org_name).export_api_proxy(
+          api_name,
+          self.revision,
+          write_to_filesystem=True,
+          output_file=zip_file,
+        )
 
         create_directory(str(api_dir))
         extract_zip_file(zip_file, str(api_dir))
@@ -67,7 +72,7 @@ class ApiBundleExporter:
         if not force:
             check_file_exists(os.path.relpath(path))
 
-        resp = Caches(self.auth, self.org_name, name).get_information_about_a_cache(self.environment).text
+        resp = Caches(self.auth, self.org_name, name).get(self.environment).text  # ✅ fixed
         console.echo(resp, expected_verbosity=1)
         path.write_text(resp)
 
@@ -89,12 +94,15 @@ class ApiBundleExporter:
         if not force:
             check_file_exists(os.path.relpath(path))
 
-        resp = Targetservers(self.auth, self.org_name, name).get_targetserver(self.environment).text
+        resp = Targetservers(self.auth, self.org_name, name).get(self.environment).text  # ✅ fixed
         console.echo(resp, expected_verbosity=1)
         path.write_text(resp)
 
     def _apiproxy_files(self, directory):
-        return execute_function_on_directory_files(str(Path(directory) / "apiproxy"), lambda f: f)
+        return execute_function_on_directory_files(
+          str(Path(directory) / "apiproxy"),
+          lambda f: f,
+        )
 
     def _get_caches(self, files):
 
