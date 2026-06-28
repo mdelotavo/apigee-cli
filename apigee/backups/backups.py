@@ -226,6 +226,11 @@ class UserRolesBackup(BaseBackup):
             except HTTPError as e:
                 self.http_error(e, f" for User Role ({role})")
             except Exception as e:
+
+                import traceback
+                traceback.print_exc()
+
+                console.echo(f"{type(e).__name__}: {e}")
                 self.error(e, role)
             self.progress("UserRoles")
 
