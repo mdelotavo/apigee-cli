@@ -36,11 +36,11 @@ class BaseBackup(ABC):
         return Path(self.config.working_org_directory) / subpath
 
     def progress(self, label: str):
-        if not self.config.progress_bar:
-            self.config.progress_bar = tqdm(unit="files", leave=False)
+        # just increment a counter
+        if not hasattr(self.config, "completed"):
+            self.config.completed = 0
 
-        self.config.progress_bar.set_description(label)
-        self.config.progress_bar.update(1)
+        self.config.completed += 1
 
     def handle_http_error(self, error: HTTPError, message: str):
         log_and_echo_http_error(error, append_message=message)

@@ -1,6 +1,7 @@
 import asyncio
 from requests.exceptions import HTTPError
 
+from apigee import console
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.utils import write_content_to_file
 
@@ -35,10 +36,21 @@ class KeyValueMapsBackup(BaseBackup):
 
     async def download(self):
         tasks = []
+        total = 0
+
+        for env, kvms in self.config.snapshot_data.keyvaluemaps.items():
+            count = len(kvms)
+            total += count
+            console.echo(f"  {env}: {count} keyvaluemaps")
+
+        console.echo(f"  Total keyvaluemaps to download: {total}")
+
+        # store estimate globally
+        self.config.total_items = getattr(self.config, "total_items", 0) + total
 
         for env, kvms in self.config.snapshot_data.keyvaluemaps.items():
             for kvm in kvms:
-                tasks.append(self._download(env, kvm))
+                tasks.append(asyncio.create_task(self._download(env, kvm)))
 
         await asyncio.gather(*tasks)
 
