@@ -83,7 +83,11 @@ Core Functionality
   - caches
   - targetservers
 
-- ``backups`` command (appears to work, but only limited testing has been performed)
+- ``backups`` command:
+  
+  - Core functionality appears to work, but testing has been limited
+  - New ``--async`` feature has been introduced and appears to function correctly
+  - Fixed issue where user roles were not being downloaded correctly during backups
 
 - More commands and features will be tested and added here over time.
 
