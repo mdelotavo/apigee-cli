@@ -57,7 +57,6 @@ class AppsBackup(BaseBackup):
     def save_snapshot(self, data):
         self.config.snapshot_data.apps = data
 
-        # ✅ Match sync: developer -> [apps]
         for developer, apps in data.items():
             path = self.full_path(f"snapshots/apps/{developer}.json")
             write_content_to_file(apps, path, indentation=2)
