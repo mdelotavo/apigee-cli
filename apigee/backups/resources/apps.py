@@ -1,6 +1,7 @@
 import asyncio
 from requests.exceptions import HTTPError
 
+from apigee import console
 from apigee.apps.apps import Apps
 from apigee.developers.developers import Developers
 from apigee.utils import write_content_to_file, filter_out_empty_values
@@ -12,25 +13,43 @@ from ..utils import run_blocking
 class AppsBackup(BaseBackup):
 
     async def snapshot(self):
-        # Step 1: get all developers
+        dev_client = Developers(self.config.authentication, self.config.org_name, None)
+
         developers = await run_blocking(
-          Developers(self.config.authentication, self.config.org_name, None).list_developers,
-          None,  # prefix handled later
-          False,  # expand
+          dev_client.list,
+          None,
+          False,
           1000,
           "",
           "dict",
         )
 
-        # Step 2: get apps for all developers
-        apps = await run_blocking(
-          Apps(self.config.authentication, self.config.org_name, None).list_apps_for_all_developers,
-          developers,
-          self.config.prefix,
-          "dict",
-        )
+        apps_client = Apps(self.config.authentication, self.config.org_name, None)
 
-        # Step 3: remove empty values (same as original logic)
+        apps = {}
+
+        async def fetch(dev):
+            try:
+                result = await run_blocking(
+                  apps_client.list,
+                  dev,
+                  self.config.prefix,
+                  False,
+                  1000,
+                  "",
+                  "dict",
+                )
+                return dev, result
+            except Exception as e:
+                self.handle_error(e, dev)
+                return dev, []
+
+        tasks = [asyncio.create_task(fetch(dev)) for dev in developers]
+        results = await asyncio.gather(*tasks)
+
+        for dev, dev_apps in results:
+            apps[dev] = dev_apps
+
         apps = filter_out_empty_values(apps)
 
         return apps
@@ -38,29 +57,36 @@ class AppsBackup(BaseBackup):
     def save_snapshot(self, data):
         self.config.snapshot_data.apps = data
 
-        # NOTE: data structure is:
-        # { developer: [app1, app2, ...] }
-
         for developer, apps in data.items():
             for app in apps:
                 path = self.full_path(f"snapshots/apps/{app}.json")
-
-                # snapshot stores just the name (consistent with original)
                 write_content_to_file(app, path, indentation=2)
 
     async def download(self):
         tasks = []
+        total = 0
+
+        for developer, apps in self.config.snapshot_data.apps.items():
+            count = len(apps)
+            total += count
+            console.echo(f"  {developer}: {count} apps")
+
+        console.echo(f"  Total apps to download: {total}")
+
+        self.config.total_items = getattr(self.config, "total_items", 0) + total
 
         for developer, apps in self.config.snapshot_data.apps.items():
             for app in apps:
-                tasks.append(self._download(developer, app))
+                tasks.append(asyncio.create_task(self._download(developer, app)))
 
         await asyncio.gather(*tasks)
 
     async def _download(self, developer, app):
         try:
-            content = await run_blocking(
-              Apps(self.config.authentication, self.config.org_name, app).get_developer_app_details,
+            client = Apps(self.config.authentication, self.config.org_name, app)
+
+            resp = await run_blocking(
+              client.get,
               developer,
             )
 
@@ -68,7 +94,7 @@ class AppsBackup(BaseBackup):
 
             await run_blocking(
               write_content_to_file,
-              content.text,
+              resp.text,
               path,
               2,
             )
@@ -76,6 +102,10 @@ class AppsBackup(BaseBackup):
             self.progress("Apps")
 
         except HTTPError as e:
-            self.handle_http_error(e, f" for Developer App ({app})")
+            if e.response.status_code == 404:
+                self.handle_http_error(e, f" for Developer App ({app})")
+                return
+            raise
+
         except Exception as e:
             self.handle_error(e, developer, app)

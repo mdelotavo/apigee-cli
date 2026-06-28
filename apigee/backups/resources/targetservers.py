@@ -1,6 +1,7 @@
 import asyncio
 from requests.exceptions import HTTPError
 
+from apigee import console
 from apigee.targetservers.targetservers import Targetservers
 from apigee.utils import write_content_to_file
 
@@ -13,9 +14,11 @@ class TargetServersBackup(BaseBackup):
     async def snapshot(self):
         result = {}
 
+        client = Targetservers(self.config.authentication, self.config.org_name, None)
+
         for env in self.config.environments:
             targets = await run_blocking(
-              Targetservers(self.config.authentication, self.config.org_name, None).list_targetservers_in_an_environment,
+              client.list,
               env,
               self.config.prefix,
               "dict",
@@ -33,27 +36,43 @@ class TargetServersBackup(BaseBackup):
 
     async def download(self):
         tasks = []
+        total = 0
+
+        for env, targets in self.config.snapshot_data.targetservers.items():
+            count = len(targets)
+            total += count
+            console.echo(f"  {env}: {count} targetservers")
+
+        console.echo(f"  Total targetservers to download: {total}")
+
+        self.config.total_items = getattr(self.config, "total_items", 0) + total
 
         for env, targets in self.config.snapshot_data.targetservers.items():
             for target in targets:
-                tasks.append(self._download(env, target))
+                tasks.append(asyncio.create_task(self._download(env, target)))
 
         await asyncio.gather(*tasks)
 
     async def _download(self, env, target):
         try:
-            content = await run_blocking(
-              Targetservers(self.config.authentication, self.config.org_name, target).get_targetserver,
+            client = Targetservers(self.config.authentication, self.config.org_name, target)
+
+            resp = await run_blocking(
+              client.get,
               env,
             )
 
             path = self.full_path(f"targetservers/{env}/{target}.json")
 
-            await run_blocking(write_content_to_file, content.text, path, 2)
+            await run_blocking(write_content_to_file, resp.text, path, 2)
 
             self.progress("TargetServers")
 
         except HTTPError as e:
-            self.handle_http_error(e, f" for TargetServer ({target})")
+            if e.response.status_code == 404:
+                self.handle_http_error(e, f" for TargetServer ({target})")
+                return
+            raise
+
         except Exception as e:
             self.handle_error(e, env, target)
