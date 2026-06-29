@@ -73,9 +73,11 @@ Core Functionality
   - sharedflows
   - apps
 
-- ``deploy`` command for:
 
-  - apis
+- `apis` subcommands:
+
+  - `deploy`
+  - `pull`
 
 - ``push`` and ``delete`` commands for:
 
@@ -265,9 +267,33 @@ As a workaround, you can disable SSL verification by setting the following envir
 
 ..    fmt apigee/
 
--------------------------------------
-Plugins (Remote Installation Example)
--------------------------------------
+.. -------------------------------------
+.. Plugins (Remote Installation Example)
+.. -------------------------------------
+
+.. The following demonstrates how to install plugins from a remote repository (example plugins repo).
+
+.. You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
+
+--------------------------------------------
+Plugins (Extending CLI for Custom Workflows)
+--------------------------------------------
+
+The plugin system was designed to support large organisations where multiple client teams need to extend the functionality of the `apigeecli` CLI in a consistent and scalable way.
+
+It enables teams to distribute auxiliary scripts as plugins that seamlessly integrate with the core tool. These plugins can leverage existing `apigee` modules to implement higher-level workflows and self-service capabilities.
+
+Typical use cases include:
+
+- Self-service generation and deployment of API proxies from OpenAPI specifications (run locally by developers)
+- Integration with and automated provisioning of CI/CD pipelines
+- Validation and linting of `apiproxy` policies against organisational standards
+- Security scanning of API resources using Apigee Edge Admin APIs
+- Operational and governance tooling built on top of existing platform APIs
+
+This model allows platform teams to centrally publish and maintain reusable capabilities while enabling product teams to consume them easily via the CLI.
+
+Below shows how to get started with plugins if you want to set this up.
 
 The following demonstrates how to install plugins from a remote repository (example plugins repo).
 
