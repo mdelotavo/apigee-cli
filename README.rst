@@ -73,9 +73,11 @@ Core Functionality
   - sharedflows
   - apps
 
-- ``deploy`` command for:
 
-  - apis
+- ``apis`` subcommands:
+
+  - ``deploy``
+  - ``pull``
 
 - ``push`` and ``delete`` commands for:
 
@@ -265,13 +267,31 @@ As a workaround, you can disable SSL verification by setting the following envir
 
 ..    fmt apigee/
 
--------------------------------------
-Plugins (Remote Installation Example)
--------------------------------------
+.. -------------------------------------
+.. Plugins (Remote Installation Example)
+.. -------------------------------------
 
-The following demonstrates how to install plugins from a remote repository (example plugins repo).
+.. The following demonstrates how to install plugins from a remote repository (example plugins repo).
+
+.. You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
+
+------------------
+Plugins (Optional)
+------------------
+
+The plugin system was designed for clients in large organisations to extend ``apigeecli`` with custom workflows and easily distribute reusable tools across teams.
+
+Typical use cases include:
+
+- Self-service generation and deployment of API proxies from OpenAPI specifications
+- Integration with and automated provisioning of CI/CD pipelines
+- Validation and of custom ``apiproxy`` policies against organisational standards
+- Security scanning of API resources using Apigee Edge Admin APIs
+- Operational and governance tooling built on top of existing platform APIs
 
 You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
+
+Below shows how to get started with plugins.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
