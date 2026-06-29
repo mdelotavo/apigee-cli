@@ -74,10 +74,10 @@ Core Functionality
   - apps
 
 
-- `apis` subcommands:
+- ``apis`` subcommands:
 
-  - `deploy`
-  - `pull`
+  - ``deploy``
+  - ``pull``
 
 - ``push`` and ``delete`` commands for:
 
@@ -275,29 +275,23 @@ As a workaround, you can disable SSL verification by setting the following envir
 
 .. You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
 
---------------------------------------------
-Plugins (Extending CLI for Custom Workflows)
---------------------------------------------
+------------------
+Plugins (Optional)
+------------------
 
-The plugin system was designed to support large organisations where multiple client teams need to extend the functionality of the `apigeecli` CLI in a consistent and scalable way.
-
-It enables teams to distribute auxiliary scripts as plugins that seamlessly integrate with the core tool. These plugins can leverage existing `apigee` modules to implement higher-level workflows and self-service capabilities.
+The plugin system enables large organisations to extend ``apigeecli`` with custom workflows at scale, allowing API teams to centrally build and distribute reusable tools across teams.
 
 Typical use cases include:
 
-- Self-service generation and deployment of API proxies from OpenAPI specifications (run locally by developers)
+- Self-service generation and deployment of API proxies from OpenAPI specifications
 - Integration with and automated provisioning of CI/CD pipelines
-- Validation and linting of `apiproxy` policies against organisational standards
+- Validation and of custom ``apiproxy`` policies against organisational standards
 - Security scanning of API resources using Apigee Edge Admin APIs
 - Operational and governance tooling built on top of existing platform APIs
 
-This model allows platform teams to centrally publish and maintain reusable capabilities while enabling product teams to consume them easily via the CLI.
-
-Below shows how to get started with plugins if you want to set this up.
-
-The following demonstrates how to install plugins from a remote repository (example plugins repo).
-
 You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
+
+Below shows how to get started with plugins.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
