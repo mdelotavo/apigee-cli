@@ -279,7 +279,7 @@ As a workaround, you can disable SSL verification by setting the following envir
 Plugins (Optional)
 ------------------
 
-The plugin system enables large organisations to extend ``apigeecli`` with custom workflows at scale, allowing API teams to centrally build and distribute reusable tools across teams.
+The plugin system was designed for clients in large organisations to extend ``apigeecli`` with custom workflows and easily distribute reusable tools across teams.
 
 Typical use cases include:
 
