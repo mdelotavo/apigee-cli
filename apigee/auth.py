@@ -285,8 +285,17 @@ def get_config_value(section, key):
 
 def get_sso_temporary_authentication_code(url):
     webbrowser.open(url)
-    console.echo("Complete SSO login in browser.")
-    return click.prompt("Enter Temporary Authentication Code")
+
+    messages = [
+      "SSO authorization page has automatically been opened in your default browser.",
+      "Follow the instructions in the browser to complete this authorization request.",
+      f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{url}\n\nthen copy the Temporary Authentication Code.\n"""
+    ]
+
+    for msg in messages:
+        console.echo(msg)
+
+    return click.prompt("Please enter the Temporary Authentication Code")
 
 
 # --------------------
