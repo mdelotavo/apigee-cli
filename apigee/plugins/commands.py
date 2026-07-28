@@ -88,7 +88,12 @@ def update_repos():
     for_each_file(PLUGINS_DIR, fn, glob="[!.][!__]*")
 
 
-def prune():
+def _chmod(func, p, _):
+    os.chmod(p, stat.S_IRWXU)
+    func(p)
+
+
+def prune_repos():
     sources = config()
 
     def fn(p):
@@ -102,43 +107,15 @@ def prune():
         console.echo(f"Removing {name}... ", end="", flush=True)
 
         try:
-            shutil.rmtree(p, onerror=_chmod)
+            try:
+                shutil.rmtree(p, onexc=_chmod)
+            except TypeError:
+                shutil.rmtree(p, onerror=_chmod)
             console.echo("Done")
         except Exception as e:
             console.echo(e)
 
     for_each_file(PLUGINS_DIR, fn, glob="[!.][!__]*")
-
-
-def _chmod(func, p, _):
-    os.chmod(p, stat.S_IRWXU)
-    func(p)
-
-
-# def prune():
-#     sources = config()
-
-#     def fn(p):
-#         if not is_directory(p):
-#             return
-
-#         name = Path(p).stem
-#         if name in sources:
-#             return
-
-#         console.echo(f"Removing {name}... ", line_ending="", should_flush=True)
-
-#         try:
-#             shutil.rmtree(p, onexc=_chmod)
-#             console.echo("Done")
-#         except Exception as e:
-#             console.echo(e)
-
-#     execute_function_on_directory_files(PLUGINS_DIR, fn, glob="[!.][!__]*")
-
-# def _chmod(func, path, exc):
-#     os.chmod(path, stat.S_IRWXU)
-#     func(path)
 
 
 def plugin_info(name):
@@ -175,7 +152,7 @@ def configure(silent, verbose, apply_changes):
 
     if apply_changes:
         clone()
-        prune()
+        prune_repos()
     else:
         console.echo("\nRun `apigee plugins update` to apply changes.\n")
 
@@ -223,6 +200,6 @@ def show(silent, verbose, name, show_commit_only, show_dependencies_only):
 @plugins.command()
 @common_silent_options
 @common_verbose_options
-def prune_cmd(silent, verbose):
+def prune(silent, verbose):
     require_git()
-    prune()
+    prune_repos()
