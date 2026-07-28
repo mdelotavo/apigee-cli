@@ -262,7 +262,7 @@ class Backups:
         for name in self.cfg.api_choices:
             if name not in self.modules:
                 continue
-            console.echo(f"Retrieving {name} listing... ", line_ending="", should_flush=True)
+            console.echo(f"Retrieving {name} listing... ", end="", flush=True)
             self.modules[name].collect()
             console.echo("Done")
 

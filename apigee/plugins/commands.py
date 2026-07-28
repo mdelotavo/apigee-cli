@@ -61,7 +61,7 @@ def clone():
         if is_dir(dest):
             continue
 
-        console.echo(f"Installing {name}... ", line_ending="", should_flush=True)
+        console.echo(f"Installing {name}... ", end="", flush=True)
         try:
             Repo.clone_from(uri, dest)
             console.echo("Done")
@@ -75,7 +75,7 @@ def update_repos():
         if not is_dir(p):
             return
 
-        console.echo(f"Updating {Path(p).stem}... ", line_ending="", should_flush=True)
+        console.echo(f"Updating {Path(p).stem}... ", end="", flush=True)
 
         try:
             repo = Repo(p)
@@ -99,7 +99,7 @@ def prune():
         if name in sources:
             return
 
-        console.echo(f"Removing {name}... ", line_ending="", should_flush=True)
+        console.echo(f"Removing {name}... ", end="", flush=True)
 
         try:
             shutil.rmtree(p, onerror=_chmod)

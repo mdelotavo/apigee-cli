@@ -204,7 +204,7 @@ def push(**kwargs):
 def encrypt_file(**kwargs):
     data = read_file(kwargs["file"], type="json")
 
-    console.echo("Encrypting... ", line_ending="", should_flush=True)
+    console.echo("Encrypting... ", end="", flush=True)
     data, count = Keyvaluemaps.encrypt(data, kwargs["symmetric_key"])
 
     if count:
@@ -224,7 +224,7 @@ def encrypt_file(**kwargs):
 def decrypt_file(**kwargs):
     data = read_file(kwargs["file"], type="json")
 
-    console.echo("Decrypting... ", line_ending="", should_flush=True)
+    console.echo("Decrypting... ", end="", flush=True)
     data, count = Keyvaluemaps.decrypt(data, kwargs["symmetric_key"])
 
     if count:

@@ -73,7 +73,7 @@ class ApiBundleExporter:
             check_exists(os.path.relpath(path))
 
         resp = Caches(self.auth, self.org_name, name).get(self.environment).text
-        console.echo(resp, expected_verbosity=1)
+        console.echo(resp, level=1)
         path.write_text(resp)
 
     def _write_kvm(self, name, force):
@@ -84,7 +84,7 @@ class ApiBundleExporter:
             check_exists(os.path.relpath(path))
 
         resp = Keyvaluemaps(self.auth, self.org_name, name).get_keyvaluemap(self.environment).text
-        console.echo(resp, expected_verbosity=1)
+        console.echo(resp, level=1)
         path.write_text(resp)
 
     def _write_target(self, name, force):
@@ -95,7 +95,7 @@ class ApiBundleExporter:
             check_exists(os.path.relpath(path))
 
         resp = Targetservers(self.auth, self.org_name, name).get(self.environment).text
-        console.echo(resp, expected_verbosity=1)
+        console.echo(resp, level=1)
         path.write_text(resp)
 
     def _apiproxy_files(self, directory):

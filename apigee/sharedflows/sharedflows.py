@@ -100,7 +100,7 @@ class Sharedflows:
         if file:
             rev = int(self.import_flow(name, file).json()["revision"])
 
-        console.echo(f"Deploying revision {rev}... ", line_ending="", should_flush=True)
+        console.echo(f"Deploying revision {rev}... ", end="", flush=True)
 
         resp = apigee.request.post(
           f"{APIGEE_ADMIN_API_URL}{DEPLOY_PATH.format(org=self.org, env=env, name=name, rev=rev)}",
@@ -133,7 +133,7 @@ class Sharedflows:
                     revision = int(r["name"])
 
                     if revision not in keep:
-                        console.echo(f"Undeploying revision {revision}... ", line_ending="", should_flush=True)
+                        console.echo(f"Undeploying revision {revision}... ", end="", flush=True)
                         self.undeploy(env, name, revision)
                         console.echo("Done")
 

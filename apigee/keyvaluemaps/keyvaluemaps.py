@@ -170,7 +170,7 @@ class Keyvaluemaps:
         local = read_file(file, type="json")
 
         if secret:
-            console.echo("Decrypting... ", line_ending="", should_flush=True)
+            console.echo("Decrypting... ", end="", flush=True)
             local, n = self.decrypt(local, secret)
             console.echo("Done." if n else "Nothing to decrypt.")
         elif any(has_encrypted_header(e.get("value")) for e in local["entry"]):
