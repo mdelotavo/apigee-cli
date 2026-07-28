@@ -3,7 +3,7 @@ from requests.exceptions import HTTPError
 
 from apigee import console
 from apigee.targetservers.targetservers import Targetservers
-from apigee.utils import write_content_to_file
+from apigee.utils import write_file
 
 from ..base import BaseBackup
 from ..utils import run_blocking
@@ -32,7 +32,7 @@ class TargetServersBackup(BaseBackup):
 
         for env, targets in data.items():
             path = self.full_path(f"snapshots/targetservers/{env}/targetservers.json")
-            write_content_to_file(targets, path, indentation=2)
+            write_file(targets, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -64,7 +64,7 @@ class TargetServersBackup(BaseBackup):
 
             path = self.full_path(f"targetservers/{env}/{target}.json")
 
-            await run_blocking(write_content_to_file, resp.text, path, 2)
+            await run_blocking(write_file, resp.text, path, 2)
 
             self.progress("TargetServers")
 

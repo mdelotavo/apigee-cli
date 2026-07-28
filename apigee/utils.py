@@ -15,7 +15,7 @@ import click
 # --------------------
 
 
-def apply_function_on_iterable(iterable, func, state_op="append", args=(), kwargs=None):
+def apply(iterable, func, state_op="append", args=(), kwargs=None):
     kwargs = kwargs or {}
     state = []
 
@@ -32,17 +32,17 @@ def apply_function_on_iterable(iterable, func, state_op="append", args=(), kwarg
 # --------------------
 
 
-def check_file_exists(file):
+def check_exists(file):
     if os.path.exists(file):
         sys.exit(f"error: {file} already exists")
 
 
-def check_files_exist(files):
+def check_all_exist(files):
     for f in files:
-        check_file_exists(f)
+        check_exists(f)
 
 
-def create_directory(path):
+def mkdir(path):
     if path:
         try:
             os.makedirs(path, exist_ok=True)
@@ -50,8 +50,8 @@ def create_directory(path):
             logging.warning(f"{inspect.stack()[0][3]}: failed to create directory", exc_info=True)
 
 
-def create_empty_file(path):
-    create_directory(os.path.dirname(path))
+def touch(path):
+    mkdir(os.path.dirname(path))
 
     try:
         if not os.path.exists(path):
@@ -61,22 +61,22 @@ def create_empty_file(path):
         logging.warning(f"{inspect.stack()[0][3]}: file already exists")
 
 
-def remove_file_if_above_size(file, size_kb=100):
+def remove_if_large(file, size_kb=100):
     if os.path.exists(file) and os.path.getsize(file) > size_kb * 1024:
         os.remove(file)
 
 
-def is_directory(path):
+def is_dir(path):
     return os.path.isdir(path)
 
 
-def is_regular_file(path):
+def is_file(path):
     return os.path.isfile(path)
 
 
-def get_resolved_directory_path(target=None):
+def resolve_dir(target=None):
     if target:
-        create_directory(target)
+        mkdir(target)
         return str(Path(target).resolve())
 
     return os.getcwd()
@@ -87,16 +87,16 @@ def get_resolved_directory_path(target=None):
 # --------------------
 
 
-def read_file_content(file, type="text"):
+def read_file(file, type="text"):
     with open(file, "r") as f:
         return json.load(f) if type == "json" else f.read()
 
 
-def write_content_to_file(content, path, write=True, indentation=None, append_eof=True):
+def write_file(content, path, write=True, indentation=None, append_eof=True):
     if not write:
         return
 
-    create_empty_file(path)
+    touch(path)
 
     if isinstance(content, (dict, list)):
         content = json.dumps(content, indent=indentation) if isinstance(indentation, int) else json.dumps(content)
@@ -108,13 +108,13 @@ def write_content_to_file(content, path, write=True, indentation=None, append_eo
         f.write(content)
 
 
-def write_content_to_zip(file, content):
-    create_empty_file(file)
+def write_zip(file, content):
+    touch(file)
     with open(file, "wb") as f:
         f.write(content)
 
 
-def extract_zip_file(source, dest):
+def extract_zip(source, dest):
     with zipfile.ZipFile(source) as z:
         z.extractall(dest)
 
@@ -124,15 +124,15 @@ def extract_zip_file(source, dest):
 # --------------------
 
 
-def ensure_set(iterable):
+def as_set(iterable):
     return iterable if isinstance(iterable, set) else set(iterable)
 
 
-def filter_out_empty_values(data):
-    return {k: v for k, v in data.items() if v}
+def filter_empty(d):
+    return {k: v for k, v in d.items() if v}
 
 
-def merge_dict_values(source, target=None):
+def merge_values(source, target=None):
     target = target or {}
 
     for k, v in source.items():
@@ -142,8 +142,8 @@ def merge_dict_values(source, target=None):
     return target
 
 
-def remove_last_elements(items, count=0):
-    return items if count <= 0 else items[:-count]
+def drop_last(lst, count=0):
+    return lst if count <= 0 else lst[:-count]
 
 
 # --------------------
@@ -151,11 +151,11 @@ def remove_last_elements(items, count=0):
 # --------------------
 
 
-def execute_function_on_directory_files(directory, func, glob="**/*", args=(), kwargs=None):
+def for_each_file(directory, func, glob="**/*", args=(), kwargs=None):
     kwargs = kwargs or {}
     results = []
 
-    for path in Path(get_resolved_directory_path(directory)).glob(glob):
+    for path in Path(resolve_dir(directory)).glob(glob):
         result = func(str(path), *args, **kwargs)
         if result:
             results.append(result)
@@ -163,7 +163,7 @@ def execute_function_on_directory_files(directory, func, glob="**/*", args=(), k
     return results
 
 
-def import_plugins_from_directory(init_file, commands):
+def load_plugins(init_file, commands):
     try:
         spec = importlib.util.spec_from_file_location("plugins_modules", init_file)
         module = importlib.util.module_from_spec(spec)
@@ -186,7 +186,7 @@ def import_plugins_from_directory(init_file, commands):
 # --------------------
 
 
-def get_progress_kwargs(desc):
+def progress_opts(desc):
     return {
       "desc": desc,
       "unit": "entries",
@@ -195,9 +195,8 @@ def get_progress_kwargs(desc):
     }
 
 
-def show_message(msg):
-    print(msg)
+# def show_message(msg):
+#     print(msg)
 
-
-def split_path_by_delimiter(path, delimiter=r"[/\\\\]"):
-    return re.split(delimiter, path)
+# def split_path(path, delimiter=r"[/\\\\]"):
+#     return re.split(delimiter, path)

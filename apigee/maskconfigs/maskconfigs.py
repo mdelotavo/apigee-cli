@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 
 import apigee.request
 from apigee import APIGEE_ADMIN_API_URL, console
-from apigee.utils import read_file_content
+from apigee.utils import read_file
 
 MASKCONFIGS_PATH = "/v1/organizations/{org}/apis/{api}/maskconfigs"
 MASKCONFIG_PATH = "/v1/organizations/{org}/apis/{api}/maskconfigs/{name}"
@@ -57,7 +57,7 @@ class Maskconfigs:
         )
 
     def push(self, file):
-        data = read_file_content(file, type="json")
+        data = read_file(file, type="json")
         name = data["name"]
 
         try:

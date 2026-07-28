@@ -15,7 +15,7 @@ from apigee.encryption_utils import (
   has_encrypted_header,
 )
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
-from apigee.utils import get_progress_kwargs, read_file_content
+from apigee.utils import progress_opts, read_file
 
 # --------------------
 # paths
@@ -125,7 +125,7 @@ class Keyvaluemaps:
         return apigee.request.get(self._url(KVM_ENTRY, env=env, entry=name), self.auth)
 
     def delete_entries(self, env, entries):
-        for e in tqdm(entries, **get_progress_kwargs("Deleting")):
+        for e in tqdm(entries, **progress_opts("Deleting")):
             self.delete_entry(env, e["name"])
 
     # --------------------
@@ -167,7 +167,7 @@ class Keyvaluemaps:
     # --------------------
 
     def push(self, env, file, secret=None):
-        local = read_file_content(file, type="json")
+        local = read_file(file, type="json")
 
         if secret:
             console.echo("Decrypting... ", line_ending="", should_flush=True)
@@ -197,7 +197,7 @@ class Keyvaluemaps:
             console.echo("Removed entries.")
 
         if updated:
-            for e in tqdm(updated, **get_progress_kwargs("Updating")):
+            for e in tqdm(updated, **progress_opts("Updating")):
                 self.create_or_update_entry(env, e)
             console.echo("Updated entries.")
 

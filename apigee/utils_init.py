@@ -6,12 +6,12 @@ from pathlib import Path
 # as those libraries may not be available prior to installation.
 
 
-def join_path_components(*components):
+def join_path(*components):
     if not components:
         return ""
 
     return str(Path(components[0]).joinpath(*components[1:]))
 
 
-def is_truthy_envvar(value):
+def is_truthy(value):
     return str(value) in {"True", "true", "1"}

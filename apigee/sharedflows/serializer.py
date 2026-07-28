@@ -1,17 +1,17 @@
 import json
 
-from apigee.utils import apply_function_on_iterable, remove_last_elements
+from apigee.utils import apply, drop_last
 
 
 class SharedflowsSerializer:
 
     @staticmethod
     def filter_deployed_revisions(details):
-        return list(set(apply_function_on_iterable(details, lambda d: d["revision"], state_op="extend")))
+        return list(set(apply(details, lambda d: d["revision"], state_op="extend")))
 
     @staticmethod
     def filter_deployment_details(details):
-        return apply_function_on_iterable(
+        return apply(
           details.get("environment", []),
           lambda d: {
             "name": d["name"],
@@ -22,7 +22,7 @@ class SharedflowsSerializer:
     @staticmethod
     def filter_undeployed_revisions(revisions, deployed, save_last=0):
         undeployed = [int(r) for r in revisions if r not in deployed]
-        return remove_last_elements(sorted(undeployed), save_last)
+        return drop_last(sorted(undeployed), save_last)
 
     @staticmethod
     def serialize_details(resp, format, prefix=None):

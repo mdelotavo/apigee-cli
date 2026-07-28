@@ -9,12 +9,12 @@ from apigee.caches.caches import Caches
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
 from apigee.utils import (
-  apply_function_on_iterable,
-  check_file_exists,
-  check_files_exist,
-  create_directory,
-  execute_function_on_directory_files,
-  extract_zip_file,
+  apply,
+  check_exists,
+  check_all_exist,
+  mkdir,
+  for_each_file,
+  extract_zip,
 )
 
 
@@ -39,9 +39,9 @@ class ApiBundleExporter:
         api_dir = self.apiproxy_dir / api_name
 
         if not force:
-            check_files_exist((os.path.relpath(zip_file), os.path.relpath(api_dir)))
+            check_all_exist((os.path.relpath(zip_file), os.path.relpath(api_dir)))
 
-        create_directory(str(self.root))
+        mkdir(str(self.root))
 
         exported = Apis(self.auth, self.org_name).export_api_proxy(
           api_name,
@@ -50,8 +50,8 @@ class ApiBundleExporter:
           output_file=zip_file,
         )
 
-        create_directory(str(api_dir))
-        extract_zip_file(zip_file, str(api_dir))
+        mkdir(str(api_dir))
+        extract_zip(zip_file, str(api_dir))
         os.remove(zip_file)
 
         files = self._apiproxy_files(api_dir)
@@ -63,14 +63,14 @@ class ApiBundleExporter:
         return exported
 
     def _export_deps(self, items, fn, force):
-        return apply_function_on_iterable(items, lambda x: fn(x, force))
+        return apply(items, lambda x: fn(x, force))
 
     def _write_cache(self, name, force):
         path = self.cache_dir / f"{name}.json"
-        create_directory(str(self.cache_dir))
+        mkdir(str(self.cache_dir))
 
         if not force:
-            check_file_exists(os.path.relpath(path))
+            check_exists(os.path.relpath(path))
 
         resp = Caches(self.auth, self.org_name, name).get(self.environment).text
         console.echo(resp, expected_verbosity=1)
@@ -78,10 +78,10 @@ class ApiBundleExporter:
 
     def _write_kvm(self, name, force):
         path = self.kvm_dir / f"{name}.json"
-        create_directory(str(self.kvm_dir))
+        mkdir(str(self.kvm_dir))
 
         if not force:
-            check_file_exists(os.path.relpath(path))
+            check_exists(os.path.relpath(path))
 
         resp = Keyvaluemaps(self.auth, self.org_name, name).get_keyvaluemap(self.environment).text
         console.echo(resp, expected_verbosity=1)
@@ -89,17 +89,17 @@ class ApiBundleExporter:
 
     def _write_target(self, name, force):
         path = self.target_dir / f"{name}.json"
-        create_directory(str(self.target_dir))
+        mkdir(str(self.target_dir))
 
         if not force:
-            check_file_exists(os.path.relpath(path))
+            check_exists(os.path.relpath(path))
 
         resp = Targetservers(self.auth, self.org_name, name).get(self.environment).text
         console.echo(resp, expected_verbosity=1)
         path.write_text(resp)
 
     def _apiproxy_files(self, directory):
-        return execute_function_on_directory_files(
+        return for_each_file(
           str(Path(directory) / "apiproxy"),
           lambda f: f,
         )
@@ -115,7 +115,7 @@ class ApiBundleExporter:
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 
-        return apply_function_on_iterable(files, fn, args=(set(), ))
+        return apply(files, fn, args=(set(), ))
 
     def _get_kvms(self, files):
 
@@ -130,7 +130,7 @@ class ApiBundleExporter:
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 
-        return apply_function_on_iterable(files, fn, args=(set(), ))
+        return apply(files, fn, args=(set(), ))
 
     def _get_targets(self, files):
 
@@ -145,4 +145,4 @@ class ApiBundleExporter:
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 
-        return apply_function_on_iterable(files, fn, args=(set(), ))
+        return apply(files, fn, args=(set(), ))

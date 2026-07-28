@@ -18,12 +18,12 @@ from apigee import (
 )
 from apigee.silent import common_silent_options
 from apigee.utils import (
-  create_directory,
-  create_empty_file,
-  execute_function_on_directory_files,
-  is_directory,
-  is_regular_file,
-  read_file_content,
+  mkdir,
+  touch,
+  for_each_file,
+  is_dir,
+  is_file,
+  read_file,
 )
 from apigee.verbose import common_verbose_options
 
@@ -43,9 +43,9 @@ def require_git():
 
 
 def init():
-    create_directory(PLUGINS_DIR)
-    create_empty_file(APIGEE_CLI_PLUGINS_PATH)
-    create_empty_file(APIGEE_CLI_PLUGINS_CONFIG_FILE)
+    mkdir(PLUGINS_DIR)
+    touch(APIGEE_CLI_PLUGINS_PATH)
+    touch(APIGEE_CLI_PLUGINS_CONFIG_FILE)
 
 
 def config(section="sources"):
@@ -58,7 +58,7 @@ def clone():
     init()
     for name, uri in config().items():
         dest = Path(PLUGINS_DIR) / name
-        if is_directory(dest):
+        if is_dir(dest):
             continue
 
         console.echo(f"Installing {name}... ", line_ending="", should_flush=True)
@@ -72,7 +72,7 @@ def clone():
 def update_repos():
 
     def fn(p):
-        if not is_directory(p):
+        if not is_dir(p):
             return
 
         console.echo(f"Updating {Path(p).stem}... ", line_ending="", should_flush=True)
@@ -85,14 +85,14 @@ def update_repos():
         except Exception as e:
             console.echo(e)
 
-    execute_function_on_directory_files(PLUGINS_DIR, fn, glob="[!.][!__]*")
+    for_each_file(PLUGINS_DIR, fn, glob="[!.][!__]*")
 
 
 def prune():
     sources = config()
 
     def fn(p):
-        if not is_directory(p):
+        if not is_dir(p):
             return
 
         name = Path(p).stem
@@ -107,7 +107,7 @@ def prune():
         except Exception as e:
             console.echo(e)
 
-    execute_function_on_directory_files(PLUGINS_DIR, fn, glob="[!.][!__]*")
+    for_each_file(PLUGINS_DIR, fn, glob="[!.][!__]*")
 
 
 def _chmod(func, p, _):
@@ -147,10 +147,10 @@ def plugin_info(name):
     if not f.exists():
         f = base / APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY
 
-    if not is_regular_file(f):
+    if not is_file(f):
         return None
 
-    return read_file_content(f, type="json")
+    return read_file(f, type="json")
 
 
 def print_commit(name):

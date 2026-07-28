@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 from apigee import console
 from apigee.apps.apps import Apps
 from apigee.developers.developers import Developers
-from apigee.utils import write_content_to_file, filter_out_empty_values
+from apigee.utils import write_file, filter_empty
 
 from ..base import BaseBackup
 from ..utils import run_blocking
@@ -50,7 +50,7 @@ class AppsBackup(BaseBackup):
         for dev, dev_apps in results:
             apps[dev] = dev_apps
 
-        apps = filter_out_empty_values(apps)
+        apps = filter_empty(apps)
 
         return apps
 
@@ -59,7 +59,7 @@ class AppsBackup(BaseBackup):
 
         for developer, apps in data.items():
             path = self.full_path(f"snapshots/apps/{developer}.json")
-            write_content_to_file(apps, path, indentation=2)
+            write_file(apps, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -92,7 +92,7 @@ class AppsBackup(BaseBackup):
             path = self.full_path(f"apps/{developer}/{app}.json")
 
             await run_blocking(
-              write_content_to_file,
+              write_file,
               resp.text,
               path,
               2,

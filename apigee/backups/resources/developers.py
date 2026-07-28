@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 
 from apigee import console
 from apigee.developers.developers import Developers
-from apigee.utils import write_content_to_file
+from apigee.utils import write_file
 
 from ..base import BaseBackup
 from ..utils import run_blocking
@@ -28,7 +28,7 @@ class DevelopersBackup(BaseBackup):
         self.config.snapshot_data.developers = data
 
         path = self.full_path("snapshots/developers/developers.json")
-        write_content_to_file(data, path, indentation=2)
+        write_file(data, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -51,7 +51,7 @@ class DevelopersBackup(BaseBackup):
 
             path = self.full_path(f"developers/{developer}.json")
 
-            await run_blocking(write_content_to_file, resp.text, path, 2)
+            await run_blocking(write_file, resp.text, path, 2)
 
             self.progress("Developers")
 

@@ -3,7 +3,7 @@ from requests.exceptions import HTTPError
 
 from apigee import console
 from apigee.apiproducts.apiproducts import Apiproducts
-from apigee.utils import write_content_to_file
+from apigee.utils import write_file
 
 from ..base import BaseBackup
 from ..utils import run_blocking
@@ -27,7 +27,7 @@ class ApiProductsBackup(BaseBackup):
         self.config.snapshot_data.apiproducts = data
 
         path = self.full_path("snapshots/apiproducts/apiproducts.json")
-        write_content_to_file(data, path, indentation=2)
+        write_file(data, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -50,7 +50,7 @@ class ApiProductsBackup(BaseBackup):
 
             path = self.full_path(f"apiproducts/{apiproduct}.json")
 
-            await run_blocking(write_content_to_file, resp.text, path, 2)
+            await run_blocking(write_file, resp.text, path, 2)
 
             self.progress("ApiProducts")
 

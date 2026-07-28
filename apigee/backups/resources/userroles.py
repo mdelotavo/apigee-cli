@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 from apigee import console
 from apigee.userroles.userroles import Userroles
 from apigee.permissions.permissions import Permissions
-from apigee.utils import write_content_to_file
+from apigee.utils import write_file
 
 from ..base import BaseBackup
 from ..utils import run_blocking
@@ -28,7 +28,7 @@ class UserRolesBackup(BaseBackup):
         self.config.snapshot_data.userroles = data
 
         path = self.full_path("snapshots/userroles/userroles.json")
-        write_content_to_file(data, path, indentation=2)
+        write_file(data, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -49,7 +49,7 @@ class UserRolesBackup(BaseBackup):
 
             users_resp = await run_blocking(client.list_users)
             users_path = self.full_path(f"userroles/{role_name}/users.json")
-            await run_blocking(write_content_to_file, users_resp.json(), users_path, 2)
+            await run_blocking(write_file, users_resp.json(), users_path, 2)
 
         except HTTPError as e:
             if e.response.status_code == 404:
@@ -68,7 +68,7 @@ class UserRolesBackup(BaseBackup):
             perms_path = self.full_path(f"userroles/{role_name}/resource_permissions.json")
 
             await run_blocking(
-              write_content_to_file,
+              write_file,
               json.dumps(perms, indent=2),
               perms_path,
               2,

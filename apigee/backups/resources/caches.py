@@ -3,7 +3,7 @@ from requests.exceptions import HTTPError
 
 from apigee import console
 from apigee.caches.caches import Caches
-from apigee.utils import write_content_to_file
+from apigee.utils import write_file
 
 from ..base import BaseBackup
 from ..utils import run_blocking
@@ -32,7 +32,7 @@ class CachesBackup(BaseBackup):
 
         for env, caches in data.items():
             path = self.full_path(f"snapshots/caches/{env}/caches.json")
-            write_content_to_file(caches, path, indentation=2)
+            write_file(caches, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -64,7 +64,7 @@ class CachesBackup(BaseBackup):
 
             path = self.full_path(f"caches/{env}/{cache}.json")
 
-            await run_blocking(write_content_to_file, resp.text, path, 2)
+            await run_blocking(write_file, resp.text, path, 2)
 
             self.progress("Caches")
 

@@ -1,6 +1,6 @@
 import json
 
-from apigee.utils import remove_last_elements
+from apigee.utils import drop_last
 
 
 class ApisSerializer:
@@ -20,7 +20,7 @@ class ApisSerializer:
     def filter_undeployed_revisions(all_revisions, deployed_revisions, save_last=0):
         deployed = set(deployed_revisions)
         undeployed = sorted(int(r) for r in all_revisions if r not in deployed)
-        return remove_last_elements(undeployed, save_last)
+        return drop_last(undeployed, save_last)
 
     @staticmethod
     def serialize_details(resp, format, prefix=None):

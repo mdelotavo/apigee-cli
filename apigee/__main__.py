@@ -33,7 +33,7 @@ from apigee.virtualhosts.commands import virtualhosts
 
 from apigee.cls import AliasedGroup
 from apigee.exceptions import configure_global_logger, wrap_with_exception_handling
-from apigee.utils import execute_function_on_directory_files, import_plugins_from_directory
+from apigee.utils import for_each_file, load_plugins
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
@@ -72,9 +72,9 @@ def main():
       plugins,
     }
 
-    execute_function_on_directory_files(
+    for_each_file(
       PLUGINS_DIR,
-      import_plugins_from_directory,
+      load_plugins,
       args=(cli_commands, ),
       glob="[!.][!__]*/__init__.py",
     )

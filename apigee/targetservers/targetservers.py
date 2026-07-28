@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 import apigee.request
 from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.targetservers.serializer import TargetserversSerializer
-from apigee.utils import read_file_content
+from apigee.utils import read_file
 
 TARGETSERVERS_PATH = "/v1/organizations/{org}/environments/{env}/targetservers"
 TARGETSERVER_PATH = "/v1/organizations/{org}/environments/{env}/targetservers/{name}"
@@ -62,7 +62,7 @@ class Targetservers:
         )
 
     def push(self, env, file):
-        data = read_file_content(file, type="json")
+        data = read_file(file, type="json")
         self.name = data["name"]
 
         try:

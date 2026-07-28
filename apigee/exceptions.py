@@ -4,7 +4,7 @@ import logging
 import sys
 
 from apigee import console
-from apigee.utils import create_empty_file, remove_file_if_above_size
+from apigee.utils import touch, remove_if_large
 
 
 class InvalidApisError(Exception):
@@ -17,8 +17,8 @@ class InvalidApisError(Exception):
 
 
 def configure_global_logger(log_file):
-    create_empty_file(log_file)
-    remove_file_if_above_size(log_file, size_kb=1000)
+    touch(log_file)
+    remove_if_large(log_file, size_kb=1000)
 
     logging.basicConfig(
       filename=log_file,

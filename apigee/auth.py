@@ -31,7 +31,7 @@ from apigee import (
 from apigee.cls import AliasedGroup
 from apigee.silent import common_silent_options
 from apigee.types import Struct
-from apigee.utils import create_directory
+from apigee.utils import mkdir
 from apigee.verbose import common_verbose_options
 
 # --------------------
@@ -241,7 +241,7 @@ def set_authentication_headers(authentication_object, custom_headers=None):
 
 
 def validate_jwt_token(authentication_object, file_name, username_field):
-    create_directory(APIGEE_CLI_DIRECTORY)
+    mkdir(APIGEE_CLI_DIRECTORY)
 
     token = ""
     with contextlib.suppress(IOError, OSError):

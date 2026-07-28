@@ -7,7 +7,7 @@ from apigee import utils_init
 APP = "apigeecli"
 CMD = "apigee"
 
-__version__ = "0.55.2"
+__version__ = "0.56.0"
 
 # description = "(DEPRECATED) User-friendly wrapper for the Apigee Edge admin APIs."
 description = "User-friendly wrapper for the Apigee Edge admin APIs."
@@ -21,16 +21,16 @@ long_description = (
 # --------------------
 
 HOME = Path.home()
-APIGEE_CLI_DIRECTORY = utils_init.join_path_components(HOME, ".apigee")
-PLUGINS_DIR = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "plugins")
+APIGEE_CLI_DIRECTORY = utils_init.join_path(HOME, ".apigee")
+PLUGINS_DIR = utils_init.join_path(APIGEE_CLI_DIRECTORY, "plugins")
 
-APIGEE_CLI_ACCESS_TOKEN_FILE = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "access_token")
-APIGEE_CLI_REFRESH_TOKEN_FILE = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "refresh_token")
-APIGEE_CLI_CREDENTIALS_FILE = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "credentials")
-APIGEE_CLI_EXCEPTIONS_LOG_FILE = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "exceptions.log")
+APIGEE_CLI_ACCESS_TOKEN_FILE = utils_init.join_path(APIGEE_CLI_DIRECTORY, "access_token")
+APIGEE_CLI_REFRESH_TOKEN_FILE = utils_init.join_path(APIGEE_CLI_DIRECTORY, "refresh_token")
+APIGEE_CLI_CREDENTIALS_FILE = utils_init.join_path(APIGEE_CLI_DIRECTORY, "credentials")
+APIGEE_CLI_EXCEPTIONS_LOG_FILE = utils_init.join_path(APIGEE_CLI_DIRECTORY, "exceptions.log")
 
-APIGEE_CLI_PLUGINS_CONFIG_FILE = utils_init.join_path_components(PLUGINS_DIR, "config")
-APIGEE_CLI_PLUGINS_PATH = utils_init.join_path_components(PLUGINS_DIR, "__init__.py")
+APIGEE_CLI_PLUGINS_CONFIG_FILE = utils_init.join_path(PLUGINS_DIR, "config")
+APIGEE_CLI_PLUGINS_PATH = utils_init.join_path(PLUGINS_DIR, "__init__.py")
 
 # --------------------
 # API endpoints
@@ -61,14 +61,14 @@ APIGEE_ORG = getenv("APIGEE_ORG")
 
 # ---- Auth mode / behaviour ----
 APIGEE_IS_TOKEN = getenv("APIGEE_IS_TOKEN")
-APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy_envvar(getenv("APIGEE_CLI_IS_MACHINE_USER"))
+APIGEE_CLI_IS_MACHINE_USER = utils_init.is_truthy(getenv("APIGEE_CLI_IS_MACHINE_USER"))
 
 # ---- CLI configuration ----
 APIGEE_CLI_PREFIX = getenv("APIGEE_CLI_PREFIX")
 APIGEE_CLI_SYMMETRIC_KEY = getenv("APIGEE_CLI_SYMMETRIC_KEY")
 
 # ---- Network / runtime settings ----
-APIGEE_CLI_ENABLE_SSL_VERIFY = utils_init.is_truthy_envvar((getenv("APIGEE_CLI_ENABLE_SSL_VERIFY") or "").lower())
+APIGEE_CLI_ENABLE_SSL_VERIFY = utils_init.is_truthy((getenv("APIGEE_CLI_ENABLE_SSL_VERIFY") or "").lower())
 
 # ---- Misc ----
 APIGEE_QUERY_PARAMETERS = getenv("APIGEE_QUERY_PARAMETERS")

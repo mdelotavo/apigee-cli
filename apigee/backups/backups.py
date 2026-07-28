@@ -19,7 +19,7 @@ from apigee.permissions.permissions import Permissions
 from apigee.targetservers.targetservers import Targetservers
 from apigee.types import APIGEE_API_CHOICES, Struct, empty_snapshot
 from apigee.userroles.userroles import Userroles
-from apigee.utils import extract_zip_file, filter_out_empty_values, write_content_to_file
+from apigee.utils import extract_zip, filter_empty, write_file
 
 from .config import BackupConfig
 
@@ -33,7 +33,7 @@ class BaseBackup:
         path = self.cfg.working_org_directory
         for part in subpath.split("/"):
             path /= part
-        write_content_to_file(content, path, indentation=2)
+        write_file(content, path, indentation=2)
 
     def progress(self, label):
         if not isinstance(self.cfg.progress_bar, tqdm):
@@ -72,7 +72,7 @@ class ApisBackup(BaseBackup):
                     output = Path(self.cfg.working_org_directory) / "apis" / api / rev / f"{api}.zip"
                     workdir = output.parent
                     Apis(self.cfg.authentication, self.cfg.org_name).export_api_proxy(api, rev, write_to_filesystem=True, output_file=str(output))
-                    extract_zip_file(output, workdir)
+                    extract_zip(output, workdir)
                     os.remove(output)
                 except HTTPError as e:
                     self.http_error(e, f" for API Proxy ({api}, revision {rev})")
@@ -105,7 +105,7 @@ class AppsBackup(BaseBackup):
     def collect(self):
         developers = Developers(self.cfg.authentication, self.cfg.org_name, None).list(format="dict")
         apps = Apps(self.cfg.authentication, self.cfg.org_name, None).list_all(developers, prefix=self.cfg.prefix, format="dict")
-        apps = filter_out_empty_values(apps)
+        apps = filter_empty(apps)
         self.cfg.snapshot_data.apps = apps
         for app, details in apps.items():
             self.save(details, f"snapshots/apps/{app}.json")

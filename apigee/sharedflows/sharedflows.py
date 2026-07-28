@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.deployments.deployments import Deployments
 from apigee.sharedflows.serializer import SharedflowsSerializer
-from apigee.utils import apply_function_on_iterable, merge_dict_values, write_content_to_zip
+from apigee.utils import apply, merge_values, write_zip
 
 SHAREDFLOWS_PATH = "/v1/organizations/{org}/sharedflows"
 SHAREDFLOW_PATH = "/v1/organizations/{org}/sharedflows/{name}"
@@ -81,7 +81,7 @@ class Sharedflows:
         )
 
         if write and output:
-            write_content_to_zip(output, resp.content)
+            write_zip(output, resp.content)
 
         return resp
 
@@ -105,7 +105,7 @@ class Sharedflows:
         resp = apigee.request.post(
           f"{APIGEE_ADMIN_API_URL}{DEPLOY_PATH.format(org=self.org, env=env, name=name, rev=rev)}",
           self.auth,
-          params=merge_dict_values({
+          params=merge_values({
             "override": "true" if override else "false",
             "delay": str(delay),
           }),
@@ -159,7 +159,7 @@ class Sharedflows:
             console.echo(f"Deleting revision {rev}")
             self.delete_revision(name, rev)
 
-        return apply_function_on_iterable(undeployed, _delete)
+        return apply(undeployed, _delete)
 
     # misc
 

@@ -7,7 +7,7 @@ from apigee.encryption_utils import has_encrypted_header
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
-from apigee.utils import read_file_content, write_content_to_file
+from apigee.utils import read_file, write_file
 from apigee.verbose import common_verbose_options
 
 
@@ -202,13 +202,13 @@ def push(**kwargs):
 @click.option("-f", "--file", type=click.Path(exists=True), required=True)
 @click.option("--symmetric-key", required=True)
 def encrypt_file(**kwargs):
-    data = read_file_content(kwargs["file"], type="json")
+    data = read_file(kwargs["file"], type="json")
 
     console.echo("Encrypting... ", line_ending="", should_flush=True)
     data, count = Keyvaluemaps.encrypt(data, kwargs["symmetric_key"])
 
     if count:
-        write_content_to_file(data, kwargs["file"], indentation=2)
+        write_file(data, kwargs["file"], indentation=2)
         console.echo("Done.")
         return data
 
@@ -222,13 +222,13 @@ def encrypt_file(**kwargs):
 @click.option("-f", "--file", type=click.Path(exists=True), required=True)
 @click.option("--symmetric-key", required=True)
 def decrypt_file(**kwargs):
-    data = read_file_content(kwargs["file"], type="json")
+    data = read_file(kwargs["file"], type="json")
 
     console.echo("Decrypting... ", line_ending="", should_flush=True)
     data, count = Keyvaluemaps.decrypt(data, kwargs["symmetric_key"])
 
     if count:
-        write_content_to_file(data, kwargs["file"], indentation=2)
+        write_file(data, kwargs["file"], indentation=2)
         console.echo("Done.")
         return data
 

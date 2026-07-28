@@ -4,8 +4,8 @@ import sys
 import click
 
 from apigee import APIGEE_CLI_CREDENTIALS_FILE, APIGEE_CLI_DIRECTORY
-from apigee.utils import create_directory
-from apigee.utils_init import is_truthy_envvar
+from apigee.utils import mkdir
+from apigee.utils_init import is_truthy
 
 KEYS = ("username", "password", "mfa_secret", "is_token", "zonename", "org", "prefix")
 
@@ -72,7 +72,7 @@ profile_data, config = _load_profile(profile_name)
 )
 @click.option(
   "--token/--no-token",
-  default=is_truthy_envvar(profile_data["is_token"]),
+  default=is_truthy(profile_data["is_token"]),
   prompt="Use OAuth, no MFA (optional)?",
   show_default=True,
 )
@@ -112,7 +112,7 @@ def configure(username, password, mfa_secret, token, zonename, org, prefix, prof
 
     config[profile] = {k: v for k, v in data.items() if v}
 
-    create_directory(APIGEE_CLI_DIRECTORY)
+    mkdir(APIGEE_CLI_DIRECTORY)
 
     with open(APIGEE_CLI_CREDENTIALS_FILE, "w") as f:
         config.write(f)

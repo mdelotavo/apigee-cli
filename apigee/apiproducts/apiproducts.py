@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 import apigee.request
 from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.apiproducts.serializer import ApiproductsSerializer
-from apigee.utils import read_file_content
+from apigee.utils import read_file
 
 CREATE_API_PRODUCT_PATH = "/v1/organizations/{org}/apiproducts"
 DELETE_API_PRODUCT_PATH = "/v1/organizations/{org}/apiproducts/{name}"
@@ -68,7 +68,7 @@ class Apiproducts:
         return ApiproductsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def push_apiproducts(self, file):
-        data = read_file_content(file, type="json")
+        data = read_file(file, type="json")
         self.name = data["name"]
 
         try:

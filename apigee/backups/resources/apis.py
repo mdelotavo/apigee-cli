@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 
 from apigee import console
 from apigee.apis.apis import Apis
-from apigee.utils import extract_zip_file
+from apigee.utils import extract_zip
 from ..base import BaseBackup
 from ..utils import run_blocking
 
@@ -43,8 +43,8 @@ class APIsBackup(BaseBackup):
 
         for api, content in data.items():
             path = self.full_path(f"snapshots/apis/{api}.json")
-            from apigee.utils import write_content_to_file
-            write_content_to_file(content, path, indentation=2)
+            from apigee.utils import write_file
+            write_file(content, path, indentation=2)
 
     async def download(self):
         tasks = []
@@ -80,7 +80,7 @@ class APIsBackup(BaseBackup):
               str(output),
             )
 
-            await run_blocking(extract_zip_file, str(output), work_dir)
+            await run_blocking(extract_zip, str(output), work_dir)
             await run_blocking(os.remove, str(output))
 
             self.progress("APIs")

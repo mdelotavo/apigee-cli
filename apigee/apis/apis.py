@@ -2,7 +2,7 @@ import apigee.request
 from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.apis.serializer import ApisSerializer
 from apigee.deployments.deployments import Deployments
-from apigee.utils import apply_function_on_iterable, write_content_to_zip
+from apigee.utils import apply, write_zip
 
 DELETE_API_PROXY_PATH = "{api_url}/v1/organizations/{org}/apis/{api_name}"
 DELETE_API_PROXY_REVISION_PATH = "{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}"
@@ -55,7 +55,7 @@ class Apis:
             console.echo(f"Deleting revison {revision}")
             self.delete_api_proxy_revision(api_name, revision)
 
-        return apply_function_on_iterable(undeployed_revisions, _func)
+        return apply(undeployed_revisions, _func)
 
     def deploy_api_proxy_revision(self, api_name, environment, revision_number, delay=0, override=False):
         uri = DEPLOY_API_PROXY_REVISION_PATH.format(
@@ -86,7 +86,7 @@ class Apis:
         )
         resp = apigee.request.get(uri, self.auth)
         if write_to_filesystem:
-            write_content_to_zip(output_file, resp.content)
+            write_zip(output_file, resp.content)
         return resp
 
     def force_undeploy_api_proxy_revision(self, api_name, environment, revision_number):

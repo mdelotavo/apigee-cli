@@ -6,7 +6,7 @@ from typing import List, Set, Optional
 from tqdm import tqdm
 
 from apigee.types import Struct, empty_snapshot
-from apigee.utils import get_resolved_directory_path
+from apigee.utils import resolve_dir
 
 _GLOBAL_SEMAPHORE: Optional[asyncio.Semaphore] = None
 
@@ -40,7 +40,7 @@ class BackupConfig:
         self.api_choices = set(self.api_choices or [])
         self.environments = self.environments or []
 
-        self.working_directory = get_resolved_directory_path(self.working_directory)
+        self.working_directory = resolve_dir(self.working_directory)
         self.working_org_directory = Path(self.working_directory) / self.org_name
 
         self.semaphore = asyncio.Semaphore(self.max_concurrency)
