@@ -103,6 +103,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-apigee.console">apigee.console module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apigee.console.EchoOptions"><code class="docutils literal notranslate"><span class="pre">EchoOptions</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#apigee.console.echo"><code class="docutils literal notranslate"><span class="pre">echo()</span></code></a></li>
 </ul>
 </li>
@@ -681,7 +682,7 @@
 <li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.plugin_info"><code class="docutils literal notranslate"><span class="pre">plugin_info()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.print_commit"><code class="docutils literal notranslate"><span class="pre">print_commit()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.prune"><code class="docutils literal notranslate"><span class="pre">prune()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.prune_repos"><code class="docutils literal notranslate"><span class="pre">prune_repos()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.require_git"><code class="docutils literal notranslate"><span class="pre">require_git()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="apigee.plugins.html#apigee.plugins.commands.update_repos"><code class="docutils literal notranslate"><span class="pre">update_repos()</span></code></a></li>
 </ul>
@@ -943,9 +944,45 @@
 </section>
 <section id="module-apigee.console">
 <span id="apigee-console-module"></span><h2>apigee.console module<a class="headerlink" href="#module-apigee.console" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.console.</span></span><span class="sig-name descname"><span class="pre">EchoOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exit_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.console.EchoOptions" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions.end">
+<span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#apigee.console.EchoOptions.end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions.exit_status">
+<span class="sig-name descname"><span class="pre">exit_status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#apigee.console.EchoOptions.exit_status" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions.flush">
+<span class="sig-name descname"><span class="pre">flush</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#apigee.console.EchoOptions.flush" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions.level">
+<span class="sig-name descname"><span class="pre">level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#apigee.console.EchoOptions.level" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions.silent">
+<span class="sig-name descname"><span class="pre">silent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#apigee.console.EchoOptions.silent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.console.EchoOptions.verbosity">
+<span class="sig-name descname"><span class="pre">verbosity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#apigee.console.EchoOptions.verbosity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.console.echo">
-<span class="sig-prename descclassname"><span class="pre">apigee.console.</span></span><span class="sig-name descname"><span class="pre">echo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exit_status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_ending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">should_flush</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.console.echo" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">apigee.console.</span></span><span class="sig-name descname"><span class="pre">echo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#apigee.console.EchoOptions" title="apigee.console.EchoOptions"><span class="pre">EchoOptions</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.console.echo" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
