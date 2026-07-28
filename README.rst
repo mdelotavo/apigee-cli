@@ -300,7 +300,7 @@ Option 1: One-liner (quick setup)
 
 ::
 
-   echo -e '[sources]\npublic = https://github.com/mdelotavo/apigee-cli-plugins' >> ~/.apigee/plugins/config
+   echo -e '[sources]\npublic = https://github.com/mdelotavo/apigee-cli-plugins.git' >> ~/.apigee/plugins/config
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -331,7 +331,7 @@ Edit the file ``~/.apigee/plugins/config`` and add:
 ::
 
    [sources]
-   public = https://github.com/mdelotavo/apigee-cli-plugins
+   public = https://github.com/mdelotavo/apigee-cli-plugins.git
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
