@@ -16,7 +16,7 @@ class InvalidApisError(Exception):
 # --------------------
 
 
-def configure_global_logger(log_file):
+def configure_root_logger(log_file):
     touch(log_file)
     remove_if_large(log_file, size_kb=1000)
 

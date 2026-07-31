@@ -300,7 +300,7 @@ Option 1: One-liner (quick setup)
 
 ::
 
-   echo -e '[sources]\npublic = https://github.com/mdelotavo/apigee-cli-plugins.git' >> ~/.apigee/plugins/config
+   echo -e '[sources]\nmdelotavo-apigee-plugins = https://github.com/mdelotavo/apigee-cli-plugins.git' >> ~/.apigee/plugins/config
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -331,7 +331,7 @@ Edit the file ``~/.apigee/plugins/config`` and add:
 ::
 
    [sources]
-   public = https://github.com/mdelotavo/apigee-cli-plugins.git
+   mdelotavo-apigee-plugins = https://github.com/mdelotavo/apigee-cli-plugins.git
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -349,13 +349,13 @@ Inspect available plugins:
 ::
 
    apigee plugins show
-   apigee plugins show -n public
+   apigee plugins show -n mdelotavo-apigee-plugins
 
 Install required dependencies:
 
 ::
 
-   pip install $(apigee plugins show -n public --show-dependencies-only)
+   pip install $(apigee plugins show -n mdelotavo-apigee-plugins --show-dependencies-only)
 
 ------------
 Getting Help

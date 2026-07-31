@@ -13,7 +13,7 @@ from apigee import (
   APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY,
   APIGEE_CLI_PLUGINS_CONFIG_FILE,
   PLUGINS_DIR,
-  APIGEE_CLI_PLUGINS_PATH,
+  APIGEE_CLI_PLUGINS_INIT_FILE,
   console,
 )
 from apigee.silent import common_silent_options
@@ -44,7 +44,7 @@ def require_git():
 
 def init():
     mkdir(PLUGINS_DIR)
-    touch(APIGEE_CLI_PLUGINS_PATH)
+    touch(APIGEE_CLI_PLUGINS_INIT_FILE)
     touch(APIGEE_CLI_PLUGINS_CONFIG_FILE)
 
 

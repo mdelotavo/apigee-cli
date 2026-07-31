@@ -30,7 +30,7 @@ APIGEE_CLI_CREDENTIALS_FILE = utils_init.join_path(APIGEE_CLI_DIRECTORY, "creden
 APIGEE_CLI_EXCEPTIONS_LOG_FILE = utils_init.join_path(APIGEE_CLI_DIRECTORY, "exceptions.log")
 
 APIGEE_CLI_PLUGINS_CONFIG_FILE = utils_init.join_path(PLUGINS_DIR, "config")
-APIGEE_CLI_PLUGINS_PATH = utils_init.join_path(PLUGINS_DIR, "__init__.py")
+APIGEE_CLI_PLUGINS_INIT_FILE = utils_init.join_path(PLUGINS_DIR, "__init__.py")
 
 # --------------------
 # API endpoints

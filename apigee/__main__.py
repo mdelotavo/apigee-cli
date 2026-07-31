@@ -32,7 +32,7 @@ from apigee.userroles.commands import userroles
 from apigee.virtualhosts.commands import virtualhosts
 
 from apigee.cls import AliasedGroup
-from apigee.exceptions import configure_global_logger, wrap_with_exception_handling
+from apigee.exceptions import configure_root_logger, wrap_with_exception_handling
 from apigee.utils import for_each_file, load_plugins
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
@@ -48,7 +48,7 @@ def cli(ctx):
 
 @wrap_with_exception_handling
 def main():
-    configure_global_logger(APIGEE_CLI_EXCEPTIONS_LOG_FILE)
+    configure_root_logger(APIGEE_CLI_EXCEPTIONS_LOG_FILE)
 
     cli_commands = {
       backups,
