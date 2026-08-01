@@ -309,17 +309,17 @@ Option 2: Interactive CLI configuration
 
 ::
 
-   apigee plugins configure -a
+   apigee plugins configure
 
 This will open your default text editor, allowing you to define remote plugin sources.
 
-If you do **not** want changes to be automatically applied after saving, run:
+If you want changes to be automatically applied after saving, run:
 
 ::
 
-   apigee plugins configure
+   apigee plugins configure -a
 
-In this case, you will need to run the update command manually.
+In this case, any configured plugin updates will be applied automatically after saving.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
