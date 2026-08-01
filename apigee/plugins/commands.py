@@ -577,34 +577,38 @@ def hello(
     touch(root / "README.md")
     touch(root / "LICENSE")
 
-    console.echo(f'Created plugin "{name}" at:')
-    console.echo(f"  {root}")
-    console.echo()
-    console.echo("Generated module:")
-    console.echo(f"  {module}.py")
-    console.echo()
-    console.echo("Next steps:")
-    console.echo("  • Add commands to:")
-    console.echo(f"      {module}.py")
-    console.echo()
-    console.echo("  • To use this plugin locally:")
-    console.echo(f"      Copy the plugin directory into another {CMD}")
-    console.echo("      plugins directory:")
-    console.echo(f"        ~/.{CMD}/plugins/")
-    console.echo()
-    console.echo("  • To distribute this plugin:")
-    console.echo("      1. Initialize a Git repository.")
-    console.echo("      2. Commit and push it to a remote source")
-    console.echo("         (GitHub, GitLab, or another Git server).")
-    console.echo("      3. Add the repository URL to your plugin config:")
-    console.echo(f"           {CMD} plugins configure")
-    console.echo()
-    console.echo("         Example:")
-    console.echo()
-    console.echo("           [sources]")
-    console.echo(f"           {name} = https://github.com/<user>/{name}.git")
-    console.echo()
-    console.echo("         HTTPS and SSH Git URLs are supported.")
-    console.echo()
-    console.echo("      4. Install or update plugins:")
-    console.echo(f"           {CMD} plugins update")
+    console.echo(
+      f"""\
+Created plugin "{name}" at:
+  {root}
+
+Generated module:
+  {module}.py
+
+Next steps:
+  • Add commands to:
+      {module}.py
+
+  • To use this plugin locally:
+      Copy the plugin directory into another {CMD}
+      plugins directory:
+        ~/.{CMD}/plugins/
+
+  • To distribute this plugin:
+      1. Initialize a Git repository.
+      2. Commit and push it to a remote source
+         (GitHub, GitLab, or another Git server).
+      3. Add the repository URL to your plugin config:
+           {CMD} plugins configure
+
+         Example:
+
+           [sources]
+           {name} = https://github.com/<user>/{name}.git
+
+         HTTPS and SSH Git URLs are supported.
+
+      4. Install or update plugins:
+           {CMD} plugins update
+"""
+    )
