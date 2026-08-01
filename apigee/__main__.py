@@ -72,12 +72,17 @@ def main():
       plugins,
     }
 
+    plugin_commands = {}
+
     for_each_file(
       PLUGINS_DIR,
       load_plugins,
-      args=(cli_commands, ),
+      args=(plugin_commands, ),
       glob="[!.][!__]*/__init__.py",
     )
+
+    for command in plugin_commands.values():
+        cli.add_command(command)
 
     for command in cli_commands:
         cli.add_command(command)

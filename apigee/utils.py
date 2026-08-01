@@ -3,12 +3,14 @@ import inspect
 import json
 import logging
 import os
-import re
+# import re
 import sys
 import zipfile
 from pathlib import Path
 
 import click
+
+from apigee import CMD
 
 # --------------------
 # iteration helpers
@@ -165,7 +167,10 @@ def for_each_file(directory, func, glob="**/*", args=(), kwargs=None):
 
 def load_plugins(init_file, commands):
     try:
-        spec = importlib.util.spec_from_file_location("plugins_modules", init_file)
+        spec = importlib.util.spec_from_file_location(
+          "plugins_modules",
+          init_file,
+        )
         module = importlib.util.module_from_spec(spec)
         sys.modules[spec.name] = module
         spec.loader.exec_module(module)
@@ -174,8 +179,44 @@ def load_plugins(init_file, commands):
 
         for name in plugins:
             obj = getattr(module, name)
-            if isinstance(obj, (click.Command, click.Group)):
-                commands.add(obj)
+
+            if not isinstance(obj, (click.Command, click.Group)):
+                continue
+
+            if name in commands:
+                existing = commands[name]
+
+                raise RuntimeError(
+                  f"""
+Duplicate plugin command detected.
+
+Command:
+  {name}
+
+Existing plugin:
+  {existing.callback.__module__}
+
+Conflicting plugin:
+  {init_file}
+
+Plugin command names must be unique across all installed repositories.
+
+To resolve this:
+  1. Delete one of the conflicting plugin repositories.
+  2. If the repository was installed from a remote source, remove or comment
+     out its entry in ~/.{CMD}/plugins/config (or run
+     `{CMD} plugins configure`) before running
+     `{CMD} plugins update` again, otherwise it will be reinstalled.
+  3. Run the command again.
+  4. If another duplicate plugin error appears, repeat these steps until no
+     duplicate plugin command errors remain.
+
+Suggested command:
+  rm -rf {Path(init_file).parent}
+""".strip()
+                )
+
+            commands[name] = obj
 
     except ImportError:
         logging.warning("Failed to load plugin", exc_info=True)

@@ -351,11 +351,40 @@ Inspect available plugins:
    apigee plugins show
    apigee plugins show -n mdelotavo-apigee-plugins
 
-Install required dependencies:
+If one or more dependencies could not be installed automatically, the CLI
+will report the failures and display the appropriate pip command to install
+the remaining packages manually.
 
-::
+^^^^^^^^^^^^^^^^
+Creating plugins
+^^^^^^^^^^^^^^^^
 
-   pip install $(apigee plugins show -n mdelotavo-apigee-plugins --show-dependencies-only)
+This section shows how to start prototyping plugins on your local machine.
+See the sections below to learn how to distribute your commands as remote
+plugins that can be installed and updated from Git repositories.
+
+Create a new local plugin::
+
+   apigee plugins new test
+
+Show the generated command help::
+
+   apigee run test hello --help
+
+Run the example command::
+
+   apigee test hello \
+      "Hello, World!" \
+      --count 3 \
+      --format json \
+      -vv \
+      --enabled \
+      --tag alpha \
+      --tag beta
+
+Edit the generated source code::
+
+   vim ~/.apigee/plugins/test/plugin_*.py
 
 ------------
 Getting Help
