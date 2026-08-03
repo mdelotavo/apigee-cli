@@ -7,6 +7,7 @@ import sys
 import uuid
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+from urllib.parse import urlparse
 
 import click
 from click_option_group import MutuallyExclusiveOptionGroup, optgroup
@@ -53,15 +54,43 @@ def init():
     touch(APIGEE_CLI_PLUGINS_CONFIG_FILE)
 
 
-def config(section="sources"):
+def read_config(section="sources"):
     cfg = configparser.ConfigParser(allow_no_value=True)
     cfg.read(APIGEE_CLI_PLUGINS_CONFIG_FILE)
     return dict(cfg._sections.get(section, {}))
 
 
+def write_config(data, section="sources"):
+    cfg = configparser.ConfigParser(allow_no_value=True)
+    cfg[section] = data
+
+    with open(APIGEE_CLI_PLUGINS_CONFIG_FILE, "w") as f:
+        cfg.write(f)
+
+
+def normalize_git_url(url):
+    return url.removesuffix(".git").rstrip("/")
+
+
+def source_key_from_url(url):
+    """
+    https://github.com/user/my-plugin.git -> my-plugin
+    git@github.com:user/my-plugin.git     -> my-plugin
+    """
+
+    url = normalize_git_url(url)
+
+    if url.startswith("git@"):
+        path = url.split(":", 1)[1]
+    else:
+        path = urlparse(url).path
+
+    return Path(path).name
+
+
 def clone():
     init()
-    for name, uri in config().items():
+    for name, uri in read_config().items():
         dest = Path(PLUGINS_DIR) / name
         if is_dir(dest):
             continue
@@ -259,7 +288,7 @@ def _chmod(func, p, _):
 
 
 def prune_repos():
-    sources = config()
+    sources = read_config()
 
     def fn(p):
         if not is_dir(p):
@@ -314,7 +343,7 @@ def plugins():
     pass
 
 
-@plugins.command()
+@plugins.command(help="Edit the plugin source configuration.")
 @common_silent_options
 @common_verbose_options
 @click.option("-a/-A", "--apply-changes/--no-apply-changes", default=False)
@@ -331,7 +360,70 @@ def configure(silent, verbose, apply_changes):
         console.echo("\nRun `apigee plugins update` to apply changes.\n")
 
 
-@plugins.command()
+@plugins.command(help="Add a plugin source.")
+@common_silent_options
+@common_verbose_options
+@click.argument("url")
+@click.option(
+  "-k",
+  "--key",
+  help="Plugin source name. Defaults to the repository name.",
+)
+def add(silent, verbose, url, key):
+    init()
+
+    sources = read_config()
+
+    key = key or source_key_from_url(url)
+
+    normalized = normalize_git_url(url)
+
+    for existing_key, existing_url in sources.items():
+        if normalize_git_url(existing_url) == normalized:
+            console.echo(f'Source "{existing_key}" already uses "{existing_url}".')
+            sys.exit(1)
+
+    if key in sources:
+        console.echo(f'Source "{key}" already exists.')
+        sys.exit(1)
+
+    sources[key] = url
+    write_config(sources)
+
+    console.echo(f'Added "{key}" -> {url}')
+
+
+@plugins.command(help="Remove a plugin source.")
+@common_silent_options
+@common_verbose_options
+@click.argument("source")
+def remove(silent, verbose, source):
+    init()
+
+    sources = read_config()
+
+    if source in sources:
+        del sources[source]
+        write_config(sources)
+
+        console.echo(f'Removed "{source}".')
+        return
+
+    normalized = normalize_git_url(source)
+
+    for key, url in list(sources.items()):
+        if normalize_git_url(url) == normalized:
+            del sources[key]
+            write_config(sources)
+
+            console.echo(f'Removed "{key}".')
+            return
+
+    console.echo(f'Plugin source "{source}" not found.')
+    sys.exit(1)
+
+
+@plugins.command(help="Install, update, and synchronize plugins with the configured sources.")
 @common_silent_options
 @common_verbose_options
 @click.option("-n", "--name")
@@ -349,7 +441,7 @@ def update(silent, verbose, name):
     install_plugin_dependencies(name)
 
 
-@plugins.command()
+@plugins.command(help="Show configured plugins or plugin information.")
 @common_silent_options
 @common_verbose_options
 @click.option("-n", "--name")
@@ -357,7 +449,7 @@ def update(silent, verbose, name):
 @optgroup.option("--show-commit-only/--no-show-commit-only", default=False)
 @optgroup.option("--show-dependencies-only/--no-show-dependencies-only", default=False)
 def show(silent, verbose, name, show_commit_only, show_dependencies_only):
-    sources = config()
+    sources = read_config()
 
     if not name:
         for k, v in sources.items():
@@ -410,7 +502,7 @@ def show(silent, verbose, name, show_commit_only, show_dependencies_only):
         console.echo(f"{k}: {v}")
 
 
-@plugins.command()
+@plugins.command(help="Remove unmanaged plugin repositories.")
 @common_silent_options
 @common_verbose_options
 def prune(silent, verbose):
@@ -418,7 +510,7 @@ def prune(silent, verbose):
     prune_repos()
 
 
-@plugins.command()
+@plugins.command(help="Create a new plugin project.")
 @common_silent_options
 @common_verbose_options
 @click.argument("name")
