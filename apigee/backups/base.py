@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
-from tqdm import tqdm
+
 from requests.exceptions import HTTPError
+from tqdm import tqdm
 
 from apigee import console
 from apigee.exceptions import log_and_echo_http_error

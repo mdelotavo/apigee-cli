@@ -1,6 +1,6 @@
-from dataclasses import dataclass, fields, replace
 import builtins
 import sys
+from dataclasses import dataclass, fields, replace
 
 
 @dataclass(slots=True)

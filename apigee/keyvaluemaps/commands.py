@@ -1,4 +1,5 @@
 import sys
+
 import click
 
 from apigee import APIGEE_CLI_SYMMETRIC_KEY, console

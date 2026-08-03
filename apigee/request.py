@@ -2,11 +2,10 @@ import json
 from urllib.parse import quote_plus
 
 import requests
+import urllib3
 
 from apigee import APIGEE_CLI_ENABLE_SSL_VERIFY as VERIFY_SSL
 from apigee import APIGEE_QUERY_PARAMETERS, auth
-
-import urllib3
 
 if not VERIFY_SSL:
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

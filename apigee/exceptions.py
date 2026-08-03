@@ -4,7 +4,7 @@ import logging
 import sys
 
 from apigee import console
-from apigee.utils import touch, remove_if_large
+from apigee.utils import remove_if_large, touch
 
 
 class InvalidApisError(Exception):

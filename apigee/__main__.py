@@ -3,13 +3,8 @@
 
 import click
 
-from apigee import (
-  APIGEE_CLI_EXCEPTIONS_LOG_FILE,
-  PLUGINS_DIR,
-  CMD,
-)
+from apigee import APIGEE_CLI_EXCEPTIONS_LOG_FILE, CMD, PLUGINS_DIR
 from apigee import __version__ as version
-
 # commands
 from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
@@ -17,9 +12,11 @@ from apigee.apps.commands import apps
 from apigee.auth import auth
 from apigee.backups.commands import backups
 from apigee.caches.commands import caches
+from apigee.cls import AliasedGroup
 from apigee.configure.commands import configure
 from apigee.deployments.commands import deployments
 from apigee.developers.commands import developers
+from apigee.exceptions import (configure_root_logger, wrap_with_exception_handling)
 from apigee.keystores.commands import keystores
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
@@ -29,11 +26,8 @@ from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
-from apigee.virtualhosts.commands import virtualhosts
-
-from apigee.cls import AliasedGroup
-from apigee.exceptions import configure_root_logger, wrap_with_exception_handling
 from apigee.utils import for_each_file, load_plugins
+from apigee.virtualhosts.commands import virtualhosts
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 

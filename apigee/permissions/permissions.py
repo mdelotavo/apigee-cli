@@ -1,7 +1,6 @@
 import json
 
 import apigee.request
-
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.permissions.serializer import PermissionsSerializer
 

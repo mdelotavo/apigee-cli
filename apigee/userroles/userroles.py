@@ -1,7 +1,6 @@
 import json
 
 import apigee.request
-
 from apigee import APIGEE_ADMIN_API_URL
 
 ROLES_PATH = "/v1/organizations/{org}/userroles"

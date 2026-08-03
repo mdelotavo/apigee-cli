@@ -1,5 +1,4 @@
 import apigee.request
-
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.deployments.serializer import DeploymentsSerializer
 

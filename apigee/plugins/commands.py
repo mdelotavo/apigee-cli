@@ -14,23 +14,10 @@ from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 from packaging.requirements import Requirement
 
 from apigee import (
-  CMD,
-  APIGEE_CLI_PLUGIN_INFO_FILE,
-  APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY,
-  APIGEE_CLI_PLUGINS_CONFIG_FILE,
-  APIGEE_CLI_PLUGINS_INIT_FILE,
-  PLUGINS_DIR,
-  console,
+  APIGEE_CLI_PLUGIN_INFO_FILE, APIGEE_CLI_PLUGIN_INFO_FILE_LEGACY, APIGEE_CLI_PLUGINS_CONFIG_FILE, APIGEE_CLI_PLUGINS_INIT_FILE, CMD, PLUGINS_DIR, console
 )
 from apigee.silent import common_silent_options
-from apigee.utils import (
-  for_each_file,
-  is_dir,
-  is_file,
-  mkdir,
-  read_file,
-  touch,
-)
+from apigee.utils import (for_each_file, is_dir, is_file, mkdir, read_file, touch)
 from apigee.verbose import common_verbose_options
 
 try:

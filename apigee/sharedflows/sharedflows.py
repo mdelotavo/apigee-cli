@@ -1,6 +1,6 @@
-import apigee.request
 from requests.exceptions import HTTPError
 
+import apigee.request
 from apigee import APIGEE_ADMIN_API_URL, console
 from apigee.deployments.deployments import Deployments
 from apigee.sharedflows.serializer import SharedflowsSerializer

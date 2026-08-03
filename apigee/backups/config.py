@@ -1,8 +1,8 @@
 import asyncio
-
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Set, Optional
+from typing import List, Optional, Set
+
 from tqdm import tqdm
 
 from apigee.types import Struct, empty_snapshot

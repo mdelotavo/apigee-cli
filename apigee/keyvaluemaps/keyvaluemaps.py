@@ -7,13 +7,7 @@ from tqdm import tqdm
 
 import apigee.request
 from apigee import APIGEE_ADMIN_API_URL, console
-from apigee.encryption_utils import (
-  ENCRYPTED_HEADER_BEGIN,
-  ENCRYPTED_HEADER_END,
-  decrypt_with_gpg,
-  encrypt_with_gpg,
-  has_encrypted_header,
-)
+from apigee.encryption_utils import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END, decrypt_with_gpg, encrypt_with_gpg, has_encrypted_header)
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.utils import progress_opts, read_file
 
