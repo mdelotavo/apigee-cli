@@ -140,11 +140,6 @@
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="apigee.plugins.commands.config">
-<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.config" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="apigee.plugins.commands.init">
 <span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.init" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -152,6 +147,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="apigee.plugins.commands.install_plugin_dependencies">
 <span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">install_plugin_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.install_plugin_dependencies" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.normalize_git_url">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">normalize_git_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.normalize_git_url" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -190,13 +190,30 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.read_config">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">read_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.read_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="apigee.plugins.commands.require_git">
 <span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">require_git</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.require_git" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.source_key_from_url">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">source_key_from_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.source_key_from_url" title="Link to this definition"></a></dt>
+<dd><p><a class="reference external" href="https://github.com/user/my-plugin.git">https://github.com/user/my-plugin.git</a> -&gt; my-plugin
+<a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:user/my-plugin.git     -&gt; my-plugin</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="apigee.plugins.commands.update_repos">
 <span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">update_repos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.update_repos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apigee.plugins.commands.write_config">
+<span class="sig-prename descclassname"><span class="pre">apigee.plugins.commands.</span></span><span class="sig-name descname"><span class="pre">write_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sources'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.plugins.commands.write_config" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
