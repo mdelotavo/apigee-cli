@@ -92,12 +92,46 @@
 <p class="admonition-title">Warning</p>
 <p>This tool is no longer actively maintained.</p>
 </div>
-<p>For a more stable experience, install version <strong>0.53.11 or earlier</strong>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">apigeecli</span><span class="o">==</span><span class="mf">0.53.11</span>
-</pre></div>
-</div>
-<p>Versions <strong>0.54.0 and above</strong> are <strong>maintenance-only releases</strong> (refactoring and ad hoc fixes).
-See the <a class="reference external" href="https://github.com/mdelotavo/apigee-cli">Forked</a> repository for the current maintained source code.</p>
+<section id="maintenance-status">
+<h3>Maintenance Status<a class="headerlink" href="#maintenance-status" title="Link to this heading"></a></h3>
+<p><strong>This tool is no longer actively maintained.</strong></p>
+<p>It remains usable, but no new features or fixes are planned.</p>
+<p>If you encounter any broken versions, please report them via the <a class="reference external" href="https://github.com/mdelotavo/apigee-cli">Forked</a> repository, thanks.</p>
+</section>
+<section id="authentication-support-notice">
+<h3>Authentication Support Notice<a class="headerlink" href="#authentication-support-notice" title="Link to this heading"></a></h3>
+<p>We exclusively use <strong>SSO</strong>.</p>
+<p><strong>Basic</strong> and <strong>MFA</strong> authentication may still work, but they are <strong>no longer tested or guaranteed</strong>.</p>
+</section>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p>The Apigee Edge command-line interface is an <strong>unofficial Python CLI</strong> built to simplify and automate Apigee API usage.</p>
+<ul class="simple">
+<li><p>Originally built for <strong>Darumatic clients</strong></p></li>
+<li><p>Designed for <strong>Apigee Edge</strong></p></li>
+<li><p>Supports common API management workflows</p></li>
+</ul>
+</section>
+<section id="deprecation">
+<h3>Deprecation<a class="headerlink" href="#deprecation" title="Link to this heading"></a></h3>
+<p>This tool was designed for <strong>Apigee Edge</strong>, which is being phased out in favor of <strong>Apigee X (ApigeeX)</strong>.</p>
+<p>No major enhancements for ApigeeX compatibility are planned</p>
+</section>
+<section id="recommendation">
+<h3>Recommendation<a class="headerlink" href="#recommendation" title="Link to this heading"></a></h3>
+<p>For new implementations, consider:</p>
+<ul class="simple">
+<li><p>Official Google Cloud / Apigee tooling</p></li>
+<li><p>Direct ApigeeX API usage</p></li>
+<li><p>Modern CI/CD integrations</p></li>
+</ul>
+<p>This CLI is best suited for:</p>
+<ul class="simple">
+<li><p>Legacy automation</p></li>
+<li><p>Transitional environments</p></li>
+<li><p>Existing scripts that depend on it</p></li>
+</ul>
+</section>
 <section id="disclaimer">
 <h3>Disclaimer<a class="headerlink" href="#disclaimer" title="Link to this heading"></a></h3>
 <p>This tool is not affiliated with Apigee or Google and is highly experimental.</p>

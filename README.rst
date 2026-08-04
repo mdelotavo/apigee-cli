@@ -5,29 +5,14 @@ apigee-cli
 |Python version| |Downloads| |License|
 
 
------
-TL;DR
------
-For a more stable experience, install version **0.53.11 or earlier**:
-
-::
-
-   pip install apigeecli==0.53.11
-
-
-Versions **0.54.0 and above** are **maintenance-only releases** (refactoring and ad hoc fixes).  
-See the `Forked`_ repository for the current maintained source code.
-
-
-If you encounter any broken versions, please report them via the `Forked`_ repository, thanks.
-
-
 ------------------
 Maintenance Status
 ------------------
 **This tool is no longer actively maintained.**
 
 It remains usable, but no new features or fixes are planned.
+
+If you encounter any broken versions, please report them via the `Forked`_ repository, thanks.
 
 
 ------------------------------
@@ -99,9 +84,7 @@ Deprecation
 -----------
 This tool was designed for **Apigee Edge**, which is being phased out in favor of **Apigee X (ApigeeX)**.
 
-- No major enhancements for ApigeeX compatibility are planned
-- Some commands may not fully align with ApigeeX APIs
-- Long-term usage is **not recommended for new projects**
+No major enhancements for ApigeeX compatibility are planned
 
 
 --------------
@@ -314,7 +297,7 @@ Remove a configured plugin source by key or URL:
 
 ::
 
-   apigee plugins remove mdelotavo-apigee-plugins
+   apigee plugins remove apigee-cli-plugins
 
    apigee plugins remove https://github.com/mdelotavo/apigee-cli-plugins.git
 
@@ -337,7 +320,7 @@ You can also edit the configuration manually in
 ::
 
    [sources]
-   mdelotavo-apigee-plugins = https://github.com/mdelotavo/apigee-cli-plugins.git
+   apigee-cli-plugins = https://github.com/mdelotavo/apigee-cli-plugins.git
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -355,7 +338,7 @@ Inspect configured and installed plugins:
 ::
 
    apigee plugins show
-   apigee plugins show -n mdelotavo-apigee-plugins
+   apigee plugins show -n apigee-cli-plugins
 
 Remove plugin repositories that are no longer configured:
 
