@@ -6,57 +6,12 @@ apigee-cli
 
    This tool is no longer actively maintained.
 
-------------------
-Maintenance Status
-------------------
-**This tool is no longer actively maintained.**
-
-It remains usable, but no new features or fixes are planned.
-
-If you encounter any broken versions, please report them via the `Forked`_ repository, thanks.
-
-
-------------------------------
-Authentication Support Notice
-------------------------------
-We exclusively use **SSO**.
-
-**Basic** and **MFA** authentication may still work, but they are **no longer tested or guaranteed**.
-
-
---------
-Overview
---------
-The Apigee Edge command-line interface is an **unofficial Python CLI** built to simplify and automate Apigee API usage.
-
-- Originally built for **Darumatic clients**
-- Designed for **Apigee Edge**
-- Supports common API management workflows
-
-
 -----------
 Deprecation
 -----------
 This tool was designed for **Apigee Edge**, which is being phased out in favor of **Apigee X (ApigeeX)**.
 
-No major enhancements for ApigeeX compatibility are planned
-
-
---------------
-Recommendation
---------------
-For new implementations, consider:
-
-- Official Google Cloud / Apigee tooling
-- Direct ApigeeX API usage
-- Modern CI/CD integrations
-
-This CLI is best suited for:
-
-- Legacy automation
-- Transitional environments
-- Existing scripts that depend on it
-
+No major enhancements for ApigeeX compatibility are planned.
 
 ----------
 Disclaimer
