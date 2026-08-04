@@ -285,48 +285,54 @@ Typical use cases include:
 
 - Self-service generation and deployment of API proxies from OpenAPI specifications
 - Integration with and automated provisioning of CI/CD pipelines
-- Validation and of custom ``apiproxy`` policies against organisational standards
+- Validation of custom ``apiproxy`` policies against organisational standards
 - Security scanning of API resources using Apigee Edge Admin APIs
 - Operational and governance tooling built on top of existing platform APIs
 
-You can configure plugin sources in three ways: a one-liner, manual config, or via the CLI.
+Plugin repositories are configured as sources. The CLI can add, remove, edit,
+install, update, and inspect these sources.
 
-Below shows how to get started with plugins.
 
+^^^^^^^^^^^^^^^^^^^^^^^^
+Configure plugin sources
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Option 1: One-liner (quick setup)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Add a plugin source:
 
 ::
 
-   echo -e '[sources]\nmdelotavo-apigee-plugins = https://github.com/mdelotavo/apigee-cli-plugins.git' >> ~/.apigee/plugins/config
+   apigee plugins add https://github.com/mdelotavo/apigee-cli-plugins.git
 
+By default, the repository name is used as the source key. To specify your own
+key:
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Option 2: Interactive CLI configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+::
+
+   apigee plugins add https://github.com/mdelotavo/apigee-cli-plugins.git --key example
+
+Remove a configured plugin source by key or URL:
+
+::
+
+   apigee plugins remove mdelotavo-apigee-plugins
+
+   apigee plugins remove https://github.com/mdelotavo/apigee-cli-plugins.git
+
+For bulk edits, you can edit the configuration directly:
 
 ::
 
    apigee plugins configure
 
-This will open your default text editor, allowing you to define remote plugin sources.
-
-If you want changes to be automatically applied after saving, run:
+To automatically apply configuration changes after saving (install new plugins,
+update existing plugins, and prune removed repositories):
 
 ::
 
    apigee plugins configure -a
 
-In this case, any configured plugin updates will be applied automatically after saving.
-
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Option 3: Manual configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Edit the file ``~/.apigee/plugins/config`` and add:
+You can also edit the configuration manually in
+``~/.apigee/plugins/config``:
 
 ::
 
@@ -338,21 +344,30 @@ Edit the file ``~/.apigee/plugins/config`` and add:
 Install and manage plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Update and install plugins:
+Install new plugins and update existing ones:
 
 ::
 
    apigee plugins update
 
-Inspect available plugins:
+Inspect configured and installed plugins:
 
 ::
 
    apigee plugins show
    apigee plugins show -n mdelotavo-apigee-plugins
 
+Remove plugin repositories that are no longer configured:
+
+::
+
+   apigee plugins prune
+
+If you first remove a source with ``apigee plugins remove``, running
+``apigee plugins prune`` will remove the corresponding local repository.
+
 If one or more dependencies could not be installed automatically, the CLI
-will report the failures and display the appropriate pip command to install
+will report the failures and display the appropriate ``pip`` command to install
 the remaining packages manually.
 
 ^^^^^^^^^^^^^^^^
