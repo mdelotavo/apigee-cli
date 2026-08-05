@@ -358,8 +358,6 @@ Creating plugins
 ^^^^^^^^^^^^^^^^
 
 This section shows how to start prototyping plugins on your local machine.
-See the sections below to learn how to distribute your commands as remote
-plugins that can be installed and updated from Git repositories.
 
 Create a new local plugin::
 
