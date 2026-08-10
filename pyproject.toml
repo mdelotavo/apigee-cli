@@ -11,7 +11,7 @@ requires-python = ">=3.7"
 license = "Apache-2.0"
 
 authors = [
-  { name = "Matthew Delotavo", email = "hello@darumatic.com" }
+  { name = "Matthew Delotavo" }
 ]
 
 keywords = ["apigee", "cli", "api", "automation"]
