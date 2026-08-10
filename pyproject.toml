@@ -40,9 +40,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/darumatic/apigee-cli"
-Repository = "https://github.com/mdelotavo/apigee-cli"
 Documentation = "https://mdelotavo.github.io/apigee-cli/"
+Homepage = "https://pypi.org/project/apigeecli/"
+Issues = "https://github.com/mdelotavo/apigee-cli/issues"
+Legacy = "https://github.com/darumatic/apigee-cli"
+Repository = "https://github.com/mdelotavo/apigee-cli"
 
 [project.scripts]
 apigee = "apigee.__main__:main"
