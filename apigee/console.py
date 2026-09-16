@@ -23,9 +23,7 @@ def echo(*msg, options=None, **kwargs):
 
     for key, value in kwargs.items():
         if key not in valid_fields:
-            raise TypeError(
-                "echo() got an unexpected keyword argument '{}'".format(key)
-            )
+            raise TypeError("echo() got an unexpected keyword argument '{}'".format(key))
         options = replace(options, **{key: value})
 
     if options.silent or builtins.APIGEE_CLI_TOGGLE_SILENT:
@@ -34,8 +32,8 @@ def echo(*msg, options=None, **kwargs):
         return
 
     verbosity = max(
-        options.verbosity,
-        builtins.APIGEE_CLI_TOGGLE_VERBOSE,
+      options.verbosity,
+      builtins.APIGEE_CLI_TOGGLE_VERBOSE,
     )
 
     if verbosity >= options.level:
